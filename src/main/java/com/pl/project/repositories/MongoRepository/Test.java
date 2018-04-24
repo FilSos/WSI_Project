@@ -12,8 +12,8 @@ public class Test {
 
     public static void main(String[] args) {
 
-        MongoBase mongoBase = new MongoBase();
-       StudentModel studentModel = new StudentModel();
+        MongoBase mongoBase = MongoBase.getInstance();
+        StudentModel studentModel = new StudentModel();
         studentModel.setName("test");
         studentModel.setSurname("test2");
        final  Morphia morphia = new Morphia();

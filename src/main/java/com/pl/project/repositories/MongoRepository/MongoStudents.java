@@ -10,10 +10,10 @@ import java.util.Date;
 public class MongoStudents {
     public  void addStudent(){
         StudentModel studentOne = new StudentModel();
-        StudentModel studentTwo = new StudentModel();
-        StudentModel studentThree = new StudentModel();
-        StudentModel studentFour = new StudentModel();
-        StudentModel studentFive = new StudentModel();
+//        StudentModel studentTwo = new StudentModel();
+//        StudentModel studentThree = new StudentModel();
+//        StudentModel studentFour = new StudentModel();
+//        StudentModel studentFive = new StudentModel();
         studentOne.setIndex(114562);
         studentOne.setName("Filip");
         studentOne.setSurname("Sosnowski");
@@ -35,11 +35,16 @@ public class MongoStudents {
 //        studentFive.setSurname("Sendrowski");
 //        studentFive.setBirthday(LocalDate.of(1993,11,19));
 
-        MongoBase mongoBase = new MongoBase();
+        MongoBase mongoBase = MongoBase.getInstance();
         mongoBase.addStudent(studentOne);
-        mongoBase.addStudent(studentTwo);
-        mongoBase.addStudent(studentThree);
-        mongoBase.addStudent(studentFour);
-        mongoBase.addStudent(studentFive);
+//        mongoBase.addStudent(studentTwo);
+//        mongoBase.addStudent(studentThree);
+//        mongoBase.addStudent(studentFour);
+//        mongoBase.addStudent(studentFive);
     }
+
+    public void deleteStudent() {
+
+    }
+
 }

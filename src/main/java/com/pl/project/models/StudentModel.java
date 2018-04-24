@@ -1,10 +1,7 @@
 package com.pl.project.models;
 
 
-
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.*;
 
@@ -19,15 +16,10 @@ import java.util.Date;
 @Entity("students")
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-
-//@Indexes(
-//        @Index(value = "name", fields = @Field("name"))
-////        @Index(value = "surname", fields = @Field("surname"))
-////        @Index(value = "birthday", fields = @Field("birthday"))
-//)
+@NoArgsConstructor
 public class StudentModel {
     @Id
-    //@XmlJavaTypeAdapter(ObjectIdJaxbAdapter.class)
+    @XmlJavaTypeAdapter(ObjectIdJaxbAdapter.class)
     private ObjectId id;
     @XmlTransient
     private long index;
@@ -86,6 +78,4 @@ public class StudentModel {
                 '}';
     }
 
-    public StudentModel() {
-    }
 }
