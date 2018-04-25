@@ -1,34 +1,29 @@
 package com.pl.project.models;
 
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.ToString;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
-import org.mongodb.morphia.annotations.Reference;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-import java.util.Arrays;
-import java.util.List;
+
+
 @Entity("subjects")
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 @NoArgsConstructor
+@ToString
 public class SubjectModel {
     @Id
     @XmlJavaTypeAdapter(ObjectIdJaxbAdapter.class)
     private ObjectId id;
     private String name;
     private String teacher;
-    @Reference
-    private GradeModel grades;
-    @Reference
-    private List<StudentModel> students;
 
     @XmlTransient
     public ObjectId getId() {
@@ -53,32 +48,5 @@ public class SubjectModel {
 
     public void setTeacher(String teacher) {
         this.teacher = teacher;
-    }
-
-    public GradeModel getGrades() {
-        return grades;
-    }
-
-    public void setGrades(GradeModel grades) {
-        this.grades = grades;
-    }
-
-    public List<StudentModel> getStudents() {
-        return students;
-    }
-
-    public void setStudents(List<StudentModel> students) {
-        this.students = students;
-    }
-
-    @Override
-    public String toString() {
-        return "SubjectModel{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", teacher='" + teacher + '\'' +
-                ", grades=" + grades +
-                ", students=" + students +
-                '}';
     }
 }

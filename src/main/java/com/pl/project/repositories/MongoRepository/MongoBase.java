@@ -19,7 +19,7 @@ public class MongoBase {
         //morphia.getMapper().getOptions().isStoreEmpties() = true;
         datastore = morphia.createDatastore(new MongoClient("localhost",8004),"WSI");
         morphia.mapPackage("com.pl.project.models");
-        datastore.getDB().dropDatabase();
+        //datastore.getDB().dropDatabase();
         datastore.ensureIndexes();
     }
     private  static class MongoBaseHandler{
@@ -45,7 +45,6 @@ public class MongoBase {
     public void addSubject(SubjectModel subjectModel){
         datastore.save(subjectModel);
     }
-
     public void deleteSubject(SubjectModel subjectModel){
         datastore.delete(subjectModel);
     }
@@ -53,6 +52,11 @@ public class MongoBase {
     public List<StudentModel> studentsList(){
        return datastore.find(StudentModel.class).asList();
     }
-
+    public List<SubjectModel> subjectsList(){
+        return datastore.find(SubjectModel.class).asList();
+    }
+    public List<GradeModel> gradesList() {
+        return datastore.find(GradeModel.class).asList();
+    }
 
 }

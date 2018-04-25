@@ -2,6 +2,7 @@ package com.pl.project.models;
 
 
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.*;
 
@@ -17,11 +18,13 @@ import java.util.Date;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 @NoArgsConstructor
+@ToString
 public class StudentModel {
+    //TODO do sprawdzenia czy poprawnie odczytuje/zapisuje
     @Id
     @XmlJavaTypeAdapter(ObjectIdJaxbAdapter.class)
-    private ObjectId id;
     @XmlTransient
+    private ObjectId id;
     private long index;
     private String name;
     private String surname;
@@ -67,15 +70,6 @@ public class StudentModel {
         this.id = id;
     }
 
-    @Override
-    public String toString() {
-        return "StudentModel{" +
-                "id=" + id +
-                ", index=" + index +
-                ", name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
-                ", birthday=" + birthday +
-                '}';
-    }
+
 
 }

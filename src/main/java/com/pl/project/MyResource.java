@@ -1,19 +1,6 @@
 package com.pl.project;
 
-import com.pl.project.models.GradeModel;
-import com.pl.project.models.StudentModel;
-import com.pl.project.models.SubjectModel;
-import com.pl.project.repositories.GradesRepository;
-import com.pl.project.repositories.MongoRepository.MongoBase;
-import com.pl.project.repositories.MongoRepository.MongoStudents;
-import com.pl.project.repositories.StudentsRepository;
-import com.pl.project.repositories.SubjectsRepository;
 import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import java.time.LocalDate;
-import java.util.Date;
-import java.util.List;
 
 @Path("/project")
 public class MyResource {
