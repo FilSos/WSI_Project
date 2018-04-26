@@ -20,7 +20,6 @@ import java.util.Date;
 @NoArgsConstructor
 @ToString
 public class StudentModel {
-    //TODO do sprawdzenia czy poprawnie odczytuje/zapisuje
     @Id
     @XmlJavaTypeAdapter(ObjectIdJaxbAdapter.class)
     @XmlTransient
@@ -29,6 +28,8 @@ public class StudentModel {
     private String name;
     private String surname;
     private Date birthday;
+    @Reference
+    private SubjectModel subject;
 
     public long getIndex() {
         return index;
@@ -70,6 +71,11 @@ public class StudentModel {
         this.id = id;
     }
 
+    public SubjectModel getSubject() {
+        return subject;
+    }
 
-
+    public void setSubject(SubjectModel subject) {
+        this.subject = subject;
+    }
 }

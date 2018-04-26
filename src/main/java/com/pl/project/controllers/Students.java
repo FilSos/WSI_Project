@@ -1,8 +1,8 @@
-package com.pl.project.endpoints;
+package com.pl.project.controllers;
 
 import com.pl.project.models.StudentModel;
-import com.pl.project.repositories.MongoRepository.MongoBase;
-import com.pl.project.repositories.MongoRepository.MongoStudents;
+import com.pl.project.services.MongoBase;
+import com.pl.project.services.MongoStudents;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;

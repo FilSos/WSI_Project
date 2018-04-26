@@ -1,6 +1,11 @@
-package com.pl.project.repositories.MongoRepository;
+package com.pl.project.services;
 
+import com.pl.project.models.StudentModel;
 import com.pl.project.models.SubjectModel;
+import org.bson.types.ObjectId;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class MongoSubjects {
 
@@ -23,5 +28,13 @@ public class MongoSubjects {
         mongoBase.addSubject(subjectOne);
         mongoBase.addSubject(subjectTwo);
         mongoBase.addSubject(subjectThree);
+    }
+    //TODO Zamienic na DTO i powycinac adnotacjami z object mappera @JsonIgnore rzeczy ktorych nie chemy miec podczas wyswietlania np. przedmiot
+    public List<StudentModel> studentsOnSubject(ObjectId id){
+
+        List<StudentModel> studentsList = MongoBase.getInstance().studentsList();
+
+        List<StudentModel> studentsOnSubject = studentsList.stream().filter(student -> id.equals(student.getSubject().getId())).collect(Collectors.toList());
+        return studentsOnSubject;
     }
 }

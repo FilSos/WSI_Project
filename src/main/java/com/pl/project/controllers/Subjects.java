@@ -1,10 +1,11 @@
-package com.pl.project.endpoints;
+package com.pl.project.controllers;
 
 
 import com.pl.project.models.StudentModel;
 import com.pl.project.models.SubjectModel;
-import com.pl.project.repositories.MongoRepository.MongoBase;
-import com.pl.project.repositories.MongoRepository.MongoSubjects;
+import com.pl.project.services.MongoBase;
+import com.pl.project.services.MongoSubjects;
+import org.bson.types.ObjectId;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -30,6 +31,14 @@ MongoSubjects mongoSubjects = new MongoSubjects();
     public Response getSingleSubject(@PathParam("id") int id) {
         SubjectModel oneSubject = MongoBase.getInstance().subjectsList().get(id);
         return Response.status(Response.Status.OK).entity(oneSubject).build();
+    }
+
+    @GET
+    @Path("/{id}/students")
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public Response getSubjectsStudents(@PathParam("id") ObjectId id) {
+        List<StudentModel> studentsOnSubject = mongoSubjects.studentsOnSubject(id);
+        return Response.status(Response.Status.OK).entity(studentsOnSubject).build();
     }
 
     @POST

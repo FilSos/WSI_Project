@@ -24,7 +24,6 @@ public class SubjectModel {
     private ObjectId id;
     private String name;
     private String teacher;
-
     @XmlTransient
     public ObjectId getId() {
         return id;

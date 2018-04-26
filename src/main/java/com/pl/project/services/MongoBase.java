@@ -1,4 +1,4 @@
-package com.pl.project.repositories.MongoRepository;
+package com.pl.project.services;
 
 import com.mongodb.MongoClient;
 import com.pl.project.models.GradeModel;
