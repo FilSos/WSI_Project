@@ -36,10 +36,19 @@ MongoSubjects mongoSubjects = new MongoSubjects();
     @GET
     @Path("/{id}/students")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response getSubjectsStudents(@PathParam("id") ObjectId id) {
+    public Response getSubjectStudents(@PathParam("id") ObjectId id) {
         List<StudentModel> studentsOnSubject = mongoSubjects.studentsOnSubject(id);
         return Response.status(Response.Status.OK).entity(studentsOnSubject).build();
     }
+
+    @GET
+    @Path("/{id}/students/{id2}/grades")
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public Response getSubjectStudentGrades(@PathParam("id") ObjectId id,@PathParam("id2") ObjectId id2) {
+        List<StudentModel> studentsOnSubject = mongoSubjects.studentsOnSubject(id);
+        return Response.status(Response.Status.OK).entity(studentsOnSubject).build();
+    }
+
 
     @POST
     @Path("/add_subject")

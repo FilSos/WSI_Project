@@ -30,7 +30,7 @@ public class StudentModel {
     private Date birthday;
     @Reference
     private SubjectModel subject;
-
+    
     public long getIndex() {
         return index;
     }
@@ -78,4 +78,5 @@ public class StudentModel {
     public void setSubject(SubjectModel subject) {
         this.subject = subject;
     }
+
 }

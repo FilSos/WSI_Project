@@ -1,5 +1,6 @@
 package com.pl.project.services;
 
+import com.pl.project.models.GradeModel;
 import com.pl.project.models.StudentModel;
 import com.pl.project.models.SubjectModel;
 import org.bson.types.ObjectId;
@@ -37,4 +38,15 @@ public class MongoSubjects {
         List<StudentModel> studentsOnSubject = studentsList.stream().filter(student -> id.equals(student.getSubject().getId())).collect(Collectors.toList());
         return studentsOnSubject;
     }
+
+//    public List<GradeModel> studentOnSubjectGrades(ObjectId id, ObjectId id2){
+//
+//        List<GradeModel> gradesList = MongoBase.getInstance().gradesList();
+//
+//        List<GradeModel> studentOnSubjectGrades = gradesList.stream().filter(grade ->
+//        {
+//            id.equals(grade.getSubject().getId()),
+//            id2.equals(grade.getStudent().getId()).collect(Collectors.toList())});
+//        return studentOnSubjectGrades;
+//    }
 }
