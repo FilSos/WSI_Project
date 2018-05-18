@@ -1,12 +1,14 @@
 
-body{
+html,body{
     font-family: 'Hind', sans-serif;
     background-color: aliceblue;
 }
 wrapper{
+    min-height: 100%
     max-width: 960px;
     margin: 0 auto;
-    background-color: #fff;
+    margin-bottom: -50px;
+    background-color: aliceblue;
     padding: 32px;
 }
 
@@ -36,7 +38,7 @@ header h1{
     text-align: center;
     line-height: 32px;
     background-color: dimgrey;
-    background-color: ;
+   
 }
 ul.main_menu{
     margin-top: 0px;
@@ -56,27 +58,48 @@ ul.main_menu{
     font-variant: small-caps;
 }
 .main_menu a:hover{
-    color: #59d5d8;
+    color: darkorange;
 }
 table{
     border-collapse: collapse;
+    width: 100% ;
 }
 table th{
     text-align: left;
-    background-color: #3a6070;
+    background-color: dimgrey;
     color:#FFF;
-    padding: 4px 30px 4px 8px;
+    padding: 7px 8px 7px 16px;
 }
 table td{
     border: 1px solid #e3e3e3;
-    padding: 4p 8px;
+    padding: 7px 16px;
 }
 
 table tr:nth-child(odd) td{
     background-color: #e7edf0; 
 }
-.footer_info{
-   
+.button1 {
+    background-color: #008CBA; /* Blue */
+    border: none;
+    color: white;
+    padding: 8px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+.button2 {
+    background-color: #f44336; /* Red */ 
+    border: none;
+    color: white;
+    padding: 8px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+.footer_info,push{
+   height: 150px;
     padding: 5px 0 5px 0;
     text-align: center;
     line-height: 32px;
