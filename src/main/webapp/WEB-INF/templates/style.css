@@ -1,67 +1,92 @@
-body {
-background-image: url("images/test.jpg");
-color: #000305;
-font-size: 87.5%;
-font-family: Arial,
-line-height: 1.5;
-test-align:left;
+
+body{
+    font-family: 'Hind', sans-serif;
+    background-color: aliceblue;
+}
+wrapper{
+    max-width: 960px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 32px;
 }
 
-a{
-text-decoration:none;
+header{
+    background-color: aliceblue;
+    height: 120px;
+    padding: 4px;
+}
+header h1{
+    text-align: right;
+    color: black;
+    line-height: 75px;
+}
+#logo{
+    margin:7px;
+    float: left;
+    width: 350px;
+    height: 105px;
+    background: url(images/politechnika_logo.png) no-repeat center;
+    display: block;
+
 }
 
-a:link,a:visited{
+
+.main_menu{
+    padding: 5px 0 5px 0;
+    text-align: center;
+    line-height: 32px;
+    background-color: dimgrey;
+    background-color: ;
+}
+ul.main_menu{
+    margin-top: 0px;
 }
 
-a:hover,a:active{
+.main_menu li{
+    display: inline;
+    padding: 0 150px 0 150px;
+    font-size: 16px;
+    
 }
 
-.body{
-margin:0 auto;
-width 70;
-clear:both;
+.main_menu a{
+    text-decoration: :none;
+    color: #fff;
+    padding: 8px;
+    font-variant: small-caps;
+}
+.main_menu a:hover{
+    color: #59d5d8;
+}
+table{
+    border-collapse: collapse;
+}
+table th{
+    text-align: left;
+    background-color: #3a6070;
+    color:#FFF;
+    padding: 4px 30px 4px 8px;
+}
+table td{
+    border: 1px solid #e3e3e3;
+    padding: 4p 8px;
 }
 
-.mainheader img{
-width:30#;
-height:auto;
-margin 2% 0;
+table tr:nth-child(odd) td{
+    background-color: #e7edf0; 
+}
+.footer_info{
+   
+    padding: 5px 0 5px 0;
+    text-align: center;
+    line-height: 32px;
+background: linear-gradient(dimgrey,dimgray,darkgrey);
+
 }
 
-.mainheader nav{
-background-color: #666;
-height: 40px;
-border-radius: 5px;
--moz-border-radius: 5px;
--webkit-border-radius: 5px;
-}
-
-.mainheader nav ul{
-list-style none;
-margin: 0 auto;
-}
-
-.mainheader nav ul li{
-float: left;
-display: inline;
-}
-
-.mainheader nav a:link, .mainheader nav a:visited{
-color: #FFF;
-display: inline-block;
-padding: 10px 25px;
-height: 20px;
-}
-
-.mainheader nav a:hover, .mainheader nav a:active,
-.mainheader nav .active a:link, .mainheader nav .active a:visited{
-background-color: #CF5C3F;
-text-shadow:none;
-}
-
-.mainheader nav ul li a {
-border-radius: 5px;
--moz-border-radius: 5px;
--webkit-border-radius: 5px;
+.footer_info a{
+    text-decoration: :none;
+    color: white;
+    padding: 8px;
+    font-variant: small-caps;
 }
