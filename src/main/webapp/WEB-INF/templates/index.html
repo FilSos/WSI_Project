@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WSI Table</title>
+    <meta name="viewport" content="width=device-width; initial-scale=1; maximum-scale=1">
+    <link rel="stylesheet" href="style.css" type="text/css" media="screen,projection"/>
+    <link href="https://fonts.googleapis.com/css?family=Hind" rel="stylesheet"/>
+</head>
+<body>
+<!--TODO nie dziala wyswietlanie ikonki lupy do wyszukiwania, poszukaj czemu-->
+<div id="wrapper">
+    <header>
+        <a href="images/politechnika_logo.png" id="logo"></a>
+        <a href="images/magnifier.png" id="magnifier"></a>
+        <h1>Student Grade Manager</h1>
+    </header>
+    <nav>
+        <ul class="main_menu">
+            <li><a href="#student_list">Home</a></li>
+            <li><a href="#student_list">Manage students</a></li>
+            <li><a href="#courses_list">Manage courses</a></li>
+        </ul>
+    </nav>
+
+    <section id="student_list" class="view">
+        <h2>List of students</h2>
+        <h1>
+            <a href="#add_student" class="button1">Add student</a>
+        </h1>
+        <table class="my_table">
+            <col width="210">
+            <col width="210">
+            <col width="210">
+            <col width="210">
+            <col width="50">
+            <tr>
+                <th>Index</th>
+                <th>First name</th>
+                <th>Last name</th>
+                <th>Brithday</th>
+                <th>Actions</th>
+
+            </tr>
+
+            <tr>
+                <td>115610</td>
+                <td>Filip</td>
+                <td>Sosnowski</td>
+                <td>1994-04-04</td>
+                <td><a href="#student_grades" class="button1">See grades</a>
+                    <a href="#" class="button2">Delete</a></td>
+            </tr>
+
+            <tr>
+                <td>112424</td>
+                <td>Piotr</td>
+                <td>Sendrowski</td>
+                <td>1993-05-12</td>
+                <td><a href="#student_grades" class="button1">See grades</a>
+                    <a href="#" class="button2">Delete</a></td>
+            </tr>
+
+            <tr>
+                <td>115235</td>
+                <td>Karol</td>
+                <td>Pawlak</td>
+                <td>1993-02-24</td>
+                <td><a href="#student_grades" class="button1">See grades</a>
+                    <a href="#" class="button2">Delete</a></td>
+            </tr>
+        </table>
+    </section>
+
+    <section class="view" id="courses_list">
+
+        <h2>List of courses</h2>
+        <h1>
+            <a href="#add_subject" class="button1">Add course</a>
+        </h1>
+        <table>
+            <col width="380">
+            <col width="380">
+            <col width="40">
+            <tr>
+                <th>Name</th>
+                <th>Teacher</th>
+                <th>Actions</th>
+
+            </tr>
+            <tr>
+                <td>WOS</td>
+                <td>Wojciech Szczęsny</td>
+                <td><a href="#" class="button1">See all grades</a>
+                    <a href="#" class="button2">Delete</a></td>
+            </tr>
+            <tr>
+                <td>Informatyka</td>
+                <td>Tomasz Pawlak</td>
+                <td><a href="#" class="button1">See all grades</a>
+                    <a href="#" class="button2">Delete</a></td>
+            </tr>
+            <tr>
+                <td>Historia</td>
+                <td>Bartłomiej Prędki</td>
+                <td><a href="#" class="button1">See all grades</a>
+                    <a href="#" class="button2">Delete</a></td>
+            </tr>
+        </table>
+    </section>
+
+    <section class="view" id="add_student">
+        <h2>Add student</h2>
+        <form>
+            Index:<br>
+            <input type="text" required="required" placeholder="example: 123456"/><br/>
+            First name:<br>
+            <input type="text" required="required" placeholder="example: John"/><br/>
+            Last name:<br>
+            <input type="text" required="required" placeholder="example: Lemon"/><br/>
+            Birthday:<br>
+            <input type="date" required="required"/><br/>
+
+            <h1>
+                <td><a href="index.html" class="button3">Save</a>
+            </h1>
+        </form>
+    </section>
+
+    <section class="view" id="add_grade">
+        <h2>Add grade</h2>
+        <form>
+            Grade:<br>
+            <input type="text" required="required" placeholder="example: 4.0"/><br/>
+            Student Data:<br>
+            <input type="text" required="required" placeholder="example: John Lemon"/><br/>
+            Subject:<br>
+            <input type="text" required="required" placeholder="example: Matematyka"/><br/>
+            <h1>
+                <td><a href="index.html" class="button3">Save</a>
+            </h1>
+        </form>
+    </section>
+
+    <section class="view" id="add_subject">
+        <h2>Add subject</h2>
+        <form>
+            Name:<br>
+            <input type="text" required="required" placeholder="example: Informatyka"/><br/>
+            Teacher:<br>
+            <input type="text" required="required" placeholder="example: John Doe"/><br/>
+            <h1>
+                <td><a href="index.html" class="button3">Save</a>
+            </h1>
+        </form>
+    </section>
+
+    <section class="view" id="student_grades">
+        <h2>Student grades</h2>
+        <h1>
+            <td><a href="#add_grade" class="button1">Add grade</a>
+        </h1>
+        <table>
+            <col width="320">
+            <col width="320">
+            <col width="320">
+            <col width="50">
+            <tr>
+                <th>Course</th>
+                <th>Grade</th>
+                <th>Date</th>
+                <th>Actions</th>
+
+            </tr>
+
+            <tr>
+                <td>WOS</td>
+                <td>4.0</td>
+                <td>2018-04-04</td>
+                <td><a href="#add_grade" class="button1">Modify</a>
+                    <a href="#" class="button2">Delete</a></td>
+            </tr>
+
+            <tr>
+                <td>Historia</td>
+                <td>5.0</td>
+                <td>2018-07-14</td>
+                <td><a href="#add_grade" class="button1">Modify</a>
+                    <a href="#" class="button2">Delete</a></td>
+            </tr>
+
+            <tr>
+                <td>Informatyka</td>
+                <td>4.5</td>
+                <td>2018-12-12</td>
+                <td><a href="#add_grade" class="button1">Modify</a>
+                    <a href="#" class="button2">Delete</a></td>
+            </tr>
+
+        </table>
+    </section>
+
+    <div class="push"></div>
+</div>
+<footer>
+    <div class="wrapper">
+        <nav>
+            <ul class="footer_info">
+                <p><a>&#169 2018 Made with love by Filip Sosnowski</a></p>
+                <p><a href="https://www4.put.poznan.pl/pl">Politechnika Poznańska</a></p>
+                <p><a>Wytwarzanie Systemów Internetowych</a></p>
+            </ul>
+        </nav>
+    </div>
+</footer>
+</body>
+
+</html>
