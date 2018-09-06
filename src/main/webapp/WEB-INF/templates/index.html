@@ -6,9 +6,11 @@
     <meta name="viewport" content="width=device-width; initial-scale=1; maximum-scale=1">
     <link rel="stylesheet" href="style.css" type="text/css" media="screen,projection"/>
     <link href="https://fonts.googleapis.com/css?family=Hind" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
 <body>
-<!--TODO nie dziala wyswietlanie ikonki lupy do wyszukiwania, poszukaj czemu-->
+<!--TODO - ogarnac stylowanie przycisku search-->
 <div id="wrapper">
     <header>
         <a href="images/politechnika_logo.png" id="logo"></a>
@@ -26,8 +28,13 @@
     <section id="student_list" class="view">
         <h2>List of students</h2>
         <h1>
-            <a href="#add_student" class="button1">Add student</a>
-            <a href="www.google.pl" id="search"><img src="images/search.png"></a>
+            <div id="search_panel">
+                <a href="#add_student" class="button1">Add student</a>
+                <span class="icon"><i class="fa fa-search"></i></span>
+                <input type="search" id="search_text" required="required" placeholder="example: Sosnowski"/>
+                <!--<button type="submit"><i class="fa fa-search"></i></button>-->
+                <!--<img src="images/search.png" id="search_icon">-->
+            </div>
         </h1>
         <table class="my_table">
             <col width="210">
@@ -208,8 +215,11 @@
         <nav>
             <ul class="footer_info">
                 <p><a>&#169 2018 Made with love by Filip Sosnowski</a></p>
-                <p><a href="https://www4.put.poznan.pl/pl">Politechnika Poznańska</a></p>
-                <p><a>Wytwarzanie Systemów Internetowych</a></p>
+                <div class="links">
+                    <p><a href="https://www4.put.poznan.pl/pl">Politechnika Poznańska</a></p>
+                    <p><a href="http://www.cs.put.poznan.pl/tpawlak/?wytwarzanie-systemow-internetowych,24">Wytwarzanie
+                        Systemów Internetowych</a></p>
+                </div>
             </ul>
         </nav>
     </div>
