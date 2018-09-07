@@ -2,6 +2,7 @@
 html,body{
     font-family: 'Hind', sans-serif;
     background-color: aliceblue;
+    min-width:700px;
 }
 wrapper{
     min-height: 100%;
@@ -21,6 +22,7 @@ header h1{
     text-align: right;
     color: black;
     line-height: 75px;
+    min-width:700px;
 }
 #logo{
     margin:7px;
@@ -33,33 +35,35 @@ header h1{
 }
 
 #search_panel{
- vertical-align: middle;
-  white-space: nowrap;
-  position: relative;
+  float: right;
 }
 
 #search_panel input#search_text{
-     float: right;
-     width: 12%;
+     width: 80%;
      border-sizing:border-box;
      border:2px solid #ccc;
      border-radiusL 5px;
      font-size:15px;
      background:#e7edf0;
      background-position:5px 5px;
-     background-image:url(images/search.png);
      background-repeat:no-repeat;
      padding: 11px 16px 10px 30px;
+     max-width:200px;
 
 }
 
-#search_panel .icon{
-position: absolute;
-    top: 50%;
-  margin-left: 17px;
-  margin-top: 17px;
-  z-index: 1;
-  color: #4f5b66;
+#search_panel #search_button{
+    float: left;
+    padding: 11px 16px 10px 16px;
+    margin-right: 1px;
+    background: #ddd;
+    background-position:5px 5px;
+    background-repeat:no-repeat;
+    font-size: 15px;
+    border-sizing:border-box;
+    border:2px solid #ccc;
+    border-radiusL 5px;
+    cursor: pointer;
 }
 
 .main_menu{
@@ -67,17 +71,18 @@ position: absolute;
     text-align: center;
     line-height: 32px;
     background-color: dimgray;
+    min-width:700px;
    
 }
 ul.main_menu{
+color: #fff;
     margin-top: 0px;
 }
 
 .main_menu li{
     display: inline;
-    padding: 0 150px 0 150px;
-    font-size: 16px;
-
+    padding: 0 40px 0 40px;
+    font-size: 18px;
 }
 
 .main_menu a{
@@ -92,7 +97,10 @@ ul.main_menu{
     cursor: pointer;
 }
 
-
+#student_list h2{
+text-align: left;
+    width: 160px;
+}
 .links a:hover{
     text-decoration: underline;
 }
@@ -100,6 +108,7 @@ ul.main_menu{
 table{
     border-collapse: collapse;
     width: 100% ;
+    min-width: 700px;
 }
 table th{
     text-align: left;
@@ -162,12 +171,12 @@ table tr:nth-child(odd){
     color: darkgray;
     opacity: 0.8; /* Firefox */
 }
-
 .footer_info,push{
    height: 150px;
     padding: 5px 0 5px 0;
     text-align: center;
     line-height: 32px;
+    min-width: 700px;
 background: linear-gradient(dimgrey,dimgray,darkgrey);
 
 }

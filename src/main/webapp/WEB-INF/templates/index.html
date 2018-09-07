@@ -7,14 +7,12 @@
     <link rel="stylesheet" href="style.css" type="text/css" media="screen,projection"/>
     <link href="https://fonts.googleapis.com/css?family=Hind" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
+<!--TODO Umiejscowienie szukaj, invalid dla zle wypelnionych pol(czerwona ramka), podgląd wydruku,link do loga-->
 <body>
-<!--TODO - ogarnac stylowanie przycisku search-->
 <div id="wrapper">
     <header>
         <a href="images/politechnika_logo.png" id="logo"></a>
-
         <h1>Student Grade Manager</h1>
     </header>
     <nav>
@@ -25,59 +23,60 @@
         </ul>
     </nav>
 
+    <div id="search_panel">
+        <input type="search" id="search_text" required="required" placeholder="example: Sosnowski"/>
+        <button id="search_button" type="submit"><i class="fa fa-search"></i></button>
+    </div>
+
     <section id="student_list" class="view">
         <h2>List of students</h2>
         <h1>
-            <div id="search_panel">
-                <a href="#add_student" class="button1">Add student</a>
-                <span class="icon"><i class="fa fa-search"></i></span>
-                <input type="search" id="search_text" required="required" placeholder="example: Sosnowski"/>
-                <!--<button type="submit"><i class="fa fa-search"></i></button>-->
-                <!--<img src="images/search.png" id="search_icon">-->
-            </div>
+            <a href="#add_student" class="button1">Add student</a>
         </h1>
-        <table class="my_table">
-            <col width="210">
-            <col width="210">
-            <col width="210">
-            <col width="210">
-            <col width="50">
-            <tr>
-                <th>Index</th>
-                <th>First name</th>
-                <th>Last name</th>
-                <th>Brithday</th>
-                <th>Actions</th>
+        <form>
+            <table class="my_table">
+                <col width="210">
+                <col width="210">
+                <col width="210">
+                <col width="210">
+                <col width="50">
+                <tr>
+                    <th>Index</th>
+                    <th>First name</th>
+                    <th>Last name</th>
+                    <th>Brithday</th>
+                    <th>Actions</th>
 
-            </tr>
+                </tr>
 
-            <tr>
-                <td>115610</td>
-                <td>Filip</td>
-                <td>Sosnowski</td>
-                <td>1994-04-04</td>
-                <td><a href="#student_grades" class="button1">See grades</a>
-                    <a href="#" class="button2">Delete</a></td>
-            </tr>
+                <tr>
+                    <td>115610</td>
+                    <td>Filip</td>
+                    <td>Sosnowski</td>
+                    <td>1994-04-04</td>
+                    <td><a href="#student_grades" class="button1">See grades</a>
+                        <a href="#" class="button2">Delete</a></td>
+                </tr>
 
-            <tr>
-                <td>112424</td>
-                <td>Piotr</td>
-                <td>Sendrowski</td>
-                <td>1993-05-12</td>
-                <td><a href="#student_grades" class="button1">See grades</a>
-                    <a href="#" class="button2">Delete</a></td>
-            </tr>
+                <tr>
+                    <td>112424</td>
+                    <td>Piotr</td>
+                    <td>Sendrowski</td>
+                    <td>1993-05-12</td>
+                    <td><a href="#student_grades" class="button1">See grades</a>
+                        <a href="#" class="button2">Delete</a></td>
+                </tr>
 
-            <tr>
-                <td>115235</td>
-                <td>Karol</td>
-                <td>Pawlak</td>
-                <td>1993-02-24</td>
-                <td><a href="#student_grades" class="button1">See grades</a>
-                    <a href="#" class="button2">Delete</a></td>
-            </tr>
-        </table>
+                <tr>
+                    <td>115235</td>
+                    <td>Karol</td>
+                    <td>Pawlak</td>
+                    <td>1993-02-24</td>
+                    <td><a href="#student_grades" class="button1">See grades</a>
+                        <a href="#" class="button2">Delete</a></td>
+                </tr>
+            </table>
+        </form>
     </section>
 
     <section class="view" id="courses_list">
@@ -86,35 +85,37 @@
         <h1>
             <a href="#add_subject" class="button1">Add course</a>
         </h1>
-        <table>
-            <col width="380">
-            <col width="380">
-            <col width="40">
-            <tr>
-                <th>Name</th>
-                <th>Teacher</th>
-                <th>Actions</th>
+        <form>
+            <table>
+                <col width="380">
+                <col width="380">
+                <col width="40">
+                <tr>
+                    <th>Name</th>
+                    <th>Teacher</th>
+                    <th>Actions</th>
 
-            </tr>
-            <tr>
-                <td>WOS</td>
-                <td>Wojciech Szczęsny</td>
-                <td><a href="#" class="button1">See all grades</a>
-                    <a href="#" class="button2">Delete</a></td>
-            </tr>
-            <tr>
-                <td>Informatyka</td>
-                <td>Tomasz Pawlak</td>
-                <td><a href="#" class="button1">See all grades</a>
-                    <a href="#" class="button2">Delete</a></td>
-            </tr>
-            <tr>
-                <td>Historia</td>
-                <td>Bartłomiej Prędki</td>
-                <td><a href="#" class="button1">See all grades</a>
-                    <a href="#" class="button2">Delete</a></td>
-            </tr>
-        </table>
+                </tr>
+                <tr>
+                    <td>WOS</td>
+                    <td>Wojciech Szczęsny</td>
+                    <td><a href="#" class="button1">See all grades</a>
+                        <a href="#" class="button2">Delete</a></td>
+                </tr>
+                <tr>
+                    <td>Informatyka</td>
+                    <td>Tomasz Pawlak</td>
+                    <td><a href="#" class="button1">See all grades</a>
+                        <a href="#" class="button2">Delete</a></td>
+                </tr>
+                <tr>
+                    <td>Historia</td>
+                    <td>Bartłomiej Prędki</td>
+                    <td><a href="#" class="button1">See all grades</a>
+                        <a href="#" class="button2">Delete</a></td>
+                </tr>
+            </table>
+        </form>
     </section>
 
     <section class="view" id="add_student">
@@ -168,44 +169,46 @@
         <h1>
             <td><a href="#add_grade" class="button1">Add grade</a>
         </h1>
-        <table>
-            <col width="320">
-            <col width="320">
-            <col width="320">
-            <col width="50">
-            <tr>
-                <th>Course</th>
-                <th>Grade</th>
-                <th>Date</th>
-                <th>Actions</th>
+        <form>
+            <table>
+                <col width="320">
+                <col width="320">
+                <col width="320">
+                <col width="50">
+                <tr>
+                    <th>Course</th>
+                    <th>Grade</th>
+                    <th>Date</th>
+                    <th>Actions</th>
 
-            </tr>
+                </tr>
 
-            <tr>
-                <td>WOS</td>
-                <td>4.0</td>
-                <td>2018-04-04</td>
-                <td><a href="#add_grade" class="button1">Modify</a>
-                    <a href="#" class="button2">Delete</a></td>
-            </tr>
+                <tr>
+                    <td>WOS</td>
+                    <td>4.0</td>
+                    <td>2018-04-04</td>
+                    <td><a href="#add_grade" class="button1">Modify</a>
+                        <a href="#" class="button2">Delete</a></td>
+                </tr>
 
-            <tr>
-                <td>Historia</td>
-                <td>5.0</td>
-                <td>2018-07-14</td>
-                <td><a href="#add_grade" class="button1">Modify</a>
-                    <a href="#" class="button2">Delete</a></td>
-            </tr>
+                <tr>
+                    <td>Historia</td>
+                    <td>5.0</td>
+                    <td>2018-07-14</td>
+                    <td><a href="#add_grade" class="button1">Modify</a>
+                        <a href="#" class="button2">Delete</a></td>
+                </tr>
 
-            <tr>
-                <td>Informatyka</td>
-                <td>4.5</td>
-                <td>2018-12-12</td>
-                <td><a href="#add_grade" class="button1">Modify</a>
-                    <a href="#" class="button2">Delete</a></td>
-            </tr>
+                <tr>
+                    <td>Informatyka</td>
+                    <td>4.5</td>
+                    <td>2018-12-12</td>
+                    <td><a href="#add_grade" class="button1">Modify</a>
+                        <a href="#" class="button2">Delete</a></td>
+                </tr>
 
-        </table>
+            </table>
+        </form>
     </section>
 
     <div class="push"></div>
