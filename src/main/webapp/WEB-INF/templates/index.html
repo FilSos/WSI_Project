@@ -2,22 +2,22 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>WSI Table</title>
+    <title>WSI Project</title>
     <meta name="viewport" content="width=device-width; initial-scale=1; maximum-scale=1">
-    <link rel="stylesheet" href="style.css" type="text/css" media="screen,projection"/>
+    <link rel="stylesheet" href="style.css" type="text/css"/>
     <link href="https://fonts.googleapis.com/css?family=Hind" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
-<!--TODO Umiejscowienie szukaj, invalid dla zle wypelnionych pol(czerwona ramka), podgląd wydruku,link do loga-->
+<!--TODO pozycjonowanie wzgledem search menu-->
 <body>
 <div id="wrapper">
     <header>
-        <a href="images/politechnika_logo.png" id="logo"></a>
+        <a href="https://www4.put.poznan.pl/pl" id="logo"><img src="images/politechnika_logo.png"></a>
         <h1>Student Grade Manager</h1>
     </header>
     <nav>
         <ul class="main_menu">
-            <li><a href="#student_list">Home</a></li>
+            <li><a href="#home">Home</a></li>
             <li><a href="#student_list">Manage students</a></li>
             <li><a href="#courses_list">Manage courses</a></li>
         </ul>
@@ -27,6 +27,11 @@
         <input type="search" id="search_text" required="required" placeholder="example: Sosnowski"/>
         <button id="search_button" type="submit"><i class="fa fa-search"></i></button>
     </div>
+
+    <section id="home" class="view">
+        <img src="images/home.png" id="home_logo">
+        <h1>Welcome home!</h1>
+    </section>
 
     <section id="student_list" class="view">
         <h2>List of students</h2>
@@ -99,68 +104,22 @@
                 <tr>
                     <td>WOS</td>
                     <td>Wojciech Szczęsny</td>
-                    <td><a href="#" class="button1">See all grades</a>
+                    <td><a href="#student_grades" class="button1">See all grades</a>
                         <a href="#" class="button2">Delete</a></td>
                 </tr>
                 <tr>
                     <td>Informatyka</td>
                     <td>Tomasz Pawlak</td>
-                    <td><a href="#" class="button1">See all grades</a>
+                    <td><a href="#student_grades" class="button1">See all grades</a>
                         <a href="#" class="button2">Delete</a></td>
                 </tr>
                 <tr>
                     <td>Historia</td>
                     <td>Bartłomiej Prędki</td>
-                    <td><a href="#" class="button1">See all grades</a>
+                    <td><a href="#student_grades" class="button1">See all grades</a>
                         <a href="#" class="button2">Delete</a></td>
                 </tr>
             </table>
-        </form>
-    </section>
-
-    <section class="view" id="add_student">
-        <h2>Add student</h2>
-        <form>
-            Index:<br>
-            <input type="text" required="required" placeholder="example: 123456"/><br/>
-            First name:<br>
-            <input type="text" required="required" placeholder="example: John"/><br/>
-            Last name:<br>
-            <input type="text" required="required" placeholder="example: Lemon"/><br/>
-            Birthday:<br>
-            <input type="date" required="required"/><br/>
-
-            <h1>
-                <td><a href="index.html" class="button3">Save</a>
-            </h1>
-        </form>
-    </section>
-
-    <section class="view" id="add_grade">
-        <h2>Add grade</h2>
-        <form>
-            Grade:<br>
-            <input type="text" required="required" placeholder="example: 4.0"/><br/>
-            Student Data:<br>
-            <input type="text" required="required" placeholder="example: John Lemon"/><br/>
-            Subject:<br>
-            <input type="text" required="required" placeholder="example: Matematyka"/><br/>
-            <h1>
-                <td><a href="index.html" class="button3">Save</a>
-            </h1>
-        </form>
-    </section>
-
-    <section class="view" id="add_subject">
-        <h2>Add subject</h2>
-        <form>
-            Name:<br>
-            <input type="text" required="required" placeholder="example: Informatyka"/><br/>
-            Teacher:<br>
-            <input type="text" required="required" placeholder="example: John Doe"/><br/>
-            <h1>
-                <td><a href="index.html" class="button3">Save</a>
-            </h1>
         </form>
     </section>
 
@@ -208,6 +167,52 @@
                 </tr>
 
             </table>
+        </form>
+    </section>
+
+    <section class="view" id="add_student">
+        <h2>Add student</h2>
+        <form>
+            Index:<br>
+            <input type="number" required="required" placeholder="example: 123456"/><br/>
+            First name:<br>
+            <input type="text" required="required" placeholder="example: John"/><br/>
+            Last name:<br>
+            <input type="text" required="required" placeholder="example: Lemon"/><br/>
+            Birthday:<br>
+            <input type="date" required="required"/><br/>
+
+            <h1>
+                <td><a href="index.html" class="button3">Save</a>
+            </h1>
+        </form>
+    </section>
+
+    <section class="view" id="add_grade">
+        <h2>Add grade</h2>
+        <form>
+            Grade:<br>
+            <input type="number" required="required" placeholder="example: 4.0"/><br/>
+            Student Data:<br>
+            <input type="text" required="required" placeholder="example: John Lemon"/><br/>
+            Subject:<br>
+            <input type="text" required="required" placeholder="example: Matematyka"/><br/>
+            <h1>
+                <td><a href="index.html" class="button3">Save</a>
+            </h1>
+        </form>
+    </section>
+
+    <section class="view" id="add_subject">
+        <h2>Add subject</h2>
+        <form>
+            Name:<br>
+            <input type="text" required="required" placeholder="example: Informatyka"/><br/>
+            Teacher:<br>
+            <input type="text" required="required" placeholder="example: John Doe"/><br/>
+            <h1>
+                <td><a href="index.html" class="button3">Save</a>
+            </h1>
         </form>
     </section>
 
