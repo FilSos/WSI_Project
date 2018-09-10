@@ -32,7 +32,7 @@ public class MyResource {
 //    //TODO dokonczyc, zrobic opcjonalne sciezki, switch z wyborami w zleznosci od tego ile id jest podanych
 ////    @Path("/students/{id}{grades:(/grades/[^/]+?)?}{subjects:(/subjects/[^/]+?)?}")
 ////    public Response getSingleStudent(@PathParam("id") int id, @PathParam("id2") int id2) {
-////        StudentModel oneStudent = studentsRepository.getStudent(id);
+////        StudentModel oneStudent = studentsRepository.getStudentList(id);
 ////        GradeModel oneGrade = gradesRepository.getGradesList().get(id2);
 //
 //
@@ -75,7 +75,7 @@ public class MyResource {
 //        mongoBase.connect();
 //        StudentModel studentOne = new StudentModel();
 //        studentOne.setIndex(114562);
-//        studentOne.setName("Test");
+//        studentOne.setSubjectName("Test");
 //        studentOne.setSurname("Test2");
 //        studentOne.setBirthday(new Date(1994));
 //        mongoBase.addStudent(studentOne);
@@ -109,7 +109,7 @@ public class MyResource {
 //    @Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
 //    @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
 //    public GradeModel updateGrade (GradeModel grade) {
-//        GradeModel updatedGrade = gradesRepository.getGrade(grade.getId());
+//        GradeModel updatedGrade = gradesRepository.getGradeList(grade.getId());
 //        return updatedGrade;
 //    }
 ////    @PUT
@@ -129,7 +129,7 @@ public class MyResource {
 //    public StudentModel deleteStudent(StudentModel deletedStudent) {
 //        System.out.println(deletedStudent);
 //        studentsRepository.deleteStudent(deletedStudent);
-//        System.out.println("TUTAJ PUSTO:" + studentsRepository.getStudent(1));
+//        System.out.println("TUTAJ PUSTO:" + studentsRepository.getStudentList(1));
 //        return deletedStudent;
 //    }
 //    @DELETE

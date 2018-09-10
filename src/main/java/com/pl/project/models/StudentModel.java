@@ -1,6 +1,7 @@
 package com.pl.project.models;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.bson.types.ObjectId;
@@ -20,17 +21,16 @@ import java.util.Date;
 @NoArgsConstructor
 @ToString
 public class StudentModel {
-    @Id
-    @XmlJavaTypeAdapter(ObjectIdJaxbAdapter.class)
     @XmlTransient
     private ObjectId id;
+    @Id
+    @XmlJavaTypeAdapter(ObjectIdJaxbAdapter.class)
     private long index;
     private String name;
     private String surname;
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd", timezone="CET")
     private Date birthday;
-    @Reference
-    private SubjectModel subject;
-    
+
     public long getIndex() {
         return index;
     }
@@ -69,14 +69,6 @@ public class StudentModel {
 
     public void setId(ObjectId id) {
         this.id = id;
-    }
-
-    public SubjectModel getSubject() {
-        return subject;
-    }
-
-    public void setSubject(SubjectModel subject) {
-        this.subject = subject;
     }
 
 }
