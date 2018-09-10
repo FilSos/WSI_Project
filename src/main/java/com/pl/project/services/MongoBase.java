@@ -16,6 +16,12 @@ public class MongoBase {
 
     private MongoBase(){
         morphia = new Morphia();
+
+        // tell Morphia where to find your classes
+        // can be called multiple times with different packages or classes
+        morphia.map(StudentModel.class);
+        morphia.map(GradeModel.class);
+        morphia.map(SubjectModel.class);
         //morphia.getMapper().getOptions().isStoreEmpties() = true;
         datastore = morphia.createDatastore(new MongoClient("localhost",8004),"WSI");
         morphia.mapPackage("com.pl.project.models");
