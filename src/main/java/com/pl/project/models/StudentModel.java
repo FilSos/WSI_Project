@@ -2,15 +2,13 @@ package com.pl.project.models;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.*;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.*;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.util.Date;
 
@@ -21,11 +19,12 @@ import java.util.Date;
 @NoArgsConstructor
 @ToString
 public class StudentModel {
+    @JsonIgnore
     @XmlTransient
     private ObjectId id;
     @Id
-    @XmlJavaTypeAdapter(ObjectIdJaxbAdapter.class)
-    private long index;
+    @XmlJavaTypeAdapter(LongJaxbAdapter.class)
+    private Long index;
     private String name;
     private String surname;
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd", timezone="CET")
@@ -35,7 +34,7 @@ public class StudentModel {
         return index;
     }
 
-    public void setIndex(long index) {
+    public void setIndex(Long index) {
         this.index = index;
     }
 

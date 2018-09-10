@@ -6,6 +6,8 @@ import com.pl.project.models.StudentModel;
 import com.pl.project.models.SubjectModel;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
+import org.mongodb.morphia.query.Query;
+import org.mongodb.morphia.query.UpdateOperations;
 
 import java.util.List;
 
@@ -42,6 +44,12 @@ public class MongoBase {
     public void deleteStudent(StudentModel studentModel){
         datastore.delete(studentModel);
     }
+    public void updateStudent(StudentModel studentModel){
+        Query<StudentModel> updateQuery = datastore.createQuery(StudentModel.class).field("_id").equal(studentModel.getIndex());
+        UpdateOperations<StudentModel> update = datastore.createUpdateOperations(StudentModel.class).set("name", "Nowy");
+        datastore.update(updateQuery, update);
+    }
+
     public void addGrade(GradeModel gradeModel){
         datastore.save(gradeModel);
     }

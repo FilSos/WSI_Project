@@ -25,7 +25,7 @@ public class Students {
     @GET
     @Path("/{id}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response getSingleStudent(@PathParam("id") int id) {
+    public Response getSingleStudent(@PathParam("index") int id) {
         StudentModel oneStudent = MongoBase.getInstance().studentsList().get(id);
         return Response.status(Response.Status.OK).entity(oneStudent).build();
     }
@@ -34,11 +34,21 @@ public class Students {
     @Path("/add_student")
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response createStudent() {
-        MongoBase mongoBase = MongoBase.getInstance();
-        Date date = new Date();
         mongoStudents.addStudent();
         return Response.status(Response.Status.CREATED).build();
     }
+
+    @PUT
+    @Path("/update_student")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public Response.ResponseBuilder updateStudent(StudentModel studentModel) {
+        MongoBase mongoBase = MongoBase.getInstance();
+        mongoBase.updateStudent(studentModel);
+        return Response.status(Response.Status.OK);
+
+    }
+
 
     @DELETE
     @Path("/delete_student/{id}")
