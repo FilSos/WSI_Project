@@ -30,7 +30,7 @@ public class StudentModel {
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd", timezone="CET")
     private Date birthday;
 
-    public long getIndex() {
+    public Long getIndex() {
         return index;
     }
 

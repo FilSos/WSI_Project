@@ -25,7 +25,7 @@ public class GradeModel {
     @Id
     @XmlJavaTypeAdapter(ObjectIdJaxbAdapter.class)
     private ObjectId id;
-    private double gradeValue;
+    private Double gradeValue;
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd", timezone="CET")
     private Date date;
     @Reference
@@ -40,11 +40,11 @@ public class GradeModel {
         this.id = id;
     }
 
-    public double getGradeValue() {
+    public Double getGradeValue() {
         return gradeValue;
     }
 
-    public void setGradeValue(double gradeValue) {
+    public void setGradeValue(Double gradeValue) {
         this.gradeValue = gradeValue;
     }
 

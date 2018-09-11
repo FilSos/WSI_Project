@@ -16,7 +16,7 @@ public class MongoBase {
     private Morphia morphia;
     private Datastore datastore;
 
-    private MongoBase(){
+    private MongoBase() {
         morphia = new Morphia();
 
         // tell Morphia where to find your classes
@@ -25,50 +25,71 @@ public class MongoBase {
         morphia.map(GradeModel.class);
         morphia.map(SubjectModel.class);
         //morphia.getMapper().getOptions().isStoreEmpties() = true;
-        datastore = morphia.createDatastore(new MongoClient("localhost",8004),"WSI");
+        datastore = morphia.createDatastore(new MongoClient("localhost", 8004), "WSI");
         morphia.mapPackage("com.pl.project.models");
         //datastore.getDB().dropDatabase();
         datastore.ensureIndexes();
     }
-    private  static class MongoBaseHandler{
-     private static final MongoBase mongoBase = new MongoBase();
+
+    private static class MongoBaseHandler {
+        private static final MongoBase mongoBase = new MongoBase();
     }
-    public static MongoBase getInstance(){
+
+    public static MongoBase getInstance() {
         return MongoBaseHandler.mongoBase;
     }
 
-    public void addStudent(StudentModel studentModel){
+    public void addStudent(StudentModel studentModel) {
         datastore.save(studentModel);
     }
 
-    public void deleteStudent(StudentModel studentModel){
+    public void deleteStudent(StudentModel studentModel) {
         datastore.delete(studentModel);
     }
-    public void updateStudent(StudentModel studentModel){
+
+    public void updateStudent(StudentModel studentModel) {
         Query<StudentModel> updateQuery = datastore.createQuery(StudentModel.class).field("_id").equal(studentModel.getIndex());
         UpdateOperations<StudentModel> update = datastore.createUpdateOperations(StudentModel.class).set("name", "Nowy");
         datastore.update(updateQuery, update);
     }
 
-    public void addGrade(GradeModel gradeModel){
+    public void addGrade(GradeModel gradeModel) {
         datastore.save(gradeModel);
     }
-    public void deleteGrade(GradeModel gradeModel){
+
+    public void deleteGrade(GradeModel gradeModel) {
         datastore.delete(gradeModel);
     }
-    public void addSubject(SubjectModel subjectModel){
+
+    public void updateGrade(GradeModel gradeModel) {
+        Query<GradeModel> updateQuery = datastore.createQuery(GradeModel.class).field("_id").equal(gradeModel.getId());
+        UpdateOperations<GradeModel> update = datastore.createUpdateOperations(GradeModel.class).set("gradeValue", 3.5D);
+        datastore.update(updateQuery, update);
+    }
+
+    public void addSubject(SubjectModel subjectModel) {
         datastore.save(subjectModel);
     }
-    public void deleteSubject(SubjectModel subjectModel){
+
+    public void deleteSubject(SubjectModel subjectModel) {
         datastore.delete(subjectModel);
     }
-    //TODO zastanowic sie jak podawac przedmioty oraz oceny
-    public List<StudentModel> studentsList(){
-       return datastore.find(StudentModel.class).asList();
+
+    public void updateSubject(SubjectModel subjectModel) {
+        Query<SubjectModel> updateQuery = datastore.createQuery(SubjectModel.class).field("_id").equal(subjectModel.getId());
+        UpdateOperations<SubjectModel> update = datastore.createUpdateOperations(SubjectModel.class).set("subjectName", "Przyroda");
+        datastore.update(updateQuery, update);
     }
-    public List<SubjectModel> subjectsList(){
+
+    //TODO zastanowic sie jak podawac przedmioty oraz oceny
+    public List<StudentModel> studentsList() {
+        return datastore.find(StudentModel.class).asList();
+    }
+
+    public List<SubjectModel> subjectsList() {
         return datastore.find(SubjectModel.class).asList();
     }
+
     public List<GradeModel> gradesList() {
         return datastore.find(GradeModel.class).asList();
     }
