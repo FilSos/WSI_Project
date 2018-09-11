@@ -1,15 +1,11 @@
 package com.pl.project.controllers;
 
 import com.pl.project.models.GradeModel;
-import com.pl.project.models.StudentModel;
-import com.pl.project.models.SubjectModel;
 import com.pl.project.services.MongoBase;
 import com.pl.project.services.MongoGrades;
-
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.Date;
 import java.util.List;
 
 @Path("/grades")
