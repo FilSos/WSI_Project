@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>WSI Project</title>
-    <meta name="viewport" content="width=device-width; initial-scale=1; maximum-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" href="style.css" type="text/css"/>
     <link href="https://fonts.googleapis.com/css?family=Hind" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -12,7 +12,7 @@
 <body>
 <div id="wrapper">
     <header>
-        <a href="https://www4.put.poznan.pl/pl" id="logo"><img src="images/politechnika_logo.png"></a>
+        <a href="https://www4.put.poznan.pl/pl" id="logo"><img src="images/politechnika_logo.png" alt="logo"></a>
         <h1>Student Grade Manager</h1>
     </header>
     <nav>
@@ -29,7 +29,7 @@
     </div>
 
     <section id="home" class="view">
-        <img src="images/home.png" id="home_logo">
+        <img src="images/home.png" id="home_logo" alt="home_logo">
         <h1>Welcome home!</h1>
     </section>
 
@@ -39,7 +39,7 @@
             <a href="#add_student" class="button1">Add student</a>
         </h1>
         <form>
-            <table class="my_table">
+            <table class="my_table" id="student_table">
                 <col width="210">
                 <col width="210">
                 <col width="210">
@@ -91,7 +91,7 @@
             <a href="#add_subject" class="button1">Add course</a>
         </h1>
         <form>
-            <table>
+            <table id="courses_table">
                 <col width="380">
                 <col width="380">
                 <col width="40">
@@ -126,10 +126,10 @@
     <section class="view" id="student_grades">
         <h2>Student grades</h2>
         <h1>
-            <td><a href="#add_grade" class="button1">Add grade</a>
+            <a href="#add_grade" class="button1">Add grade</a>
         </h1>
         <form>
-            <table>
+            <table id="grades_table">
                 <col width="320">
                 <col width="320">
                 <col width="320">
@@ -139,7 +139,6 @@
                     <th>Grade</th>
                     <th>Date</th>
                     <th>Actions</th>
-
                 </tr>
 
                 <tr>
@@ -183,7 +182,7 @@
             <input type="date" required="required"/><br/>
 
             <h1>
-                <td><a href="index.html" class="button3">Save</a>
+                <a href="index.html" class="button3">Save</a>
             </h1>
         </form>
     </section>
@@ -198,7 +197,7 @@
             Subject:<br>
             <input type="text" required="required" placeholder="example: Matematyka"/><br/>
             <h1>
-                <td><a href="index.html" class="button3">Save</a>
+                <a href="index.html" class="button3">Save</a>
             </h1>
         </form>
     </section>
@@ -211,7 +210,7 @@
             Teacher:<br>
             <input type="text" required="required" placeholder="example: John Doe"/><br/>
             <h1>
-                <td><a href="index.html" class="button3">Save</a>
+                <a href="index.html" class="button3">Save</a>
             </h1>
         </form>
     </section>
@@ -221,17 +220,14 @@
 <footer>
     <div class="wrapper">
         <nav>
-            <ul class="footer_info">
-                <p><a>&#169 2018 Made with love by Filip Sosnowski</a></p>
+            <div class="footer_info">
+                <p><a>&#169; 2018 Made with love by Filip Sosnowski</a></p>
                 <div class="links">
                     <p><a href="https://www4.put.poznan.pl/pl">Politechnika Poznańska</a></p>
                     <p><a href="http://www.cs.put.poznan.pl/tpawlak/?wytwarzanie-systemow-internetowych,24">Wytwarzanie
                         Systemów Internetowych</a></p>
                 </div>
-            </ul>
+            </div>
         </nav>
     </div>
 </footer>
-</body>
-
-</html>
