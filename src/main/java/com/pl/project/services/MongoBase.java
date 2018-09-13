@@ -9,6 +9,7 @@ import org.mongodb.morphia.Morphia;
 import org.mongodb.morphia.query.Query;
 import org.mongodb.morphia.query.UpdateOperations;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MongoBase {
@@ -81,14 +82,59 @@ public class MongoBase {
         datastore.update(updateQuery, update);
     }
 
-    //TODO zastanowic sie jak podawac przedmioty oraz oceny
     public List<StudentModel> studentsList() {
         return datastore.find(StudentModel.class).asList();
     }
 
+    public List<GradeModel> studentSubjectGrades(int index, String subjectName) {
+        Query<SubjectModel> getQuerySubject = datastore.find(SubjectModel.class);
+        Query<StudentModel> getQueryStudent = datastore.find(StudentModel.class);
+        SubjectModel subject = getQuerySubject.field("subjectName").equal(subjectName).get();
+        StudentModel student = getQueryStudent.field("index").equal(index).get();
+        return subject.getGradesListOfStudent(student.getIndex());
+    }
+
+    public List<SubjectModel> studentSubjects(int index) {
+        List<SubjectModel> subjectsList = new ArrayList<>();
+        List<SubjectModel> getQuerySubjectsList = datastore.find(SubjectModel.class).asList();
+        Query<StudentModel> getQueryStudent = datastore.find(StudentModel.class);
+        StudentModel student = getQueryStudent.field("index").equal(index).get();
+        //TODO wyciagniecie z kazdego studenta na kazdym przedmiocie indeksow, nastepnie porownanie ich z tym co maja przedmioy przypisane
+        for (SubjectModel subject : getQuerySubjectsList) {
+            List<StudentModel> studentList = subject.getStudentList();
+            Long studentIndex = student.getIndex();
+            int studentIndexInt = studentIndex.intValue();
+            if (subject.getStudentList().contains(student)) {
+                System.out.println("show me element: " + subject.getStudentList());
+               // subjectsList.add(subject);
+            }
+        }
+        return subjectsList;
+    }
+
+
     public List<SubjectModel> subjectsList() {
         return datastore.find(SubjectModel.class).asList();
     }
+
+    public SubjectModel oneSubject(String subject) {
+        Query<SubjectModel> getQuery = datastore.find(SubjectModel.class);
+        SubjectModel subjectModel = getQuery.field("subjectName").equal(subject).get();
+        return subjectModel;
+    }
+
+    public List<GradeModel> subjectGrades(String subject) {
+        Query<SubjectModel> getQuery = datastore.find(SubjectModel.class);
+        SubjectModel querySubject = getQuery.field("subjectName").equal(subject).get();
+        return querySubject.getGradeList();
+    }
+
+    public List<StudentModel> subjectStudents(String subject) {
+        Query<SubjectModel> getQuery = datastore.find(SubjectModel.class);
+        SubjectModel querySubject = getQuery.field("subjectName").equal(subject).get();
+        return querySubject.getStudentList();
+    }
+
 
     public List<GradeModel> gradesList() {
         return datastore.find(GradeModel.class).asList();

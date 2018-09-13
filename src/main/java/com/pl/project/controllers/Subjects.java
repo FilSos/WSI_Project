@@ -1,8 +1,11 @@
 package com.pl.project.controllers;
 
+import com.pl.project.models.GradeModel;
+import com.pl.project.models.StudentModel;
 import com.pl.project.models.SubjectModel;
 import com.pl.project.services.MongoBase;
 import com.pl.project.services.MongoSubjects;
+
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -23,11 +26,27 @@ public class Subjects {
     }
 
     @GET
-    @Path("/{id}")
+    @Path("/{subject}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response getSingleSubject(@PathParam("index") int id) {
-        SubjectModel oneSubject = mongoBase.subjectsList().get(id);
+    public Response getSingleSubject(@PathParam("subject") String subject) {
+        SubjectModel oneSubject = mongoBase.oneSubject(subject);
         return Response.status(Response.Status.OK).entity(oneSubject).build();
+    }
+
+    @GET
+    @Path("/{subject}/grades")
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public Response getSubjectGrades(@PathParam("subject") String subjectName) {
+        List<GradeModel> gradesList = mongoBase.subjectGrades(subjectName);
+        return Response.status(Response.Status.OK).entity(gradesList).build();
+    }
+
+    @GET
+    @Path("/{subject}/students")
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public Response getSubjectStudents(@PathParam("subject") String subjectName) {
+        List<StudentModel> studentsList = mongoBase.subjectStudents(subjectName);
+        return Response.status(Response.Status.OK).entity(studentsList).build();
     }
 
     @POST

@@ -12,6 +12,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -67,6 +68,17 @@ public class SubjectModel {
     public List<GradeModel> getGradeList() {
         return gradeList;
     }
+
+    public List<GradeModel> getGradesListOfStudent(Long index) {
+        List<GradeModel> GradesList = new ArrayList<>();
+        for (GradeModel Grade : gradeList) {
+            if (Grade.getStudent().getIndex().equals(index)) {
+                GradesList.add(Grade);
+            }
+        }
+        return GradesList;
+    }
+
 
     public void setGradeList(List<GradeModel> gradeList) {
         this.gradeList = gradeList;
