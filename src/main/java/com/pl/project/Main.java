@@ -1,10 +1,14 @@
 package com.pl.project;
 
-import com.sun.jersey.api.container.grizzly2.GrizzlyServerFactory;
-import com.sun.jersey.api.core.PackagesResourceConfig;
-import com.sun.jersey.api.core.ResourceConfig;
+import com.pl.project.controllers.Grades;
+import com.pl.project.controllers.Students;
+import com.pl.project.controllers.Subjects;
+import com.pl.project.models.DateParamConverterProvider;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.grizzly.http.server.StaticHttpHandler;
+import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
+import org.glassfish.jersey.server.ResourceConfig;
+
 
 import javax.ws.rs.core.UriBuilder;
 import java.io.IOException;
@@ -29,10 +33,10 @@ public class Main {
     public static final URI BASE_URI = getBaseURI();
 
     protected static HttpServer startServer() throws IOException {
-        ResourceConfig resourceConfig = new PackagesResourceConfig("com.pl.project");
-
+        ResourceConfig resourceConfig = new ResourceConfig(Grades.class,Students.class,Subjects.class);
+        resourceConfig.register(new DateParamConverterProvider("yyyy-MM-dd"));
         System.out.println("Starting grizzly2...");
-        return GrizzlyServerFactory.createHttpServer(BASE_URI, resourceConfig);
+        return GrizzlyHttpServerFactory.createHttpServer(BASE_URI, resourceConfig);
     }
 
     public static void main(String[] args) throws IOException {
@@ -43,6 +47,6 @@ public class Main {
                         + "%sapplication.wadl\nHit enter to stop it...",
                 BASE_URI));
         System.in.read();
-        httpServer.stop();
+        httpServer.shutdown();
     }
 }
