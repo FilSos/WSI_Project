@@ -19,16 +19,16 @@ public class Students {
 
     @GET
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response getStudentsList() {
-        List<StudentModel> studentsList = MongoBase.getInstance().studentsList();
+    public Response getStudentsList(@DefaultValue("") @QueryParam("name") String name, @DefaultValue("") @QueryParam("surname") String surname) {
+        List<StudentModel> studentsList = mongoBase.studentsList(name, surname);
         return Response.status(Response.Status.OK).entity(studentsList).build();
     }
 
     @GET
-    @Path("/{id}")
+    @Path("/{index}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response getSingleStudent(@PathParam("index") int id) {
-        StudentModel oneStudent = mongoBase.studentsList().get(id);
+    public Response getSingleStudent(@PathParam("index") int index) {
+        StudentModel oneStudent = mongoBase.oneStudent(index);
         return Response.status(Response.Status.OK).entity(oneStudent).build();
     }
 
@@ -69,10 +69,10 @@ public class Students {
 
 
     @DELETE
-    @Path("/delete_student/{id}")
+    @Path("/delete_student/{index}")
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response deleteStudent(@PathParam("index") int id) {
-        StudentModel deletedStudent = mongoBase.studentsList().get(id);
+    public Response deleteStudent(@PathParam("index") int index) {
+        StudentModel deletedStudent = mongoBase.oneStudent(index);
         mongoBase.deleteStudent(deletedStudent);
         return Response.status(Response.Status.OK).build();
     }

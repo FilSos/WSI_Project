@@ -82,8 +82,28 @@ public class MongoBase {
         datastore.update(updateQuery, update);
     }
 
-    public List<StudentModel> studentsList() {
+    public List<StudentModel> studentsList(String name, String surname) {
+        Query<StudentModel> studentModelQuery = datastore.createQuery(StudentModel.class);
+        if (!name.equals("") && !surname.equals("")) {
+            studentModelQuery.and(studentModelQuery.criteria("name").containsIgnoreCase(name),
+                    studentModelQuery.criteria("surname").containsIgnoreCase(surname));
+            return studentModelQuery.asList();
+
+        } else if (!name.equals("")) {
+            return studentModelQuery.field("name").equal(name).asList();
+        } else if (!surname.equals("")) {
+            return studentModelQuery.field("surname").equal(surname).asList();
+        }
+
         return datastore.find(StudentModel.class).asList();
+    }
+
+    public StudentModel oneStudent(int index) {
+        System.out.println("Show me index: " + index);
+        Query<StudentModel> getQuery = datastore.find(StudentModel.class);
+        StudentModel studentModel = getQuery.field("index").equal(index).get();
+        System.out.println("Show me the student: " + studentModel);
+        return studentModel;
     }
 
     public List<GradeModel> studentSubjectGrades(int index, String subjectName) {
