@@ -94,19 +94,22 @@ public class MongoBase {
         return subject.getGradesListOfStudent(student.getIndex());
     }
 
+    //TODO dziala, ale brzydko napisane - do poprawki
     public List<SubjectModel> studentSubjects(int index) {
         List<SubjectModel> subjectsList = new ArrayList<>();
         List<SubjectModel> getQuerySubjectsList = datastore.find(SubjectModel.class).asList();
         Query<StudentModel> getQueryStudent = datastore.find(StudentModel.class);
         StudentModel student = getQueryStudent.field("index").equal(index).get();
-        //TODO wyciagniecie z kazdego studenta na kazdym przedmiocie indeksow, nastepnie porownanie ich z tym co maja przedmioy przypisane
+        Long studentIndex = student.getIndex();
+        int studentIndexInt = studentIndex.intValue();
         for (SubjectModel subject : getQuerySubjectsList) {
             List<StudentModel> studentList = subject.getStudentList();
-            Long studentIndex = student.getIndex();
-            int studentIndexInt = studentIndex.intValue();
-            if (subject.getStudentList().contains(student)) {
-                System.out.println("show me element: " + subject.getStudentList());
-               // subjectsList.add(subject);
+            for (StudentModel oneStudent : studentList) {
+                Long oneStudentIndex = oneStudent.getIndex();
+                int oneStudentIndexInt = oneStudentIndex.intValue();
+                if (studentIndexInt == oneStudentIndexInt) {
+                    subjectsList.add(subject);
+                }
             }
         }
         return subjectsList;
