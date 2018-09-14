@@ -98,6 +98,19 @@ public class MongoBase {
         return datastore.find(StudentModel.class).asList();
     }
 
+    //TODO data sie nie waliduje, sprawdz czemu
+    public List<StudentModel> studentsListByDate(String before, String in, String after) {
+        Query<StudentModel> studentModelQuery = datastore.createQuery(StudentModel.class);
+        if (!in.equals("")) {
+            return studentModelQuery.field("birthday").equal(in).asList();
+        } else if (!after.equals("")) {
+            return studentModelQuery.field("birthday").greaterThan(after).asList();
+        } else if (!before.equals("")) {
+            return studentModelQuery.field("birthday").lessThan(before).asList();
+        }
+        return datastore.find(StudentModel.class).asList();
+    }
+
     public StudentModel oneStudent(int index) {
         System.out.println("Show me index: " + index);
         Query<StudentModel> getQuery = datastore.find(StudentModel.class);

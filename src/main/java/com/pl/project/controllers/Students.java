@@ -19,9 +19,19 @@ public class Students {
 
     @GET
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response getStudentsList(@DefaultValue("") @QueryParam("name") String name, @DefaultValue("") @QueryParam("surname") String surname) {
-        List<StudentModel> studentsList = mongoBase.studentsList(name, surname);
-        return Response.status(Response.Status.OK).entity(studentsList).build();
+    public Response getStudentsList(
+            @DefaultValue("") @QueryParam("name") String name,
+            @DefaultValue("") @QueryParam("surname") String surname,
+            @DefaultValue("") @QueryParam("before") String before,
+            @DefaultValue("") @QueryParam("in") String in,
+            @DefaultValue("") @QueryParam("after") String after) {
+        if ((!name.equals("") && !surname.equals("")) || (name.equals("") && !surname.equals("")) || (!name.equals("") && surname.equals(""))) {
+            List<StudentModel> studentsList = mongoBase.studentsList(name, surname);
+            return Response.status(Response.Status.OK).entity(studentsList).build();
+        } else {
+            List<StudentModel> studentsListByDate = mongoBase.studentsListByDate(before, in, after);
+            return Response.status(Response.Status.OK).entity(studentsListByDate).build();
+        }
     }
 
     @GET
