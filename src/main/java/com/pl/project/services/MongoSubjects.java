@@ -15,9 +15,9 @@ public class MongoSubjects {
         SubjectModel subjectOne = new SubjectModel();
         SubjectModel subjectTwo = new SubjectModel();
         SubjectModel subjectThree = new SubjectModel();
-        //TODO prawdopodobnuie zle, pozniej poprawic w razie checi dodawania przedmiotow testowych
+        //TODO zle, do poprawy
         List<StudentModel> studentsList = mongoBase.studentsList("Nowy", "Pawlak");
-        List<GradeModel> gradeList = mongoBase.gradesList();
+        List<GradeModel> gradeList = mongoBase.subjectGrades(subjectOne.getSubjectName());
 
 
         subjectOne.setSubjectName("Matematyka");

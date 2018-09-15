@@ -20,8 +20,9 @@ public class Subjects {
 
     @GET
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response getSubjectsList() {
-        List<SubjectModel> subjectsList = mongoBase.subjectsList();
+    public Response getSubjectsList(@DefaultValue("") @QueryParam("teacher") String teacher,
+                                    @DefaultValue("") @QueryParam("subjectName") String subjectName) {
+        List<SubjectModel> subjectsList = mongoBase.subjectsList(teacher,subjectName);
         return Response.status(Response.Status.OK).entity(subjectsList).build();
     }
 
@@ -66,12 +67,12 @@ public class Subjects {
         return Response.status(Response.Status.OK);
 
     }
-
+    //TODO sprawdzic dzialanie
     @DELETE
-    @Path("/delete_subject/{id}")
+    @Path("/delete_subject/{subject}")
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response deleteStudent(@PathParam("index") int id) {
-        SubjectModel deletedSubject = mongoBase.subjectsList().get(id);
+    public Response deleteStudent(@PathParam("subject") String subjectName) {
+        SubjectModel deletedSubject = mongoBase.oneSubject(subjectName);
         mongoBase.deleteSubject(deletedSubject);
         return Response.status(Response.Status.OK).build();
     }

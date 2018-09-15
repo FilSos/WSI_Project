@@ -148,15 +148,23 @@ public class MongoBase {
         return subjectsList;
     }
 
+    //TODO sprawdzic czy dziala poprawnie
+    public List<SubjectModel> subjectsList(String teacher, String subjectName) {
+        final Query<SubjectModel> query = datastore.createQuery(SubjectModel.class);
+        if (!teacher.equals("")) {
+            query.field("teacher").equal(teacher);
+        }
 
-    public List<SubjectModel> subjectsList() {
-        return datastore.find(SubjectModel.class).asList();
+        if (!subjectName.equals("")) {
+            return query.field("subjectName").equal(subjectName).asList();
+        }
+
+        return query.asList();
     }
 
     public SubjectModel oneSubject(String subject) {
         Query<SubjectModel> getQuery = datastore.find(SubjectModel.class);
-        SubjectModel subjectModel = getQuery.field("subjectName").equal(subject).get();
-        return subjectModel;
+        return getQuery.field("subjectName").equal(subject).get();
     }
 
     public List<GradeModel> subjectGrades(String subject) {
@@ -171,9 +179,35 @@ public class MongoBase {
         return querySubject.getStudentList();
     }
 
-
-    public List<GradeModel> gradesList() {
-        return datastore.find(GradeModel.class).asList();
+    //TODO sprawdzic dzialanie
+    public List<GradeModel> studentSubjectGradesList(Long index, String subjectName) {
+        final Query<SubjectModel> subjectQuery = datastore.createQuery(SubjectModel.class);
+        final Query<GradeModel> gradeQuery = datastore.createQuery(GradeModel.class);
+        final Query<StudentModel> studentQuery = datastore.createQuery(StudentModel.class);
+        SubjectModel subject = subjectQuery.field("subjectName").equal(subjectName).get();
+        return subject.getGradesListOfStudent(index);
     }
 
+    public List<GradeModel> studentAboveOrBelowGradesList(Long index, String above, String below) {
+        final Query<GradeModel> gradeQuery = datastore.createQuery(GradeModel.class);
+        final Query<StudentModel> studentQuery = datastore.createQuery(StudentModel.class);
+        StudentModel student = studentQuery.field("index").equal(index).get();
+        if (!above.equals("")) {
+            gradeQuery.and(gradeQuery.criteria("gradeValue").greaterThan(above),
+                    gradeQuery.criteria("referencedStudent").equal(student));
+            return gradeQuery.asList();
+        } else if (!below.equals("")) {
+            gradeQuery.and(gradeQuery.criteria("gradeValue").lessThan(below),
+                    gradeQuery.criteria("referencedStudent").equal(student));
+            return gradeQuery.asList();
+        }
+        return null;
+    }
+
+    //TODO sprawdzic
+    public GradeModel oneGrade(int id) {
+        Query<GradeModel> getQuery = datastore.find(GradeModel.class);
+        GradeModel gradeModel = getQuery.field("id").equal(id).get();
+        return gradeModel;
+    }
 }
