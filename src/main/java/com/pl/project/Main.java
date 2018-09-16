@@ -4,6 +4,7 @@ import com.pl.project.controllers.Grades;
 import com.pl.project.controllers.Students;
 import com.pl.project.controllers.Subjects;
 import com.pl.project.models.DateParamConverterProvider;
+import com.pl.project.resources.CustomHeaders;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.grizzly.http.server.StaticHttpHandler;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
@@ -35,6 +36,7 @@ public class Main {
     protected static HttpServer startServer() throws IOException {
         ResourceConfig resourceConfig = new ResourceConfig(Grades.class,Students.class,Subjects.class);
         resourceConfig.register(new DateParamConverterProvider("yyyy-MM-dd"));
+        resourceConfig.register(new CustomHeaders());
         System.out.println("Starting grizzly2...");
         return GrizzlyHttpServerFactory.createHttpServer(BASE_URI, resourceConfig);
     }
