@@ -63,6 +63,7 @@ public class Students {
     @Path("/add_student")
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response createStudent(StudentModel studentModel) {
+        //mongoStudents.addStudent();
         mongoBase.addStudent(studentModel);
         return Response.status(Response.Status.CREATED).build();
     }

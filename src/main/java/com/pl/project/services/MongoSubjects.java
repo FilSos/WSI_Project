@@ -4,6 +4,7 @@ import com.pl.project.models.GradeModel;
 import com.pl.project.models.StudentModel;
 import com.pl.project.models.SubjectModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -15,10 +16,9 @@ public class MongoSubjects {
         SubjectModel subjectOne = new SubjectModel();
         SubjectModel subjectTwo = new SubjectModel();
         SubjectModel subjectThree = new SubjectModel();
-        //TODO zle, do poprawy
-        List<StudentModel> studentsList = mongoBase.studentsList("Nowy", "Pawlak");
-        List<GradeModel> gradeList = mongoBase.subjectGrades(subjectOne.getSubjectName());
-
+        //TODO zmienic motode wyciagania ocen, gdyz w tej chwili podanie indexu bez nazwy przedmiotu i tak zwraca cala liste
+        List<StudentModel> studentsList = mongoBase.studentsList("", "");
+        List<GradeModel> gradeList = mongoBase.studentSubjectGradesList(115610L,"");
 
         subjectOne.setSubjectName("Matematyka");
         subjectOne.setTeacher("Jan Kowalski");

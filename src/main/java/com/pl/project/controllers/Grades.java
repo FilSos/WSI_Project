@@ -43,6 +43,7 @@ public class Grades {
     @Path("/add_grade")
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response createGrade(GradeModel gradeModel) {
+        //mongoGrades.addGrade();
         mongoBase.addGrade(gradeModel);
         return Response.status(Response.Status.CREATED).build();
     }

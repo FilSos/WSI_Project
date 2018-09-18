@@ -182,10 +182,15 @@ public class MongoBase {
     //TODO sprawdzic dzialanie
     public List<GradeModel> studentSubjectGradesList(Long index, String subjectName) {
         final Query<SubjectModel> subjectQuery = datastore.createQuery(SubjectModel.class);
-        final Query<GradeModel> gradeQuery = datastore.createQuery(GradeModel.class);
-        final Query<StudentModel> studentQuery = datastore.createQuery(StudentModel.class);
-        SubjectModel subject = subjectQuery.field("subjectName").equal(subjectName).get();
-        return subject.getGradesListOfStudent(index);
+//        final Query<GradeModel> gradeQuery = datastore.createQuery(GradeModel.class);
+//        final Query<StudentModel> studentQuery = datastore.createQuery(StudentModel.class);
+        if (!"".equals(subjectName)) {
+            SubjectModel subject = subjectQuery.field("subjectName").equal(subjectName).get();
+            return subject.getGradesListOfStudent(index);
+        } else {
+            return datastore.find(GradeModel.class).asList();
+        }
+
     }
 
     public List<GradeModel> studentAboveOrBelowGradesList(Long index, String above, String below) {
@@ -207,7 +212,7 @@ public class MongoBase {
     //TODO sprawdzic
     public GradeModel oneGrade(int id) {
         Query<GradeModel> getQuery = datastore.find(GradeModel.class);
-        GradeModel gradeModel = getQuery.field("id").equal(id).get();
+        GradeModel gradeModel = getQuery.field("_id").equal(id).get();
         return gradeModel;
     }
 }

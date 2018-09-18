@@ -54,6 +54,7 @@ public class Subjects {
     @Path("/add_subject")
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response createSubject(SubjectModel subjectModel) {
+        //mongoSubjects.addSubject();
         mongoBase.addSubject(subjectModel);
         return Response.status(Response.Status.CREATED).build();
     }

@@ -24,7 +24,7 @@
         <ul class="main_menu">
             <li><a href="#home">Home</a></li>
             <li><a href="#student_list" onclick="getStudents();">Manage students</a></li>
-            <li><a href="#courses_list">Manage courses</a></li>
+            <li><a href="#courses_list" onclick="getSubjects();">Manage courses</a></li>
         </ul>
     </nav>
 
@@ -58,33 +58,16 @@
                     <th>Actions</th>
 
                 </tr>
-
+                <tbody data-bind="foreach: list">
                 <tr>
-                    <td data-bind="text: $data.index"></td>
-                    <td>Filip</td>
-                    <td>Sosnowski</td>
-                    <td>1994-04-04</td>
+                    <td data-bind="text: index"></td>
+                    <td data-bind="text: name"></td>
+                    <td data-bind="text: surname"></td>
+                    <td data-bind="text: birthday"></td>
                     <td><a href="#student_grades" class="button1">See grades</a>
                         <a href="#" class="button2">Delete</a></td>
                 </tr>
-
-                <tr>
-                    <td>112424</td>
-                    <td>Piotr</td>
-                    <td>Sendrowski</td>
-                    <td>1993-05-12</td>
-                    <td><a href="#student_grades" class="button1">See grades</a>
-                        <a href="#" class="button2">Delete</a></td>
-                </tr>
-
-                <tr>
-                    <td>115235</td>
-                    <td>Karol</td>
-                    <td>Pawlak</td>
-                    <td>1993-02-24</td>
-                    <td><a href="#student_grades" class="button1">See grades</a>
-                        <a href="#" class="button2">Delete</a></td>
-                </tr>
+                </tbody>
             </table>
         </form>
     </section>
@@ -106,24 +89,14 @@
                     <th>Actions</th>
 
                 </tr>
+                <tbody data-bind="foreach: list">
                 <tr>
-                    <td>WOS</td>
-                    <td>Wojciech Szczęsny</td>
+                    <td data-bind="text: subjectName"></td>
+                    <td data-bind="text: teacher"></td>
                     <td><a href="#student_grades" class="button1">See all grades</a>
                         <a href="#" class="button2">Delete</a></td>
                 </tr>
-                <tr>
-                    <td>Informatyka</td>
-                    <td>Tomasz Pawlak</td>
-                    <td><a href="#student_grades" class="button1">See all grades</a>
-                        <a href="#" class="button2">Delete</a></td>
-                </tr>
-                <tr>
-                    <td>Historia</td>
-                    <td>Bartłomiej Prędki</td>
-                    <td><a href="#student_grades" class="button1">See all grades</a>
-                        <a href="#" class="button2">Delete</a></td>
-                </tr>
+                </tbody>
             </table>
         </form>
     </section>
