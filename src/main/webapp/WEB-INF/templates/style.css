@@ -139,7 +139,13 @@ table tr:nth-child(odd) {
     background-color: #e7edf0;
 }
 
-.my_table tr:hover {
+#student_table tr:hover {
+    background-color: darkgrey;
+}
+#courses_table tr:hover {
+    background-color: darkgrey;
+}
+#grades_table tr:hover {
     background-color: darkgrey;
 }
 

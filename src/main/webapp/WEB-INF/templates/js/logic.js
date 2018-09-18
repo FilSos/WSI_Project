@@ -47,7 +47,7 @@ $(document).ready(function () {
     studentList = new ListViewModel();
     subjectList = new ListViewModel();
     ko.applyBindings(studentList, $("#student_list")[0]);
-    ko.applyBindings(coursesList, $("#courses_list")[0]);
+    ko.applyBindings(subjectList, $("#courses_list")[0]);
 });
 
 
@@ -57,7 +57,7 @@ function getDataFromAPI(controllerName, method, vm) {
     }
 
     $.ajax({
-        url: rootURL + 'students',
+        url: rootURL + method,
         method: "GET",
         async: false,
         "accept": "application/json",
@@ -74,11 +74,11 @@ function getDataFromAPI(controllerName, method, vm) {
 }
 
 function getStudents() {
-    getDataFromAPI('students', 'getStudentsList', studentList);
+    getDataFromAPI('getStudentsList', 'students', studentList);
 }
 
 function getSubjects() {
-    GetDataFromAPI('subjects', 'getSubjectsList', subjectList);
+    getDataFromAPI('getSubjectsList', 'subjects', subjectList);
 }
 
 
