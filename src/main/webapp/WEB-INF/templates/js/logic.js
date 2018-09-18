@@ -2,8 +2,6 @@
 var rootURL = "http://localhost:9080/";
 
 var studentList;
-var studentEditor;
-var studentDetails;
 
 var StudentViewModel = function() {
   var self = this;
@@ -56,22 +54,46 @@ $(document).ready(function() {
   });
 
   $(".studentFilter").focusout(function(){
-    GetStudents();
+    getStudents();
   });
 });
 
-function GetDataFromAPI(controllerName, method, vm) {
+function AddParameter(parameterString, propertyName, value) {
+  var result = "";
+
+  if(!value) {
+    return parameterString;
+  }
+
+  if(!parameterString) {
+    result = "?";
+  }
+  else {
+    result = parameterString;
+  }
+
+  if(result == "?") {
+    result = result + propertyName + "=" + value;
+  }
+  else {
+    result = result + "&" + propertyName + "=" + value;
+  }
+
+  return result;
+}
+
+function getDataFromAPI(controllerName, method, vm) {
   if(!method) {
     method = "";
   }
 
   var parameters = "";
-  parameters = AddParameter(parameters, "name", vm.FirstnameFilter());
-  parameters = AddParameter(parameters, "surname", vm.LastnameFilter());
-  parameters = AddParameter(parameters, "index", vm.IndexFilter());
+  parameters = AddParameter(parameters, "name", vm.nameFilter());
+  parameters = AddParameter(parameters, "surname", vm.surnameFilter());
+  parameters = AddParameter(parameters, "index", vm.indexFilter());
 
   $.ajax({
-    url: rootURL + controllerName + method,
+    url: rootURL + 'students',
     method: "GET",
     async: false,
     "accept": "application/json",
@@ -97,8 +119,8 @@ function ClearFilter(vm) {
   vm.ECTSFilter("");
 }
 
-function GetStudents() {
-  GetDataFromAPI('students', null, studentList);
+function getStudents() {
+  getDataFromAPI('student_list', null, studentList);
 }
 
 function MapStudentVM(vm1, vm2) {

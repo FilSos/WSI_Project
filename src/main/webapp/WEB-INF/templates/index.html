@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="js/jquery.js"></script>
     <script type='text/javascript' src='js/knockout.js'></script>
+    <script type='text/javascript' src='js/knockout_mapping_plugin.js'></script>
     <script type='text/javascript' src='js/logic.js'></script>
 
 </head>
@@ -22,7 +23,7 @@
     <nav>
         <ul class="main_menu">
             <li><a href="#home">Home</a></li>
-            <li><a href="#student_list">Manage students</a></li>
+            <li><a href="#student_list" onclick="getStudents();">Manage students</a></li>
             <li><a href="#courses_list">Manage courses</a></li>
         </ul>
     </nav>
@@ -59,7 +60,7 @@
                 </tr>
 
                 <tr>
-                    <td><input class="tableHeaderFilter studentFilter" placeholder="index" name="index" data-bind="textInput:IndexFilter"></td>
+                    <td data-bind="text: $data.index"></td>
                     <td>Filip</td>
                     <td>Sosnowski</td>
                     <td>1994-04-04</td>
