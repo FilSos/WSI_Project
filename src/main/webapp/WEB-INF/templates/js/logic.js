@@ -3,6 +3,10 @@ var rootURL = "http://localhost:9080/";
 
 var studentList;
 var subjectList;
+var studentGradesFromSubjects;
+var studentsOnCourse;
+
+var studentEdit;
 
 var StudentViewModel = function () {
     var self = this;
@@ -31,10 +35,38 @@ var SubjectViewModel = function () {
     this.gradeList = ko.observable();
 };
 
+var GradeViewModel = function () {
+    var self = this;
+
+    this.id = ko.observable();
+    this.gradeValue = ko.observable();
+    this.date = ko.observable();
+    this.studentData = ko.observable();
+};
+
+var StudentGradesFromSubjectsViewModel = function () {
+    var self = this;
+
+    this.studentIndex = ko.observable();
+    this.gradeData = new GradeViewModel();
+    this.subjectViewModel = new SubjectViewModel();
+    this.subjectList = new ListViewModel();
+    this.gradesList = new ListViewModel();
+};
+var StudentsOnCourseViewModel = function () {
+    var self = this;
+
+    this.studentData = new StudentViewModel();
+    this.studentsList = new ListViewModel();
+    this.subjectName = ko.observable();
+};
+
 
 var ListViewModel = function () {
     var self = this;
     this.list = ko.observableArray();
+    this.parentName = ko.observable();
+    this.parentId = ko.observable();
 };
 
 var ErrorViewModel = function () {
@@ -46,12 +78,16 @@ $(document).ready(function () {
 
     studentList = new ListViewModel();
     subjectList = new ListViewModel();
+    studentGradesFromSubjects = new ListViewModel();
+    studentsOnCourse = new ListViewModel();
     ko.applyBindings(studentList, $("#student_list")[0]);
     ko.applyBindings(subjectList, $("#courses_list")[0]);
+    ko.applyBindings(studentGradesFromSubjects, $("#student_grades")[0]);
+    ko.applyBindings(studentsOnCourse, $("#students_on_course")[0]);
 });
 
 
-function getDataFromAPI(controllerName, method, vm) {
+function getDbData(controllerName, method, vm) {
     if (!method) {
         method = "";
     }
@@ -73,12 +109,83 @@ function getDataFromAPI(controllerName, method, vm) {
     });
 }
 
+function Create(controllerName, method, vm) {
+    if (!method) {
+        method = "";
+    }
+
+    var obj = ko.mapping.toJS(vm);
+    var json = JSON.stringify(obj);
+
+    $.ajax({
+        url: rootURL + method,
+        method: "POST",
+        async: false,
+        data: json,
+        contentType: "application/json",
+        success: function (data) {
+            alert("Create success!");
+        },
+        error: function (error) {
+            var errorVM = new ErrorViewModel();
+            var obj = JSON.parse(error.responseText);
+            ko.mapping.fromJS(obj, {}, errorVM);
+            alert(errorVM.Message() + "\n" + errorVM.ExceptionMessage());
+        }
+    });
+}
+
+function Update(controllerName, method, vm, id) {
+    if (!method) {
+        method = "";
+    }
+
+    var obj = ko.mapping.toJS(vm);
+    var json = JSON.stringify(obj);
+
+    $.ajax({
+        url: protocol + serverAddress + port + apiPath + controllerName + method + "/" + id,
+        method: "PUT",
+        async: false,
+        data: json,
+        contentType: "application/json",
+        success: function (data) {
+            alert("Update success!");
+        },
+        error: function (error) {
+            var errorVM = new ErrorViewModel();
+            var obj = JSON.parse(error.responseText);
+            ko.mapping.fromJS(obj, {}, errorVM);
+            alert(errorVM.Message() + "\n" + errorVM.ExceptionMessage());
+        }
+    });
+}
+
 function getStudents() {
-    getDataFromAPI('getStudentsList', 'students', studentList);
+    getDbData('getStudentsList', 'students', studentList);
 }
 
 function getSubjects() {
-    getDataFromAPI('getSubjectsList', 'subjects', subjectList);
+    getDbData('getSubjectsList', 'subjects', subjectList);
+}
+
+function getStudentsOnSubject(subjectName) {
+    getDbData('getSubjectStudents', 'subjects/' + subjectName + '/students', studentsOnCourse);
+    // studentsOnCourse.subjectName(subjectName);
+}
+
+function getStudentsGrades(index) {
+    getDbData('getStudentSubjects', 'students/' + index + '/subjects', studentGradesFromSubjects);
+    //studentGradesFromSubjects.studentIndex(index);
+}
+
+function createEditStudent() {
+    if (studentEdit.index()) {
+        Update("updateStudent", 'students/update_student', studentEdit, studentEdit.index());
+    }
+    else {
+        Create("createStudent", 'students/add_student', studentEdit);
+    }
 }
 
 

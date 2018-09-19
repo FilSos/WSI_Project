@@ -13,7 +13,7 @@
     <script type='text/javascript' src='js/logic.js'></script>
 
 </head>
-<!--TODO pozycjonowanie wzgledem search menu,dodac hover na tabeli grades i subjects-->
+<!--TODO pozycjonowanie wzgledem search menu-->
 <body>
 <div id="wrapper">
     <header>
@@ -64,7 +64,10 @@
                     <td data-bind="text: name"></td>
                     <td data-bind="text: surname"></td>
                     <td data-bind="text: birthday"></td>
-                    <td><a href="#student_grades" class="button1">See grades</a>
+                    <td><a href="#student_grades"
+                           data-bind="attr: { 'data-index': index }"
+                           onclick="getStudentsGrades(this.dataset.index);"
+                           class="button1">See grades</a>
                         <a href="#" class="button2">Delete</a></td>
                 </tr>
                 </tbody>
@@ -93,7 +96,9 @@
                 <tr>
                     <td data-bind="text: subjectName"></td>
                     <td data-bind="text: teacher"></td>
-                    <td><a href="#student_grades" class="button1">See all grades</a>
+                    <td><a href="#students_on_course"
+                           data-bind="attr: { 'data-index': subjectName }"
+                           onclick="getStudentsOnSubject(this.dataset.index);" class="button1">See students</a>
                         <a href="#" class="button2">Delete</a></td>
                 </tr>
                 </tbody>
@@ -118,30 +123,48 @@
                     <th>Date</th>
                     <th>Actions</th>
                 </tr>
-
+                <tbody data-bind="foreach: list">
                 <tr>
-                    <td>WOS</td>
-                    <td>4.0</td>
-                    <td>2018-04-04</td>
+                    <td data-bind="text: subjectName"></td>
+                    <td data-bind="text: gradeValue"></td>
+                    <td data-bind="date: date"></td>
                     <td><a href="#add_grade" class="button1">Modify</a>
                         <a href="#" class="button2">Delete</a></td>
                 </tr>
-
+                </tbody>
+            </table>
+        </form>
+    </section>
+    <!--TODO ostyluj sekcje-->
+    <section class="view" id="students_on_course">
+        <h2>Signed students</h2>
+        <h1>
+            <a href="#add_student_to_subject" class="button1">Add student to subject</a>
+        </h1>
+        <form>
+            <table id="students_on_course_table">
+                <col width="320">
+                <col width="320">
+                <col width="320">
+                <col width="320">
+                <col width="50">
                 <tr>
-                    <td>Historia</td>
-                    <td>5.0</td>
-                    <td>2018-07-14</td>
+                    <th>Index</th>
+                    <th>Name</th>
+                    <th>Surname</th>
+                    <th>Birthday</th>
+                    <th>Actions</th>
+                </tr>
+                <tbody data-bind="foreach: list">
+                <tr>
+                    <td data-bind="text: index"></td>
+                    <td data-bind="text: name"></td>
+                    <td data-bind="text: surname"></td>
+                    <td data-bind="text: birthday"></td>
                     <td><a href="#add_grade" class="button1">Modify</a>
                         <a href="#" class="button2">Delete</a></td>
                 </tr>
-
-                <tr>
-                    <td>Informatyka</td>
-                    <td>4.5</td>
-                    <td>2018-12-12</td>
-                    <td><a href="#add_grade" class="button1">Modify</a>
-                        <a href="#" class="button2">Delete</a></td>
-                </tr>
+                </tbody>
 
             </table>
         </form>
