@@ -191,12 +191,17 @@ function getStudents() {
 }
 
 function createEditStudent() {
-    if (studentEdit.index()) {
-        Update("updateStudent", 'students/update_student', studentEdit, studentEdit.index());
-    }
-    else {
-    Create("createStudent", 'students/add_student', studentEdit);
-    }
+    // if (studentEdit.index()) {
+    //     Update("updateStudent", 'students/update_student', studentEdit);
+    // }
+    // else {
+        Create("createStudent", 'students/add_student', studentEdit);
+    //}
+}
+
+function getStudentEdit(index) {
+    var vm = studentList.list()[index];
+    mapStudentVM(studentEdit, vm);
 }
 
 function DeleteStudent(index) {
@@ -234,15 +239,17 @@ function deleteSubject(subjectName) {
     getSubjects();
 
 }
+
 function clearSubjectForm() {
     mapSubjectVM(subjectEdit, new SubjectViewModel());
 }
+
 function mapSubjectVM(vm1, vm2) {
     //vm1.id(vm2.id());
     vm1.subjectName(vm2.subjectName());
     vm1.teacher(vm2.teacher());
-   // vm1.studentList(vm2.studentList());
-   // vm1.gradeList(vm2.gradeList());
+    // vm1.studentList(vm2.studentList());
+    // vm1.gradeList(vm2.gradeList());
 }
 
 function getStudentsOnSubject(subjectName) {

@@ -50,7 +50,7 @@ public class MongoBase {
     }
 
     //TODO napisac normalny update
-    public void updateStudent(String index, String name, String surname, String birthday) {
+    public void updateStudent(Long index, String name, String surname, String birthday) {
         Query<StudentModel> updateQuery = datastore.createQuery(StudentModel.class).field("_id").equal(index);
         if (!name.isEmpty()) {
             final UpdateOperations<StudentModel> updateName = datastore.createUpdateOperations(StudentModel.class).set("name", name);

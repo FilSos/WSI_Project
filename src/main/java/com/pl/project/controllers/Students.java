@@ -72,7 +72,7 @@ public class Students {
     @Path("/update_student")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response.ResponseBuilder updateStudent(@DefaultValue("") @QueryParam("index") String index,
+    public Response.ResponseBuilder updateStudent(@DefaultValue("") @QueryParam("index") Long index,
                                                   @DefaultValue("") @QueryParam("name") String name,
                                                   @DefaultValue("") @QueryParam("surname") String surname,
                                                   @DefaultValue("") @QueryParam("birthday") String birthday) {
