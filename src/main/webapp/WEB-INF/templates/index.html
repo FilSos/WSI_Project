@@ -41,7 +41,7 @@
     <section id="student_list" class="view">
         <h2>List of students</h2>
         <h1>
-            <a href="#add_student" class="button1">Add student</a>
+            <a onclick="clearStudentForm()" href="#add_student" class="button1">Add student</a>
         </h1>
         <form>
             <table class="my_table" id="student_table">
@@ -68,7 +68,9 @@
                            data-bind="attr: { 'data-index': index }"
                            onclick="getStudentsGrades(this.dataset.index);"
                            class="button1">See grades</a>
-                        <a href="#" class="button2">Delete</a></td>
+                        <a onclick="DeleteStudent(this.dataset.index)"
+                           data-bind="attr: { 'data-index': index }" href="#student_list" class="button2">Delete</a>
+                    </td>
                 </tr>
                 </tbody>
             </table>
@@ -79,7 +81,7 @@
 
         <h2>List of courses</h2>
         <h1>
-            <a href="#add_subject" class="button1">Add course</a>
+            <a onclick="clearSubjectForm()" href="#add_subject" class="button1">Add course</a>
         </h1>
         <form>
             <table id="courses_table">
@@ -99,7 +101,8 @@
                     <td><a href="#students_on_course"
                            data-bind="attr: { 'data-index': subjectName }"
                            onclick="getStudentsOnSubject(this.dataset.index);" class="button1">See students</a>
-                        <a href="#" class="button2">Delete</a></td>
+                        <a onclick="deleteSubject(this.dataset.subjectName)"
+                           data-bind="attr: { 'data-index': subjectName }" href="#courses_list" class="button2">Delete</a></td>
                 </tr>
                 </tbody>
             </table>
@@ -161,8 +164,8 @@
                     <td data-bind="text: name"></td>
                     <td data-bind="text: surname"></td>
                     <td data-bind="text: birthday"></td>
-                    <td><a href="#add_grade" class="button1">Modify</a>
-                        <a href="#" class="button2">Delete</a></td>
+                    <td><a href="#add_student" class="button1">Edit student</a>
+                        <a href="#students_on_course" class="button2">Delete</a></td>
                 </tr>
                 </tbody>
 
@@ -172,18 +175,18 @@
 
     <section class="view" id="add_student">
         <h2>Add student</h2>
-        <form>
+        <form id="student_form" onsubmit="createEditStudent()">
             Index:<br>
-            <input type="number" required="required" placeholder="example: 123456"/><br/>
+            <input type="number" required="required" data-bind="textInput: index" placeholder="example: 123456"/><br/>
+            <!--<span data-bind="text: index"></span>-->
             First name:<br>
-            <input type="text" required="required" placeholder="example: John"/><br/>
+            <input type="text" required="required" data-bind="value: name" placeholder="example: John"/><br/>
             Last name:<br>
-            <input type="text" required="required" placeholder="example: Lemon"/><br/>
+            <input type="text" required="required" data-bind="value: surname" placeholder="example: Lemon"/><br/>
             Birthday:<br>
-            <input type="date" required="required"/><br/>
-
+            <input type="date" required="required" data-bind="value: birthday"/><br/>
             <h1>
-                <a href="index.html" class="button3">Save</a>
+                <button type="submit" class="button3" form="student_form" value="Submit">Save</button>
             </h1>
         </form>
     </section>
@@ -205,13 +208,13 @@
 
     <section class="view" id="add_subject">
         <h2>Add subject</h2>
-        <form>
+        <form id="subject_form" onsubmit="createEditSubject()">
             Name:<br>
-            <input type="text" required="required" placeholder="example: Informatyka"/><br/>
+            <input type="text" required="required" data-bind="textInput: subjectName" placeholder="example: Informatyka"/><br/>
             Teacher:<br>
-            <input type="text" required="required" placeholder="example: John Doe"/><br/>
+            <input type="text" required="required" data-bind="value: teacher" placeholder="example: John Doe"/><br/>
             <h1>
-                <a href="index.html" class="button3">Save</a>
+                <button type="submit" class="button3" form="subject_form" value="Submit">Save</button>
             </h1>
         </form>
     </section>

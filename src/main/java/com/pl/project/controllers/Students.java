@@ -72,8 +72,11 @@ public class Students {
     @Path("/update_student")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response.ResponseBuilder updateStudent(StudentModel studentModel) {
-        mongoBase.updateStudent(studentModel);
+    public Response.ResponseBuilder updateStudent(@DefaultValue("") @QueryParam("index") String index,
+                                                  @DefaultValue("") @QueryParam("name") String name,
+                                                  @DefaultValue("") @QueryParam("surname") String surname,
+                                                  @DefaultValue("") @QueryParam("birthday") String birthday) {
+        mongoBase.updateStudent(index, name, surname, birthday);
         return Response.status(Response.Status.OK);
 
     }

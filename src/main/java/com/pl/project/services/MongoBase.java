@@ -8,6 +8,7 @@ import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
 import org.mongodb.morphia.query.Query;
 import org.mongodb.morphia.query.UpdateOperations;
+import org.mongodb.morphia.query.UpdateResults;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,10 +49,22 @@ public class MongoBase {
         datastore.delete(studentModel);
     }
 
-    public void updateStudent(StudentModel studentModel) {
-        Query<StudentModel> updateQuery = datastore.createQuery(StudentModel.class).field("_id").equal(studentModel.getIndex());
-        UpdateOperations<StudentModel> update = datastore.createUpdateOperations(StudentModel.class).set("name", "Nowy");
-        datastore.update(updateQuery, update);
+    //TODO napisac normalny update
+    public void updateStudent(String index, String name, String surname, String birthday) {
+        Query<StudentModel> updateQuery = datastore.createQuery(StudentModel.class).field("_id").equal(index);
+        if (!name.isEmpty()) {
+            final UpdateOperations<StudentModel> updateName = datastore.createUpdateOperations(StudentModel.class).set("name", name);
+            datastore.update(updateQuery, updateName);
+        }
+
+        if (!surname.isEmpty()) {
+            final UpdateOperations<StudentModel> updateSurname = datastore.createUpdateOperations(StudentModel.class).set("surname", surname);
+            datastore.update(updateQuery, updateSurname);
+        }
+        if (!birthday.isEmpty()) {
+            final UpdateOperations<StudentModel> updateBirthday = datastore.createUpdateOperations(StudentModel.class).set("birthday", birthday);
+            datastore.update(updateQuery, updateBirthday);
+        }
     }
 
     public void addGrade(GradeModel gradeModel) {

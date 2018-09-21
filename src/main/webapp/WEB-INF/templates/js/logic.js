@@ -7,6 +7,7 @@ var studentGradesFromSubjects;
 var studentsOnCourse;
 
 var studentEdit;
+var subjectEdit;
 
 var StudentViewModel = function () {
     var self = this;
@@ -16,19 +17,12 @@ var StudentViewModel = function () {
     this.surname = ko.observable();
     this.birthday = ko.observable();
 
-//sprawdz czy istnieje student o takim indexie i zaciagnij jego dane jesli tak
-    this.isEdit = ko.computed(function () {
-        if (this.index())
-            return true;
-
-        return false
-    }, this);
 };
 
 var SubjectViewModel = function () {
     var self = this;
 
-    this.id = ko.observable();
+    // this.id = ko.observable();
     this.subjectName = ko.observable();
     this.teacher = ko.observable();
     this.studentList = ko.observable();
@@ -80,10 +74,25 @@ $(document).ready(function () {
     subjectList = new ListViewModel();
     studentGradesFromSubjects = new ListViewModel();
     studentsOnCourse = new ListViewModel();
+
+    studentEdit = new StudentViewModel();
+    subjectEdit = new SubjectViewModel();
+
     ko.applyBindings(studentList, $("#student_list")[0]);
     ko.applyBindings(subjectList, $("#courses_list")[0]);
     ko.applyBindings(studentGradesFromSubjects, $("#student_grades")[0]);
     ko.applyBindings(studentsOnCourse, $("#students_on_course")[0]);
+    ko.applyBindings(studentEdit, $("#add_student")[0]);
+    ko.applyBindings(subjectEdit, $("#add_subject")[0]);
+
+    $('#student_form').submit(function (e) {
+        getStudents();
+        window.location.href = '#student_list';
+    });
+    $('#subject_form').submit(function (e) {
+        getSubjects();
+        window.location.href = '#courses_list';
+    });
 });
 
 
@@ -124,7 +133,6 @@ function Create(controllerName, method, vm) {
         data: json,
         contentType: "application/json",
         success: function (data) {
-            alert("Create success!");
         },
         error: function (error) {
             var errorVM = new ErrorViewModel();
@@ -135,7 +143,7 @@ function Create(controllerName, method, vm) {
     });
 }
 
-function Update(controllerName, method, vm, id) {
+function Update(controllerName, method, vm) {
     if (!method) {
         method = "";
     }
@@ -144,7 +152,7 @@ function Update(controllerName, method, vm, id) {
     var json = JSON.stringify(obj);
 
     $.ajax({
-        url: protocol + serverAddress + port + apiPath + controllerName + method + "/" + id,
+        url: rootURL + method,
         method: "PUT",
         async: false,
         data: json,
@@ -161,12 +169,80 @@ function Update(controllerName, method, vm, id) {
     });
 }
 
+function Delete(method) {
+    $.ajax({
+        url: rootURL + method,
+        method: "DELETE",
+        async: false,
+        "contentType": "application/json",
+        success: function (data) {
+        },
+        error: function (error) {
+            var errorVM = new ErrorViewModel();
+            var obj = JSON.parse(error.responseText);
+            ko.mapping.fromJS(obj, {}, errorVM);
+            alert(errorVM.Message() + "\n" + errorVM.ExceptionMessage());
+        }
+    });
+}
+
 function getStudents() {
     getDbData('getStudentsList', 'students', studentList);
 }
 
+function createEditStudent() {
+    if (studentEdit.index()) {
+        Update("updateStudent", 'students/update_student', studentEdit, studentEdit.index());
+    }
+    else {
+    Create("createStudent", 'students/add_student', studentEdit);
+    }
+}
+
+function DeleteStudent(index) {
+    Delete("students/delete_student/" + index);
+    getStudents();
+
+}
+
+function clearStudentForm() {
+    mapStudentVM(studentEdit, new StudentViewModel());
+}
+
+function mapStudentVM(vm1, vm2) {
+    vm1.index(vm2.index());
+    vm1.birthday(vm2.birthday());
+    vm1.name(vm2.name());
+    vm1.surname(vm2.surname());
+}
+
 function getSubjects() {
     getDbData('getSubjectsList', 'subjects', subjectList);
+}
+
+function createEditSubject() {
+    // if(subjectEdit.id) {
+    //     Update("updateSubject", '/subjects/update_subject', subjectEdit, subjectEdit.id());
+    // }
+    // else {
+    Create("createSubject", '/subjects/add_subject', subjectEdit);
+    //}
+}
+
+function deleteSubject(subjectName) {
+    Delete("delete_subject/" + subjectName);
+    getSubjects();
+
+}
+function clearSubjectForm() {
+    mapSubjectVM(subjectEdit, new SubjectViewModel());
+}
+function mapSubjectVM(vm1, vm2) {
+    //vm1.id(vm2.id());
+    vm1.subjectName(vm2.subjectName());
+    vm1.teacher(vm2.teacher());
+   // vm1.studentList(vm2.studentList());
+   // vm1.gradeList(vm2.gradeList());
 }
 
 function getStudentsOnSubject(subjectName) {
@@ -179,21 +255,4 @@ function getStudentsGrades(index) {
     //studentGradesFromSubjects.studentIndex(index);
 }
 
-function createEditStudent() {
-    if (studentEdit.index()) {
-        Update("updateStudent", 'students/update_student', studentEdit, studentEdit.index());
-    }
-    else {
-        Create("createStudent", 'students/add_student', studentEdit);
-    }
-}
 
-
-function MapStudentVM(vm1, vm2) {
-    vm1.Id(vm2.Id());
-    vm1.Index(vm2.Index());
-    vm1.Grades(vm2.Grades());
-    vm1.BirthDate(vm2.BirthDate());
-    vm1.FirstName(vm2.FirstName());
-    vm1.LastName(vm2.LastName());
-}
