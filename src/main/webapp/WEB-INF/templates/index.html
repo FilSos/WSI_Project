@@ -67,7 +67,10 @@
                     <td><a href="#student_grades"
                            data-bind="attr: { 'data-index': index }"
                            onclick="getStudentsGrades(this.dataset.index);"
-                           class="button1">See grades</a>
+                           class="button4">See grades</a>
+                        <a data-bind="attr: { 'data-index': $index }"
+                           onclick="getStudentEdit(this.dataset.index)"
+                           href="#edit_student" class="button1">Edit student</a>
                         <a onclick="DeleteStudent(this.dataset.index)"
                            data-bind="attr: { 'data-index': index }" href="#student_list" class="button2">Delete</a>
                     </td>
@@ -100,9 +103,11 @@
                     <td data-bind="text: teacher"></td>
                     <td><a href="#students_on_course"
                            data-bind="attr: { 'data-index': subjectName }"
-                           onclick="getStudentsOnSubject(this.dataset.index);" class="button1">See students</a>
-                        <a onclick="deleteSubject(this.dataset.subjectName)"
-                           data-bind="attr: { 'data-index': subjectName }" href="#courses_list"
+                           onclick="getStudentsOnSubject(this.dataset.index);"
+                           class="button1">See students</a>
+
+                        <a data-bind="attr: { 'data-index': subjectName }" href="#courses_list"
+                           onclick="deleteSubject(this.dataset.index)"
                            class="button2">Delete</a></td>
                 </tr>
                 </tbody>
@@ -165,10 +170,7 @@
                     <td data-bind="text: name"></td>
                     <td data-bind="text: surname"></td>
                     <td data-bind="text: birthday"></td>
-                    <td><a data-bind="attr: { 'data-index': $index }"
-                           onclick="getStudentEdit(this.dataset.index)"
-                           href="#edit_student" class="button1">Edit student</a>
-                        <a href="#students_on_course" class="button2">Delete</a></td>
+                    <td><a href="#students_on_course" class="button2">Delete</a></td>
                 </tr>
                 </tbody>
 
@@ -229,7 +231,7 @@
 
     <section class="view" id="add_subject">
         <h2>Add subject</h2>
-        <form id="subject_form" onsubmit="createEditSubject()">
+        <form id="subject_form" onsubmit="createSubject()">
             Name:<br>
             <input type="text" required="required" data-bind="textInput: subjectName"
                    placeholder="example: Informatyka"/><br/>

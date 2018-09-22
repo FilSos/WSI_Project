@@ -86,6 +86,10 @@ public class MongoBase {
     }
 
     public void addSubject(SubjectModel subjectModel) {
+        List<StudentModel> studentsList = new ArrayList<>();
+        List<GradeModel> gradeList = new ArrayList<>();
+        subjectModel.setStudentList(studentsList);
+        subjectModel.setGradeList(gradeList);
         datastore.save(subjectModel);
     }
 

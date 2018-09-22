@@ -142,9 +142,11 @@ table tr:nth-child(odd) {
 #student_table tr:hover {
     background-color: darkgrey;
 }
+
 #courses_table tr:hover {
     background-color: darkgrey;
 }
+
 #grades_table tr:hover {
     background-color: darkgrey;
 }
@@ -195,6 +197,17 @@ input {
 
 .button3 {
     background-color: #f44336; /* Red */
+    border: none;
+    color: white;
+    padding: 8px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+
+.button4 {
+    background-color: #4CAF50; /* Green */
     border: none;
     color: white;
     padding: 8px 16px;

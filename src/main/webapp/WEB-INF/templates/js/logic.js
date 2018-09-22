@@ -8,6 +8,7 @@ var studentsOnCourse;
 
 var studentNew;
 var studentEdit;
+var subjectNew;
 var subjectEdit;
 
 var StudentViewModel = function () {
@@ -23,7 +24,7 @@ var StudentViewModel = function () {
 var SubjectViewModel = function () {
     var self = this;
 
-    // this.id = ko.observable();
+    this.id = ko.observable();
     this.subjectName = ko.observable();
     this.teacher = ko.observable();
     this.studentList = ko.observable();
@@ -78,6 +79,7 @@ $(document).ready(function () {
 
     studentNew = new StudentViewModel();
     studentEdit = new StudentViewModel();
+    subjectNew = new SubjectViewModel();
     subjectEdit = new SubjectViewModel();
 
     ko.applyBindings(studentList, $("#student_list")[0]);
@@ -86,7 +88,8 @@ $(document).ready(function () {
     ko.applyBindings(studentsOnCourse, $("#students_on_course")[0]);
     ko.applyBindings(studentNew, $("#add_student")[0]);
     ko.applyBindings(studentEdit, $("#edit_student")[0]);
-    ko.applyBindings(subjectEdit, $("#add_subject")[0]);
+    ko.applyBindings(subjectNew, $("#add_subject")[0]);
+    //ko.applyBindings(subjectEdit, $("#add_subject")[0]);
 
     $('#student_form').submit(function (e) {
         getStudents();
@@ -98,6 +101,10 @@ $(document).ready(function () {
     });
 
     $('#subject_form').submit(function (e) {
+        getSubjects();
+        window.location.href = '#courses_list';
+    });
+    $('#edit_subject_form').submit(function (e) {
         getSubjects();
         window.location.href = '#courses_list';
     });
@@ -232,17 +239,16 @@ function getSubjects() {
     getDbData('getSubjectsList', 'subjects', subjectList);
 }
 
-function createEditSubject() {
-    // if(subjectEdit.id) {
-    //     Update("updateSubject", '/subjects/update_subject', subjectEdit, subjectEdit.id());
-    // }
-    // else {
-    Create("createSubject", '/subjects/add_subject', subjectEdit);
-    //}
+function createSubject() {
+    Create("createSubject", 'subjects/add_subject', subjectNew);
+}
+
+function editSubject() {
+    Update("updateSubject", 'subjects/update_subject', subjectEdit);
 }
 
 function deleteSubject(subjectName) {
-    Delete("delete_subject/" + subjectName);
+    Delete("subjects/delete_subject/" + subjectName);
     getSubjects();
 
 }
@@ -251,12 +257,13 @@ function clearSubjectForm() {
     mapSubjectVM(subjectEdit, new SubjectViewModel());
 }
 
+//TODO- czy czyscic parametry ktorych nie ma w formie?
 function mapSubjectVM(vm1, vm2) {
-    //vm1.id(vm2.id());
+    vm1.id(vm2.id());
     vm1.subjectName(vm2.subjectName());
     vm1.teacher(vm2.teacher());
-    // vm1.studentList(vm2.studentList());
-    // vm1.gradeList(vm2.gradeList());
+    vm1.studentList(vm2.studentList());
+    vm1.gradeList(vm2.gradeList());
 }
 
 function getStudentsOnSubject(subjectName) {
