@@ -6,6 +6,7 @@ var subjectList;
 var studentGradesFromSubjects;
 var studentsOnCourse;
 
+var studentNew;
 var studentEdit;
 var subjectEdit;
 
@@ -75,6 +76,7 @@ $(document).ready(function () {
     studentGradesFromSubjects = new ListViewModel();
     studentsOnCourse = new ListViewModel();
 
+    studentNew = new StudentViewModel();
     studentEdit = new StudentViewModel();
     subjectEdit = new SubjectViewModel();
 
@@ -82,13 +84,19 @@ $(document).ready(function () {
     ko.applyBindings(subjectList, $("#courses_list")[0]);
     ko.applyBindings(studentGradesFromSubjects, $("#student_grades")[0]);
     ko.applyBindings(studentsOnCourse, $("#students_on_course")[0]);
-    ko.applyBindings(studentEdit, $("#add_student")[0]);
+    ko.applyBindings(studentNew, $("#add_student")[0]);
+    ko.applyBindings(studentEdit, $("#edit_student")[0]);
     ko.applyBindings(subjectEdit, $("#add_subject")[0]);
 
     $('#student_form').submit(function (e) {
         getStudents();
         window.location.href = '#student_list';
     });
+    $('#edit_student_form').submit(function (e) {
+        getStudents();
+        window.location.href = '#student_list';
+    });
+
     $('#subject_form').submit(function (e) {
         getSubjects();
         window.location.href = '#courses_list';
@@ -190,13 +198,12 @@ function getStudents() {
     getDbData('getStudentsList', 'students', studentList);
 }
 
-function createEditStudent() {
-    // if (studentEdit.index()) {
-    //     Update("updateStudent", 'students/update_student', studentEdit);
-    // }
-    // else {
-        Create("createStudent", 'students/add_student', studentEdit);
-    //}
+function createStudent() {
+    Create("createStudent", 'students/add_student', studentNew);
+}
+
+function updateStudent() {
+    Update("updateStudent", 'students/update_student', studentEdit);
 }
 
 function getStudentEdit(index) {
@@ -211,7 +218,7 @@ function DeleteStudent(index) {
 }
 
 function clearStudentForm() {
-    mapStudentVM(studentEdit, new StudentViewModel());
+    mapStudentVM(studentNew, new StudentViewModel());
 }
 
 function mapStudentVM(vm1, vm2) {

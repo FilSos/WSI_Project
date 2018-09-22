@@ -49,20 +49,24 @@ public class MongoBase {
         datastore.delete(studentModel);
     }
 
-    //TODO napisac normalny update
-    public void updateStudent(Long index, String name, String surname, String birthday) {
-        Query<StudentModel> updateQuery = datastore.createQuery(StudentModel.class).field("_id").equal(index);
-        if (!name.isEmpty()) {
-            final UpdateOperations<StudentModel> updateName = datastore.createUpdateOperations(StudentModel.class).set("name", name);
+    //TODO dziala, ale sypie errorami
+    public void updateStudent(StudentModel student) {
+        System.out.println("GET ALL VALUES:" + student.getIndex() + "\n" + "name: " + student.getName());
+        Query<StudentModel> updateQuery = datastore.createQuery(StudentModel.class).field("_id").equal(student.getIndex());
+        if (!student.getName().isEmpty()) {
+            System.out.println("WESZLO 1");
+            final UpdateOperations<StudentModel> updateName = datastore.createUpdateOperations(StudentModel.class).set("name", student.getName());
             datastore.update(updateQuery, updateName);
         }
 
-        if (!surname.isEmpty()) {
-            final UpdateOperations<StudentModel> updateSurname = datastore.createUpdateOperations(StudentModel.class).set("surname", surname);
+        if (!student.getSurname().isEmpty()) {
+            System.out.println("WESZLO 2");
+            final UpdateOperations<StudentModel> updateSurname = datastore.createUpdateOperations(StudentModel.class).set("surname", student.getSurname());
             datastore.update(updateQuery, updateSurname);
         }
-        if (!birthday.isEmpty()) {
-            final UpdateOperations<StudentModel> updateBirthday = datastore.createUpdateOperations(StudentModel.class).set("birthday", birthday);
+        if (!student.getBirthday().toString().isEmpty()) {
+            System.out.println("WESZLO 3");
+            final UpdateOperations<StudentModel> updateBirthday = datastore.createUpdateOperations(StudentModel.class).set("birthday", student.getBirthday());
             datastore.update(updateQuery, updateBirthday);
         }
     }

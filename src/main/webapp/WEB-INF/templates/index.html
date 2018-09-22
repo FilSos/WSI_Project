@@ -167,7 +167,7 @@
                     <td data-bind="text: birthday"></td>
                     <td><a data-bind="attr: { 'data-index': $index }"
                            onclick="getStudentEdit(this.dataset.index)"
-                           href="#add_student" class="button1">Edit student</a>
+                           href="#edit_student" class="button1">Edit student</a>
                         <a href="#students_on_course" class="button2">Delete</a></td>
                 </tr>
                 </tbody>
@@ -178,10 +178,9 @@
 
     <section class="view" id="add_student">
         <h2>Add student</h2>
-        <form id="student_form" onsubmit="createEditStudent()">
+        <form id="student_form" onsubmit="createStudent()">
             Index:<br>
             <input type="number" required="required" data-bind="textInput: index" placeholder="example: 123456"/><br/>
-            <!--<span data-bind="text: index"></span>-->
             First name:<br>
             <input type="text" required="required" data-bind="value: name" placeholder="example: John"/><br/>
             Last name:<br>
@@ -193,6 +192,25 @@
             </h1>
         </form>
     </section>
+
+
+    <section class="view" id="edit_student">
+        <h2>Edit student</h2>
+        <form id="edit_student_form" onsubmit="updateStudent()">
+            Index:<br>
+            <span data-bind="text: index"></span><br/>
+            First name:<br>
+            <input type="text" required="required" data-bind="value: name"/><br/>
+            Last name:<br>
+            <input type="text" required="required" data-bind="value: surname"/><br/>
+            Birthday:<br>
+            <input type="date" required="required" data-bind="value: birthday"/><br/>
+            <h1>
+                <button type="submit" class="button3" form="edit_student_form" value="Submit">Save</button>
+            </h1>
+        </form>
+    </section>
+
 
     <section class="view" id="add_grade">
         <h2>Add grade</h2>

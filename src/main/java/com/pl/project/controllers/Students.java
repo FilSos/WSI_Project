@@ -63,7 +63,6 @@ public class Students {
     @Path("/add_student")
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response createStudent(StudentModel studentModel) {
-        //mongoStudents.addStudent();
         mongoBase.addStudent(studentModel);
         return Response.status(Response.Status.CREATED).build();
     }
@@ -72,11 +71,8 @@ public class Students {
     @Path("/update_student")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response.ResponseBuilder updateStudent(@DefaultValue("") @QueryParam("index") Long index,
-                                                  @DefaultValue("") @QueryParam("name") String name,
-                                                  @DefaultValue("") @QueryParam("surname") String surname,
-                                                  @DefaultValue("") @QueryParam("birthday") String birthday) {
-        mongoBase.updateStudent(index, name, surname, birthday);
+    public Response.ResponseBuilder updateStudent(StudentModel studentModel) {
+        mongoBase.updateStudent(studentModel);
         return Response.status(Response.Status.OK);
 
     }
