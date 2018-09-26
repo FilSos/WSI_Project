@@ -52,7 +52,7 @@ header h1 {
 
 #search_panel input#search_text {
     width: 80%;
-    border-sizing: border-box;
+    box-sizing: border-box;
     border: 2px solid #ccc;
     font-size: 15px;
     background: #e7edf0;
@@ -128,11 +128,14 @@ table th {
     background-color: dimgrey;
     color: #FFF;
     padding: 7px 8px 7px 16px;
+    column-width: 300px;
 }
 
 table td {
     border: 1px solid #e3e3e3;
     padding: 7px 16px;
+    column-width: 300px;
+
 }
 
 table tr:nth-child(odd) {
@@ -165,7 +168,7 @@ input:invalid {
 }
 
 input {
-    border-sizing: border-box;
+    box-sizing: border-box;
     border: 2px solid #ccc;
     font-size: 15px;
     background: #e7edf0;
