@@ -9,7 +9,7 @@ import com.pl.project.services.MongoStudents;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import java.util.List;
-
+//TODO resolver do bblady empty beans - gdzie dodac
 @Path("/students")
 public class Students {
     //Unlock only if adding first record, otherwise use mongoBase instance
