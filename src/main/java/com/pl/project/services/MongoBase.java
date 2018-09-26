@@ -169,6 +169,11 @@ public class MongoBase {
         return subjectsList;
     }
 
+    public SubjectModel studentSpecificSubjects(int index, String subjectName) {
+
+        return null;
+    }
+
     //TODO sprawdzic czy dziala poprawnie
     public List<SubjectModel> subjectsList(String teacher, String subjectName) {
         final Query<SubjectModel> query = datastore.createQuery(SubjectModel.class);

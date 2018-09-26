@@ -7,8 +7,7 @@ import com.pl.project.services.MongoBase;
 import com.pl.project.services.MongoSubjects;
 
 import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+import javax.ws.rs.core.*;
 import java.util.List;
 
 @Path("/subjects")
@@ -88,10 +87,12 @@ public class Subjects {
 
     @POST
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response createSubject(SubjectModel subjectModel) {
+    public Response createSubject(SubjectModel subjectModel, @Context UriInfo uriInfo) {
         //mongoSubjects.addSubject();
         mongoBase.addSubject(subjectModel);
-        return Response.status(Response.Status.CREATED).build();
+        UriBuilder builder = uriInfo.getAbsolutePathBuilder();
+        builder.path(subjectModel.getSubjectName());
+        return Response.created(builder.build()).build();
     }
 
     @PUT

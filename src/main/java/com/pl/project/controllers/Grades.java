@@ -5,8 +5,7 @@ import com.pl.project.services.MongoBase;
 import com.pl.project.services.MongoGrades;
 
 import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+import javax.ws.rs.core.*;
 import java.util.List;
 
 @Path("/grades")
@@ -38,18 +37,18 @@ public class Grades {
         GradeModel oneGrade = mongoBase.oneGrade(id);
         return Response.status(Response.Status.OK).entity(oneGrade).build();
     }
-
+    //TODO sprawdzic dzialanie
     @POST
-    @Path("/add_grade")
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response createGrade(GradeModel gradeModel) {
+    public Response createGrade(GradeModel gradeModel, @Context UriInfo uriInfo) {
         //mongoGrades.addGrade();
         mongoBase.addGrade(gradeModel);
-        return Response.status(Response.Status.CREATED).build();
+        UriBuilder builder = uriInfo.getAbsolutePathBuilder();
+        builder.path(gradeModel.getId().toString());
+        return Response.created(builder.build()).build();
     }
 
     @PUT
-    @Path("/update_grade")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response.ResponseBuilder updateGrade(GradeModel gradeModel) {
@@ -59,7 +58,7 @@ public class Grades {
     }
 
     @DELETE
-    @Path("/delete_grade/{id}")
+    @Path("/{id}")
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response deleteGrade(@PathParam("id") int id) {
         GradeModel deletedGrade = mongoBase.oneGrade(id);
