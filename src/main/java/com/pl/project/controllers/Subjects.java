@@ -41,13 +41,14 @@ public class Subjects {
         return Response.status(Response.Status.OK).entity(gradesList).build();
     }
 
-    //TODO zaimplementuj
+
     @GET
     @Path("/{subject}/grades/{id}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response getSubjectSpecificGrade(@PathParam("subject") String subjectName) {
-        List<GradeModel> gradesList = mongoBase.subjectGrades(subjectName);
-        return Response.status(Response.Status.OK).entity(gradesList).build();
+    public Response getSubjectSpecificGrade(@PathParam("subject") String subjectName,
+                                            @PathParam("id") int id) {
+        GradeModel specificGrade = mongoBase.subjectSpecificGrade(subjectName, id);
+        return Response.status(Response.Status.OK).entity(specificGrade).build();
     }
 
 
@@ -59,30 +60,32 @@ public class Subjects {
         return Response.status(Response.Status.OK).entity(studentsList).build();
     }
 
-    //TODO zaimplementuj
     @GET
     @Path("/{subject}/students/{index}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response getSubjectSpecificStudent(@PathParam("subject") String subjectName) {
-        List<StudentModel> studentsList = mongoBase.subjectStudents(subjectName);
-        return Response.status(Response.Status.OK).entity(studentsList).build();
+    public Response getSubjectSpecificStudent(@PathParam("subject") String subjectName,
+                                              @PathParam("index") Long index) {
+        StudentModel specificStudent = mongoBase.subjectSpecificStudent(subjectName, index);
+        return Response.status(Response.Status.OK).entity(specificStudent).build();
     }
-    //TODO zaimplemetnuj
+
     @GET
     @Path("/{subject}/students/{index}/grades")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response getSubjectSpecificStudentGrades(@PathParam("subject") String subjectName) {
-        List<StudentModel> studentsList = mongoBase.subjectStudents(subjectName);
-        return Response.status(Response.Status.OK).entity(studentsList).build();
+    public Response getSubjectSpecificStudentGrades(@PathParam("subject") String subjectName,
+                                                    @PathParam("index") Long index) {
+        List<GradeModel> gradesList = mongoBase.studentSubjectGradesList(index, subjectName);
+        return Response.status(Response.Status.OK).entity(gradesList).build();
     }
 
-    //TODO zaimplemetnuj
     @GET
     @Path("/{subject}/students/{index}/grades/{id}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response getSubjectSpecificStudentSpecificGrade(@PathParam("subject") String subjectName) {
-        List<StudentModel> studentsList = mongoBase.subjectStudents(subjectName);
-        return Response.status(Response.Status.OK).entity(studentsList).build();
+    public Response getSubjectSpecificStudentSpecificGrade(@PathParam("subject") String subjectName,
+                                                           @PathParam("index") Long index,
+                                                           @PathParam("id") int id) {
+        GradeModel specificGrade = mongoBase.studentSubjectSpecificGrade(index, subjectName, id);
+        return Response.status(Response.Status.OK).entity(specificGrade).build();
     }
 
     @POST
@@ -98,13 +101,14 @@ public class Subjects {
     @PUT
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response.ResponseBuilder updateSubject(SubjectModel subjectModel) {
+    public Response updateSubject(SubjectModel subjectModel, @Context UriInfo uriInfo) {
         mongoBase.updateSubject(subjectModel);
-        return Response.status(Response.Status.OK);
+        UriBuilder builder = uriInfo.getAbsolutePathBuilder();
+        builder.path(subjectModel.getSubjectName());
+        return Response.created(builder.build()).build();
 
     }
 
-    //TODO sprawdzic dzialanie
     @DELETE
     @Path("/{subject}")
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})

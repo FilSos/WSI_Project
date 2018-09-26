@@ -149,7 +149,7 @@ public class MongoBase {
         return subject.getGradesListOfStudent(student.getIndex());
     }
 
-    public GradeModel studentSubjectSpecificGrade(int index, String subjectName, int id) {
+    public GradeModel studentSubjectSpecificGrade(Long index, String subjectName, int id) {
         Query<SubjectModel> getQuerySubject = datastore.find(SubjectModel.class);
         Query<StudentModel> getQueryStudent = datastore.find(StudentModel.class);
         SubjectModel subject = getQuerySubject.field("subjectName").equal(subjectName).get();
@@ -157,6 +157,7 @@ public class MongoBase {
         List<GradeModel> gradesListOfStudent = subject.getGradesListOfStudent(student.getIndex());
         return gradesListOfStudent.get(id);
     }
+
     //TODO do ewentualnej poprawy, gdyz dziala
     public List<SubjectModel> studentSubjects(int index) {
         List<SubjectModel> subjectsList = new ArrayList<>();
@@ -185,7 +186,7 @@ public class MongoBase {
         if (index.equals(student.getIndex())) {
             SubjectModel subject = getQuerySubject.field("subjectName").equal(subjectName).get();
             return subject;
-        }else{
+        } else {
             return null;
         }
     }
@@ -215,13 +216,32 @@ public class MongoBase {
         return querySubject.getGradeList();
     }
 
+    public GradeModel subjectSpecificGrade(String subject, int id) {
+        Query<SubjectModel> getQuery = datastore.find(SubjectModel.class);
+        SubjectModel querySubject = getQuery.field("subjectName").equal(subject).get();
+        List<GradeModel> gradeList = querySubject.getGradeList();
+        return gradeList.get(id);
+    }
+
     public List<StudentModel> subjectStudents(String subject) {
         Query<SubjectModel> getQuery = datastore.find(SubjectModel.class);
         SubjectModel querySubject = getQuery.field("subjectName").equal(subject).get();
         return querySubject.getStudentList();
     }
 
-    //TODO sprawdzic dzialanie
+    public StudentModel subjectSpecificStudent(String subject, Long index) {
+        Query<SubjectModel> getQuery = datastore.find(SubjectModel.class);
+        SubjectModel querySubject = getQuery.field("subjectName").equal(subject).get();
+        List<StudentModel> studentList = querySubject.getStudentList();
+        for (StudentModel s : studentList) {
+            if (s.getIndex().equals(index)) {
+                return s;
+            }
+        }
+        return null;
+    }
+
+
     public List<GradeModel> studentSubjectGradesList(Long index, String subjectName) {
         final Query<SubjectModel> subjectQuery = datastore.createQuery(SubjectModel.class);
 //        final Query<GradeModel> gradeQuery = datastore.createQuery(GradeModel.class);

@@ -71,13 +71,12 @@ public class Students {
     @GET
     @Path("/{index}/subjects/{subject}/grades/{id}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response getStudentSpecificGradeFromSubject(@PathParam("index") int index,
+    public Response getStudentSpecificGradeFromSubject(@PathParam("index") Long index,
                                                        @PathParam("subject") String subjectName,
                                                        @PathParam("id") int id) {
         GradeModel studentSpecificGrade = mongoBase.studentSubjectSpecificGrade(index, subjectName, id);
         return Response.status(Response.Status.OK).entity(studentSpecificGrade).build();
     }
-
 
     @POST
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
@@ -99,7 +98,6 @@ public class Students {
 
     }
 
-    //TODO sprawdzic czemu nie dziala
     @DELETE
     @Path("/{index}")
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
