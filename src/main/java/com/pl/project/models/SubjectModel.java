@@ -1,5 +1,6 @@
 package com.pl.project.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.bson.types.ObjectId;
@@ -27,8 +28,10 @@ public class SubjectModel {
     private ObjectId id;
     private String subjectName;
     private String teacher;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Reference
     private List<StudentModel> studentList;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Reference
     private List<GradeModel> gradeList;
 
