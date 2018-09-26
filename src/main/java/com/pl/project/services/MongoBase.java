@@ -10,6 +10,7 @@ import org.mongodb.morphia.query.Query;
 import org.mongodb.morphia.query.UpdateOperations;
 import org.mongodb.morphia.query.UpdateResults;
 
+import javax.management.remote.SubjectDelegationPermission;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -169,9 +170,16 @@ public class MongoBase {
         return subjectsList;
     }
 
-    public SubjectModel studentSpecificSubjects(int index, String subjectName) {
-
-        return null;
+    public SubjectModel studentSpecificSubject(Long index, String subjectName) {
+        Query<SubjectModel> getQuerySubject = datastore.find(SubjectModel.class);
+        Query<StudentModel> getQueryStudent = datastore.find(StudentModel.class);
+        StudentModel student = getQueryStudent.field("index").equal(index).get();
+        if (index.equals(student.getIndex())) {
+            SubjectModel subject = getQuerySubject.field("subjectName").equal(subjectName).get();
+            return subject;
+        }else{
+            return null;
+        }
     }
 
     //TODO sprawdzic czy dziala poprawnie

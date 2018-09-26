@@ -52,9 +52,9 @@ public class Students {
     @GET
     @Path("/{index}/subjects/{subject}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response getStudentSpecificSubject(@PathParam("index") int index, @PathParam("subject") String subjectName) {
-        List<SubjectModel> studentSubjectsList = mongoBase.studentSubjects(index);
-        return Response.status(Response.Status.OK).entity(studentSubjectsList).build();
+    public Response getStudentSpecificSubject(@PathParam("index") Long index, @PathParam("subject") String subjectName) {
+        SubjectModel studentSpecificSubject = mongoBase.studentSpecificSubject(index, subjectName);
+        return Response.status(Response.Status.OK).entity(studentSpecificSubject).build();
     }
 
 
