@@ -7,8 +7,7 @@ import com.pl.project.services.MongoBase;
 import com.pl.project.services.MongoStudents;
 
 import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+import javax.ws.rs.core.*;
 import java.util.List;
 
 @Path("/students")
@@ -60,15 +59,15 @@ public class Students {
 
 
     @POST
-    @Path("/add_student")
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response createStudent(StudentModel studentModel) {
+    public Response createStudent(StudentModel studentModel, @Context UriInfo uriInfo) {
         mongoBase.addStudent(studentModel);
-        return Response.status(Response.Status.CREATED).build();
+        UriBuilder builder = uriInfo.getAbsolutePathBuilder();
+        builder.path(Long.toString(studentModel.getIndex()));
+        return Response.created(builder.build()).build();
     }
 
     @PUT
-    @Path("/update_student")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response.ResponseBuilder updateStudent(StudentModel studentModel) {
@@ -79,7 +78,7 @@ public class Students {
 
 
     @DELETE
-    @Path("/delete_student/{index}")
+    @Path("/{index}")
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response deleteStudent(@PathParam("index") int index) {
         StudentModel deletedStudent = mongoBase.oneStudent(index);

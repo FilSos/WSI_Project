@@ -52,7 +52,7 @@ public class MongoBase {
     //TODO dziala, ale sypie errorami
     public void updateStudent(StudentModel student) {
         System.out.println("GET ALL VALUES:" + student.getIndex() + "\n" + "name: " + student.getName());
-        Query<StudentModel> updateQuery = datastore.createQuery(StudentModel.class).field("_id").equal(student.getIndex());
+        Query<StudentModel> updateQuery = datastore.createQuery(StudentModel.class).field("index").equal(student.getIndex());
         if (!student.getName().isEmpty()) {
             System.out.println("WESZLO 1");
             final UpdateOperations<StudentModel> updateName = datastore.createUpdateOperations(StudentModel.class).set("name", student.getName());
