@@ -14,7 +14,7 @@ public class Grades {
     //Unlock only if adding first record, otherwise use mongoBase instance
     //MongoGrades mongoGrades = new MongoGrades();
     MongoBase mongoBase = MongoBase.getInstance();
-
+    //TODO najpewniej przerzucic do jednej z hierarchicznej metod zeby zachowac ciaglosc
     @GET
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response getGradesList(@DefaultValue("") @QueryParam("index") Long index,
@@ -37,6 +37,7 @@ public class Grades {
         GradeModel oneGrade = mongoBase.oneGrade(id);
         return Response.status(Response.Status.OK).entity(oneGrade).build();
     }
+
     //TODO sprawdzic dzialanie
     @POST
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
@@ -51,9 +52,11 @@ public class Grades {
     @PUT
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response.ResponseBuilder updateGrade(GradeModel gradeModel) {
+    public Response updateGrade(GradeModel gradeModel, @Context UriInfo uriInfo) {
         mongoBase.updateGrade(gradeModel);
-        return Response.status(Response.Status.OK);
+        UriBuilder builder = uriInfo.getAbsolutePathBuilder();
+        builder.path(gradeModel.getId().toString());
+        return Response.created(builder.build()).build();
 
     }
 
