@@ -9,6 +9,7 @@ import com.pl.project.services.MongoStudents;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import java.util.List;
+
 //TODO resolver do bledu empty beans
 @Path("/students")
 public class Students {
@@ -36,11 +37,11 @@ public class Students {
     @GET
     @Path("/{index}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response getSingleStudent(@PathParam("index") int index) {
+    public Response getSingleStudent(@PathParam("index") Long index) {
         StudentModel oneStudent = mongoBase.oneStudent(index);
         return Response.status(Response.Status.OK).entity(oneStudent).build();
     }
-    //TODO poprawic implementacje
+
     @GET
     @Path("/{index}/subjects")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
@@ -48,7 +49,7 @@ public class Students {
         List<SubjectModel> studentSubjectsList = mongoBase.studentSubjects(index);
         return Response.status(Response.Status.OK).entity(studentSubjectsList).build();
     }
-    //TODO zaimplementowac
+
     @GET
     @Path("/{index}/subjects/{subject}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
@@ -65,13 +66,16 @@ public class Students {
         List<GradeModel> studentGradesList = mongoBase.studentSubjectGrades(index, subjectName);
         return Response.status(Response.Status.OK).entity(studentGradesList).build();
     }
-    //TODO Zaimplementowac
+
+
     @GET
     @Path("/{index}/subjects/{subject}/grades/{id}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response getStudentSpecificGradeFromSubject(@PathParam("index") int index, @PathParam("subject") String subjectName) {
-        List<GradeModel> studentGradesList = mongoBase.studentSubjectGrades(index, subjectName);
-        return Response.status(Response.Status.OK).entity(studentGradesList).build();
+    public Response getStudentSpecificGradeFromSubject(@PathParam("index") int index,
+                                                       @PathParam("subject") String subjectName,
+                                                       @PathParam("id") int id) {
+        GradeModel studentSpecificGrade = mongoBase.studentSubjectSpecificGrade(index, subjectName, id);
+        return Response.status(Response.Status.OK).entity(studentSpecificGrade).build();
     }
 
 
@@ -87,17 +91,19 @@ public class Students {
     @PUT
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response.ResponseBuilder updateStudent(StudentModel studentModel) {
+    public Response updateStudent(StudentModel studentModel, @Context UriInfo uriInfo) {
         mongoBase.updateStudent(studentModel);
-        return Response.status(Response.Status.OK);
+        UriBuilder builder = uriInfo.getAbsolutePathBuilder();
+        builder.path(Long.toString(studentModel.getIndex()));
+        return Response.created(builder.build()).build();
 
     }
 
-
+    //TODO sprawdzic czemu nie dziala
     @DELETE
     @Path("/{index}")
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response deleteStudent(@PathParam("index") int index) {
+    public Response deleteStudent(@PathParam("index") Long index) {
         StudentModel deletedStudent = mongoBase.oneStudent(index);
         mongoBase.deleteStudent(deletedStudent);
         return Response.status(Response.Status.OK).build();

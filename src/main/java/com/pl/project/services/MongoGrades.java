@@ -16,22 +16,22 @@ public class MongoGrades {
         GradeModel gradeSix = new GradeModel();
         gradeOne.setDate(new Date());
         gradeOne.setGradeValue(3.0);
-        gradeOne.setStudent(mongoBase.oneStudent(115610));
+        gradeOne.setStudent(mongoBase.oneStudent(115610L));
         gradeTwo.setDate(new Date());
         gradeTwo.setGradeValue(3.5);
-        gradeTwo.setStudent(mongoBase.oneStudent(133451));
+        gradeTwo.setStudent(mongoBase.oneStudent(133451L));
         gradeThree.setDate(new Date());
         gradeThree.setGradeValue(4.0);
-        gradeThree.setStudent(mongoBase.oneStudent(133451));
+        gradeThree.setStudent(mongoBase.oneStudent(133451L));
         gradeFour.setDate(new Date());
         gradeFour.setGradeValue(4.5);
-        gradeFour.setStudent(mongoBase.oneStudent(112341));
+        gradeFour.setStudent(mongoBase.oneStudent(112341L));
         gradeFive.setDate(new Date());
         gradeFive.setGradeValue(5.0);
-        gradeFive.setStudent(mongoBase.oneStudent(112377));
+        gradeFive.setStudent(mongoBase.oneStudent(112377L));
         gradeSix.setDate(new Date());
         gradeSix.setGradeValue(5.0);
-        gradeSix.setStudent(mongoBase.oneStudent(115672));
+        gradeSix.setStudent(mongoBase.oneStudent(115672L));
 
         mongoBase.addGrade(gradeOne);
         mongoBase.addGrade(gradeTwo);

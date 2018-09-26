@@ -133,7 +133,7 @@ public class MongoBase {
         return datastore.find(StudentModel.class).asList();
     }
 
-    public StudentModel oneStudent(int index) {
+    public StudentModel oneStudent(Long index) {
         System.out.println("Show me index: " + index);
         Query<StudentModel> getQuery = datastore.find(StudentModel.class);
         StudentModel studentModel = getQuery.field("index").equal(index).get();
@@ -149,7 +149,15 @@ public class MongoBase {
         return subject.getGradesListOfStudent(student.getIndex());
     }
 
-    //TODO dziala, ale brzydko napisane - do poprawki
+    public GradeModel studentSubjectSpecificGrade(int index, String subjectName, int id) {
+        Query<SubjectModel> getQuerySubject = datastore.find(SubjectModel.class);
+        Query<StudentModel> getQueryStudent = datastore.find(StudentModel.class);
+        SubjectModel subject = getQuerySubject.field("subjectName").equal(subjectName).get();
+        StudentModel student = getQueryStudent.field("index").equal(index).get();
+        List<GradeModel> gradesListOfStudent = subject.getGradesListOfStudent(student.getIndex());
+        return gradesListOfStudent.get(id);
+    }
+    //TODO do ewentualnej poprawy, gdyz dziala
     public List<SubjectModel> studentSubjects(int index) {
         List<SubjectModel> subjectsList = new ArrayList<>();
         List<SubjectModel> getQuerySubjectsList = datastore.find(SubjectModel.class).asList();
