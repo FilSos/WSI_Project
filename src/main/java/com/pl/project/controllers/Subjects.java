@@ -22,7 +22,7 @@ public class Subjects {
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response getSubjectsList(@DefaultValue("") @QueryParam("teacher") String teacher,
                                     @DefaultValue("") @QueryParam("subjectName") String subjectName) {
-        List<SubjectModel> subjectsList = mongoBase.subjectsList(teacher,subjectName);
+        List<SubjectModel> subjectsList = mongoBase.subjectsList(teacher, subjectName);
         return Response.status(Response.Status.OK).entity(subjectsList).build();
     }
 
@@ -42,6 +42,16 @@ public class Subjects {
         return Response.status(Response.Status.OK).entity(gradesList).build();
     }
 
+    //TODO zaimplementuj
+    @GET
+    @Path("/{subject}/grades/{id}")
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public Response getSubjectSpecificGrade(@PathParam("subject") String subjectName) {
+        List<GradeModel> gradesList = mongoBase.subjectGrades(subjectName);
+        return Response.status(Response.Status.OK).entity(gradesList).build();
+    }
+
+
     @GET
     @Path("/{subject}/students")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
@@ -50,8 +60,33 @@ public class Subjects {
         return Response.status(Response.Status.OK).entity(studentsList).build();
     }
 
+    //TODO zaimplementuj
+    @GET
+    @Path("/{subject}/students/{index}")
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public Response getSubjectSpecificStudent(@PathParam("subject") String subjectName) {
+        List<StudentModel> studentsList = mongoBase.subjectStudents(subjectName);
+        return Response.status(Response.Status.OK).entity(studentsList).build();
+    }
+    //TODO zaimplemetnuj
+    @GET
+    @Path("/{subject}/students/{index}/grades")
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public Response getSubjectSpecificStudentGrades(@PathParam("subject") String subjectName) {
+        List<StudentModel> studentsList = mongoBase.subjectStudents(subjectName);
+        return Response.status(Response.Status.OK).entity(studentsList).build();
+    }
+
+    //TODO zaimplemetnuj
+    @GET
+    @Path("/{subject}/students/{index}/grades/{id}")
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public Response getSubjectSpecificStudentSpecificGrade(@PathParam("subject") String subjectName) {
+        List<StudentModel> studentsList = mongoBase.subjectStudents(subjectName);
+        return Response.status(Response.Status.OK).entity(studentsList).build();
+    }
+
     @POST
-    @Path("/add_subject")
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response createSubject(SubjectModel subjectModel) {
         //mongoSubjects.addSubject();
@@ -60,7 +95,6 @@ public class Subjects {
     }
 
     @PUT
-    @Path("/update_subject")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response.ResponseBuilder updateSubject(SubjectModel subjectModel) {
@@ -68,9 +102,10 @@ public class Subjects {
         return Response.status(Response.Status.OK);
 
     }
+
     //TODO sprawdzic dzialanie
     @DELETE
-    @Path("/delete_subject/{subject}")
+    @Path("/{subject}")
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response deleteStudent(@PathParam("subject") String subjectName) {
         SubjectModel deletedSubject = mongoBase.oneSubject(subjectName);
