@@ -52,38 +52,45 @@ public class MongoBase {
 
     //TODO dziala, ale sypie errorami
     public void updateStudent(StudentModel student) {
-        System.out.println("GET ALL VALUES:" + student.getIndex() + "\n" + "name: " + student.getName());
         Query<StudentModel> updateQuery = datastore.createQuery(StudentModel.class).field("index").equal(student.getIndex());
         if (!student.getName().isEmpty()) {
-            System.out.println("WESZLO 1");
             final UpdateOperations<StudentModel> updateName = datastore.createUpdateOperations(StudentModel.class).set("name", student.getName());
             datastore.update(updateQuery, updateName);
         }
-
         if (!student.getSurname().isEmpty()) {
-            System.out.println("WESZLO 2");
             final UpdateOperations<StudentModel> updateSurname = datastore.createUpdateOperations(StudentModel.class).set("surname", student.getSurname());
             datastore.update(updateQuery, updateSurname);
         }
         if (!student.getBirthday().toString().isEmpty()) {
-            System.out.println("WESZLO 3");
             final UpdateOperations<StudentModel> updateBirthday = datastore.createUpdateOperations(StudentModel.class).set("birthday", student.getBirthday());
             datastore.update(updateQuery, updateBirthday);
         }
     }
 
-    public void addGrade(GradeModel gradeModel) {
+    public void addGrade(GradeModel gradeModel, Long index, String subjectName) {
+        Query<SubjectModel> getQuerySubject = datastore.find(SubjectModel.class);
+        Query<StudentModel> getQueryStudent = datastore.find(StudentModel.class);
+        StudentModel student = getQueryStudent.field("index").equal(index).get();
+        SubjectModel subject = getQuerySubject.field("subjectName").equal(subjectName).get();
+        gradeModel.setStudent(student);
         datastore.save(gradeModel);
+        subject.getGradeList().add(gradeModel);
+        datastore.save(subject);
     }
 
-    public void deleteGrade(GradeModel gradeModel) {
+    public void deleteGrade(GradeModel gradeModel,String subjectName,int id) {
+        Query<SubjectModel> getQuerySubject = datastore.find(SubjectModel.class);
+        SubjectModel subject = getQuerySubject.field("subjectName").equal(subjectName).get();
         datastore.delete(gradeModel);
+        subject.getGradeList().remove(id);
     }
 
-    public void updateGrade(GradeModel gradeModel) {
-        Query<GradeModel> updateQuery = datastore.createQuery(GradeModel.class).field("_id").equal(gradeModel.getId());
-        UpdateOperations<GradeModel> update = datastore.createUpdateOperations(GradeModel.class).set("gradeValue", 3.5D);
-        datastore.update(updateQuery, update);
+    public void updateGrade(GradeModel gradeModel, Long index, String subjectName) {
+        if (gradeModel.getStudent().getIndex().equals(index)) {
+            Query<GradeModel> updateQuery = datastore.createQuery(GradeModel.class).field("id").equal(gradeModel.getId());
+            UpdateOperations<GradeModel> update = datastore.createUpdateOperations(GradeModel.class).set("gradeValue", gradeModel.getGradeValue());
+            datastore.update(updateQuery, update);
+        }
     }
 
     public void addSubject(SubjectModel subjectModel) {
@@ -98,9 +105,10 @@ public class MongoBase {
         datastore.delete(subjectModel);
     }
 
+    //TODO napisac dobrze update
     public void updateSubject(SubjectModel subjectModel) {
         Query<SubjectModel> updateQuery = datastore.createQuery(SubjectModel.class).field("_id").equal(subjectModel.getId());
-        UpdateOperations<SubjectModel> update = datastore.createUpdateOperations(SubjectModel.class).set("subjectName", "Przyroda");
+        UpdateOperations<SubjectModel> update = datastore.createUpdateOperations(SubjectModel.class).set("subjectName", subjectModel.getSubjectName());
         datastore.update(updateQuery, update);
     }
 
@@ -271,10 +279,9 @@ public class MongoBase {
         return null;
     }
 
-    //TODO sprawdzic
-    public GradeModel oneGrade(int id) {
-        Query<GradeModel> getQuery = datastore.find(GradeModel.class);
-        GradeModel gradeModel = getQuery.field("_id").equal(id).get();
-        return gradeModel;
+    public GradeModel oneGrade(int id, String subjectName) {
+        Query<SubjectModel> getQuerySubject = datastore.find(SubjectModel.class);
+        SubjectModel subject = getQuerySubject.field("subjectName").equal(subjectName).get();
+        return subject.getGradeList().get(id);
     }
 }

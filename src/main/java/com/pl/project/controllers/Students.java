@@ -87,6 +87,20 @@ public class Students {
         return Response.created(builder.build()).build();
     }
 
+    @POST
+    @Path("/{index}/subjects/{subject}/grades")
+    @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public Response createGrade(GradeModel gradeModel,
+                                @PathParam("index") Long index,
+                                @PathParam("subject") String subjectName,
+                                @Context UriInfo uriInfo) {
+        //mongoGrades.addGrade();
+        mongoBase.addGrade(gradeModel, index, subjectName);
+        UriBuilder builder = uriInfo.getAbsolutePathBuilder();
+        builder.path(gradeModel.getId().toString());
+        return Response.created(builder.build()).build();
+    }
+
     @PUT
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
@@ -98,12 +112,39 @@ public class Students {
 
     }
 
+    @PUT
+    @Path("/{index}/subjects/{subject}/grades")
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public Response updateGrade(GradeModel gradeModel,
+                                @PathParam("index") Long index,
+                                @PathParam("subject") String subjectName,
+                                @Context UriInfo uriInfo) {
+        mongoBase.updateGrade(gradeModel, index, subjectName);
+        UriBuilder builder = uriInfo.getAbsolutePathBuilder();
+        builder.path(gradeModel.getId().toString());
+        return Response.created(builder.build()).build();
+
+    }
+
     @DELETE
     @Path("/{index}")
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response deleteStudent(@PathParam("index") Long index) {
         StudentModel deletedStudent = mongoBase.oneStudent(index);
         mongoBase.deleteStudent(deletedStudent);
+        return Response.status(Response.Status.OK).build();
+    }
+
+    @DELETE
+    @Path("/{index}/subjects/{subject}/grades/{id}")
+    @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public Response deleteGrade(@PathParam("index") Long index,
+                                @PathParam("subject") String subjectName,
+                                @PathParam("id") int id) {
+        System.out.println("wchodzi");
+        GradeModel deletedGrade = mongoBase.oneGrade(id, subjectName);
+        mongoBase.deleteGrade(deletedGrade, subjectName, id);
         return Response.status(Response.Status.OK).build();
     }
 
