@@ -107,6 +107,29 @@ public class Subjects {
 //    }
 
     @POST
+    @Path("/{subject}/students/{index}/grades/")
+    @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public Response createGrade(GradeModel gradeModel,
+                                @PathParam("index") Long index,
+                                @PathParam("subject") String subjectName,
+                                @Context UriInfo uriInfo) {
+
+        mongoBase.addGrade(gradeModel, index, subjectName);
+        UriBuilder builder = uriInfo.getAbsolutePathBuilder();
+        builder.path(gradeModel.getId().toString());
+        return Response.created(builder.build()).build();
+    }
+
+    //Test records, unlock only if need it
+//    @POST
+//    @Path("/grades")
+//    @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+//    public Response createTestGrades() {
+//        mongoGrades.addGrade();
+//        return Response.status(Response.Status.OK).build();
+//    }
+
+    @POST
     @Path("/{subject}/students")
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response addStudentToSubject(StudentModel studentModel, @PathParam("subject") String subjectName, @Context UriInfo uriInfo) {
@@ -137,7 +160,7 @@ public class Subjects {
         mongoBase.deleteSubject(deletedSubject);
         return Response.status(Response.Status.OK).build();
     }
-    //TODO do dokonczenia
+
     @DELETE
     @Path("/{subject}/students/{index}")
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})

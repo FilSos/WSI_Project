@@ -100,29 +100,6 @@ public class Students {
 //
 //    }
 
-    @POST
-    @Path("/{index}/subjects/{subject}/grades")
-    @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response createGrade(GradeModel gradeModel,
-                                @PathParam("index") Long index,
-                                @PathParam("subject") String subjectName,
-                                @Context UriInfo uriInfo) {
-
-        mongoBase.addGrade(gradeModel, index, subjectName);
-        UriBuilder builder = uriInfo.getAbsolutePathBuilder();
-        builder.path(gradeModel.getId().toString());
-        return Response.created(builder.build()).build();
-    }
-
-    //Test records, unlock only if need it
-//    @POST
-//    @Path("/grades")
-//    @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-//    public Response createTestGrades() {
-//        mongoGrades.addGrade();
-//        return Response.status(Response.Status.OK).build();
-//    }
-
     @PUT
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})

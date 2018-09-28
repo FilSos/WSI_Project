@@ -8,9 +8,7 @@ import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
 import org.mongodb.morphia.query.Query;
 import org.mongodb.morphia.query.UpdateOperations;
-import org.mongodb.morphia.query.UpdateResults;
 
-import javax.management.remote.SubjectDelegationPermission;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -59,11 +57,28 @@ public class MongoBase {
         datastore.save(studentModel);
     }
 
+    //TODO dokoncz ladne usuwanie,referencje studeta-usuniete,oceny-usuniete, usunac referencje do tych ocen jeszcze
     public void deleteStudent(StudentModel studentModel) {
+        List<SubjectModel> getQuerySubjectsList = datastore.find(SubjectModel.class).asList();
+        List<GradeModel> getQueryGradesList = datastore.find(GradeModel.class).asList();
+        Long index = studentModel.getIndex();
+        for (int i = 0; i < getQuerySubjectsList.size(); i++) {
+            for (int j = 0; j < getQuerySubjectsList.get(i).getStudentList().size(); j++) {
+                if (getQuerySubjectsList.get(i).getStudentList().get(j).getIndex().equals(index)) {
+                    getQuerySubjectsList.get(i).getStudentList().remove(getQuerySubjectsList.get(i).getStudentList().get(j));
+                    datastore.save(getQuerySubjectsList.get(i));
+                }
+            }
+        }
+        for (int k = 0; k < getQueryGradesList.size(); k++) {
+            if (getQueryGradesList.get(k).getStudent().getIndex().equals(index)) {
+                datastore.delete(getQueryGradesList.get(k));
+            }
+        }
         datastore.delete(studentModel);
     }
 
-    //TODO do przetestowania na JSie
+    //TODO REST ok, sprawdzic JS
     public void addStudentToSubject(StudentModel studentModel, String subjectName) {
         Query<SubjectModel> getQuerySubject = datastore.find(SubjectModel.class);
         Query<StudentModel> getQueryStudent = datastore.find(StudentModel.class);
@@ -73,17 +88,16 @@ public class MongoBase {
         datastore.save(subject);
     }
 
-    //TODO do przetestowania na JSie,prawdopodobnie zamiast usuwac po indexie studenta trzeba usuwac po miejscu na liscie
-    public void deleteStudentFromSubject(String subjectName,Long index) {
+    //TODO REST ok, sprawdzic JS
+    public void deleteStudentFromSubject(String subjectName, Long index) {
         Query<SubjectModel> getQuerySubject = datastore.find(SubjectModel.class);
-        Query<StudentModel> getQueryStudent = datastore.find(StudentModel.class);
         SubjectModel subject = getQuerySubject.field("subjectName").equal(subjectName).get();
-        StudentModel student = getQueryStudent.field("index").equal(index).get();
-        System.out.println("Czy tu ladnie dociera?");
-        //foreach dla kazdego z listy, jesli zmatchuje po indexie - usun
-        subject.getStudentList().remove(student.getIndex().intValue());
-        System.out.println("A tu?");
-        datastore.save(subject);
+        for (int i = 0; i < subject.getStudentList().size(); i++) {
+            if (subject.getStudentList().get(i).getIndex().equals(index)) {
+                subject.getStudentList().remove(i);
+                datastore.save(subject);
+            }
+        }
     }
 
 
@@ -138,8 +152,13 @@ public class MongoBase {
         subjectModel.setGradeList(gradeList);
         datastore.save(subjectModel);
     }
+
     //TODO napisac ladnie, jak usuwasz przedmiot, wypieprz wszystkie oceny rowniez z nim zwiazane
     public void deleteSubject(SubjectModel subjectModel) {
+        List<GradeModel> gradeList = subjectModel.getGradeList();
+        for (GradeModel grade : gradeList) {
+            datastore.delete(grade);
+        }
         datastore.delete(subjectModel);
     }
 
