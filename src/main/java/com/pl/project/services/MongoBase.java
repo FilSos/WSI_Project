@@ -74,17 +74,19 @@ public class MongoBase {
     }
 
     //TODO do przetestowania na JSie,prawdopodobnie zamiast usuwac po indexie studenta trzeba usuwac po miejscu na liscie
-    public void deleteStudentFromSubject(StudentModel studentModel, String subjectName) {
+    public void deleteStudentFromSubject(String subjectName,Long index) {
         Query<SubjectModel> getQuerySubject = datastore.find(SubjectModel.class);
         Query<StudentModel> getQueryStudent = datastore.find(StudentModel.class);
         SubjectModel subject = getQuerySubject.field("subjectName").equal(subjectName).get();
-        StudentModel student = getQueryStudent.field("index").equal(studentModel.getIndex()).get();
-        datastore.delete(student);
+        StudentModel student = getQueryStudent.field("index").equal(index).get();
+        System.out.println("Czy tu ladnie dociera?");
+        //foreach dla kazdego z listy, jesli zmatchuje po indexie - usun
         subject.getStudentList().remove(student.getIndex().intValue());
+        System.out.println("A tu?");
         datastore.save(subject);
     }
 
-    //TODO dziala, ale sypie errorami
+
     public void updateStudent(StudentModel student) {
         Query<StudentModel> updateQuery = datastore.createQuery(StudentModel.class).field("index").equal(student.getIndex());
         if (!student.getName().isEmpty()) {
@@ -136,7 +138,7 @@ public class MongoBase {
         subjectModel.setGradeList(gradeList);
         datastore.save(subjectModel);
     }
-
+    //TODO napisac ladnie, jak usuwasz przedmiot, wypieprz wszystkie oceny rowniez z nim zwiazane
     public void deleteSubject(SubjectModel subjectModel) {
         datastore.delete(subjectModel);
     }

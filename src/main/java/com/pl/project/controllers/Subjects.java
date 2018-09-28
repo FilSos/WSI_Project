@@ -100,9 +100,9 @@ public class Subjects {
     @POST
     @Path("/{subject}/students")
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response addStudentToSubject(StudentModel studentModel,@PathParam("subject") String subjectName, @Context UriInfo uriInfo) {
+    public Response addStudentToSubject(StudentModel studentModel, @PathParam("subject") String subjectName, @Context UriInfo uriInfo) {
         //mongoStudents.addStudent();
-        mongoBase.addStudentToSubject(studentModel,subjectName);
+        mongoBase.addStudentToSubject(studentModel, subjectName);
         UriBuilder builder = uriInfo.getAbsolutePathBuilder();
         builder.path(Long.toString(studentModel.getIndex()));
         return Response.created(builder.build()).build();
@@ -123,9 +123,19 @@ public class Subjects {
     @DELETE
     @Path("/{subject}")
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response deleteStudent(@PathParam("subject") String subjectName) {
+    public Response deleteSubject(@PathParam("subject") String subjectName) {
         SubjectModel deletedSubject = mongoBase.oneSubject(subjectName);
         mongoBase.deleteSubject(deletedSubject);
         return Response.status(Response.Status.OK).build();
     }
+    //TODO do dokonczenia
+    @DELETE
+    @Path("/{subject}/students/{index}")
+    @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public Response deleteStudentFromSubject(@PathParam("subject") String subjectName,
+                                             @PathParam("index") Long index) {
+        mongoBase.deleteStudentFromSubject(subjectName, index);
+        return Response.status(Response.Status.OK).build();
+    }
+
 }
