@@ -16,7 +16,7 @@ import java.util.List;
 @Path("/students")
 public class Students {
     //Unlock only if adding first record, otherwise use mongoBase instance
-   // MongoStudents mongoStudents = new MongoStudents();
+    // MongoStudents mongoStudents = new MongoStudents();
     MongoGrades mongoGrades = new MongoGrades();
     MongoBase mongoBase = MongoBase.getInstance();
 
@@ -111,6 +111,7 @@ public class Students {
 
     }
 
+    //TODO przeniesc do subjects
     @PUT
     @Path("/{index}/subjects/{subject}/grades")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
@@ -135,6 +136,7 @@ public class Students {
         return Response.status(Response.Status.OK).build();
     }
 
+    //TODO przeniesc do subjects
     @DELETE
     @Path("/{index}/subjects/{subject}/grades/{id}")
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
