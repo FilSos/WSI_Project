@@ -141,10 +141,10 @@ public class MongoBase {
         datastore.delete(subjectModel);
     }
 
-    //TODO sprawdzic dzialanie
+    //TODO REST dziala, sprawdzic JS
     public void updateSubject(SubjectModel subjectModel) {
         Query<SubjectModel> updateQuery = datastore.createQuery(SubjectModel.class).field("subjectName").equal(subjectModel.getSubjectName());
-        UpdateOperations<SubjectModel> update = datastore.createUpdateOperations(SubjectModel.class).set("Teacher", subjectModel.getTeacher());
+        UpdateOperations<SubjectModel> update = datastore.createUpdateOperations(SubjectModel.class).set("teacher", subjectModel.getTeacher());
         datastore.update(updateQuery, update);
     }
 
