@@ -19,9 +19,8 @@ public class Subjects {
 
     @GET
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response getSubjectsList(@DefaultValue("") @QueryParam("teacher") String teacher,
-                                    @DefaultValue("") @QueryParam("subjectName") String subjectName) {
-        List<SubjectModel> subjectsList = mongoBase.subjectsList(teacher, subjectName);
+    public Response getSubjectsList(@DefaultValue("") @QueryParam("teacher") String teacher) {
+        List<SubjectModel> subjectsList = mongoBase.subjectsList(teacher);
         return Response.status(Response.Status.OK).entity(subjectsList).build();
     }
 

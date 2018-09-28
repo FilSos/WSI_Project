@@ -238,18 +238,13 @@ public class MongoBase {
         }
     }
 
-    //TODO sprawdzic czy dziala poprawnie
-    public List<SubjectModel> subjectsList(String teacher, String subjectName) {
+    public List<SubjectModel> subjectsList(String teacher) {
         final Query<SubjectModel> query = datastore.createQuery(SubjectModel.class);
         if (!teacher.equals("")) {
             query.field("teacher").equal(teacher);
+            return query.asList();
         }
-
-        if (!subjectName.equals("")) {
-            return query.field("subjectName").equal(subjectName).asList();
-        }
-
-        return query.asList();
+        return null;
     }
 
     public SubjectModel oneSubject(String subject) {
