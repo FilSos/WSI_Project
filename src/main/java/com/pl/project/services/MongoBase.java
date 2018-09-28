@@ -244,7 +244,7 @@ public class MongoBase {
             query.field("teacher").equal(teacher);
             return query.asList();
         }
-        return null;
+        return datastore.find(SubjectModel.class).asList();
     }
 
     public SubjectModel oneSubject(String subject) {
