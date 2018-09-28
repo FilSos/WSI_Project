@@ -33,11 +33,11 @@ public class MongoGrades {
         gradeSix.setGradeValue(5.0);
         gradeSix.setStudent(mongoBase.oneStudent(115672L));
 
-        mongoBase.addGrade(gradeOne,115610L,"Przyroda");
-        mongoBase.addGrade(gradeTwo,115610L,"Przyroda");
-        mongoBase.addGrade(gradeThree,115610L,"Przyroda");
-        mongoBase.addGrade(gradeFour,115610L,"Przyroda");
-        mongoBase.addGrade(gradeFive,115610L,"Przyroda");
-        mongoBase.addGrade(gradeSix,115610L,"Przyroda");
+        mongoBase.addGrade(gradeOne,115610L,"Matematyka");
+        mongoBase.addGrade(gradeTwo,133451L,"Polski");
+        mongoBase.addGrade(gradeThree,133451L,"Historia");
+        mongoBase.addGrade(gradeFour,112341L,"Matematyka");
+        mongoBase.addGrade(gradeFive,112377L,"Historia");
+        mongoBase.addGrade(gradeSix,115672L,"Polski");
     }
 }

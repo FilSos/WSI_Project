@@ -33,11 +33,12 @@ public class MongoStudents {
         studentFive.setSurname("Sendrowski");
         studentFive.setBirthday(new Date(1993,11,19));
 
-        mongoBase.addStudent(studentOne);
-        mongoBase.addStudent(studentTwo);
-        mongoBase.addStudent(studentThree);
-        mongoBase.addStudent(studentFour);
-        mongoBase.addStudent(studentFive);
+
+        mongoBase.createStudentAndAddToSubject(studentOne,"Matematyka");
+        mongoBase.createStudentAndAddToSubject(studentTwo,"Polski");
+        mongoBase.createStudentAndAddToSubject(studentThree,"Matematyka");
+        mongoBase.createStudentAndAddToSubject(studentFour,"Polski");
+        mongoBase.createStudentAndAddToSubject(studentFive,"Historia");
     }
 
 }

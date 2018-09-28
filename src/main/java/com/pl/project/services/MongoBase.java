@@ -42,7 +42,15 @@ public class MongoBase {
         return MongoBaseHandler.mongoBase;
     }
 
-    public void addStudent(StudentModel studentModel) {
+    public void createStudentAndAddToSubject(StudentModel studentModel, String subjectName) {
+        Query<SubjectModel> getQuerySubject = datastore.find(SubjectModel.class);
+        SubjectModel subject = getQuerySubject.field("subjectName").equal(subjectName).get();
+        datastore.save(studentModel);
+        subject.getStudentList().add(studentModel);
+        datastore.save(subject);
+    }
+
+    public void createStudent(StudentModel studentModel) {
         datastore.save(studentModel);
     }
 
@@ -78,7 +86,7 @@ public class MongoBase {
         datastore.save(subject);
     }
 
-    public void deleteGrade(GradeModel gradeModel,String subjectName,int id) {
+    public void deleteGrade(GradeModel gradeModel, String subjectName, int id) {
         Query<SubjectModel> getQuerySubject = datastore.find(SubjectModel.class);
         SubjectModel subject = getQuerySubject.field("subjectName").equal(subjectName).get();
         datastore.delete(gradeModel);
@@ -124,7 +132,7 @@ public class MongoBase {
         } else if (!surname.equals("")) {
             return studentModelQuery.field("surname").equal(surname).asList();
         }
-
+        System.out.println("Zwrociło cala liste studentow");
         return datastore.find(StudentModel.class).asList();
     }
 

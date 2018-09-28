@@ -4,6 +4,7 @@ import com.pl.project.models.GradeModel;
 import com.pl.project.models.StudentModel;
 import com.pl.project.models.SubjectModel;
 import com.pl.project.services.MongoBase;
+import com.pl.project.services.MongoGrades;
 import com.pl.project.services.MongoStudents;
 
 import javax.ws.rs.*;
@@ -15,6 +16,7 @@ import java.util.List;
 public class Students {
     //Unlock only if adding first record, otherwise use mongoBase instance
     //MongoStudents mongoStudents = new MongoStudents();
+    //MongoGrades mongoGrades = new MongoGrades();
     MongoBase mongoBase = MongoBase.getInstance();
 
     @GET
@@ -81,7 +83,8 @@ public class Students {
     @POST
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response createStudent(StudentModel studentModel, @Context UriInfo uriInfo) {
-        mongoBase.addStudent(studentModel);
+        //mongoStudents.addStudent();
+        mongoBase.createStudent(studentModel);
         UriBuilder builder = uriInfo.getAbsolutePathBuilder();
         builder.path(Long.toString(studentModel.getIndex()));
         return Response.created(builder.build()).build();
