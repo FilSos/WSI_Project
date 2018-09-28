@@ -9,6 +9,7 @@ import com.pl.project.services.MongoStudents;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
+import java.text.ParseException;
 import java.util.List;
 
 //TODO resolver do bledu empty beans - prawdopodobnie naprawione, zly typ zwracany przez PUT, do sprawdzenia
@@ -26,7 +27,7 @@ public class Students {
             @DefaultValue("") @QueryParam("surname") String surname,
             @DefaultValue("") @QueryParam("before") String before,
             @DefaultValue("") @QueryParam("in") String in,
-            @DefaultValue("") @QueryParam("after") String after) {
+            @DefaultValue("") @QueryParam("after") String after) throws ParseException {
         if ((!name.equals("") && !surname.equals("")) || (name.equals("") && !surname.equals("")) || (!name.equals("") && surname.equals(""))) {
             List<StudentModel> studentsList = mongoBase.studentsList(name, surname);
             return Response.status(Response.Status.OK).entity(studentsList).build();

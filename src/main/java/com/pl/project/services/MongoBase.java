@@ -11,8 +11,13 @@ import org.mongodb.morphia.query.UpdateOperations;
 import org.mongodb.morphia.query.UpdateResults;
 
 import javax.management.remote.SubjectDelegationPermission;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class MongoBase {
 
@@ -159,15 +164,18 @@ public class MongoBase {
         return datastore.find(StudentModel.class).asList();
     }
 
-    //TODO data sie nie waliduje, sprawdz czemu
-    public List<StudentModel> studentsListByDate(String before, String in, String after) {
+    public List<StudentModel> studentsListByDate(String before, String in, String after) throws ParseException {
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
         Query<StudentModel> studentModelQuery = datastore.createQuery(StudentModel.class);
         if (!in.equals("")) {
-            return studentModelQuery.field("birthday").equal(in).asList();
+            Date inDate = format.parse(in);
+            return studentModelQuery.field("birthday").equal(inDate).asList();
         } else if (!after.equals("")) {
-            return studentModelQuery.field("birthday").greaterThan(after).asList();
+            Date afterDate = format.parse(after);
+            return studentModelQuery.field("birthday").greaterThan(afterDate).asList();
         } else if (!before.equals("")) {
-            return studentModelQuery.field("birthday").lessThan(before).asList();
+            Date beforeDate = format.parse(before);
+            return studentModelQuery.field("birthday").lessThan(beforeDate).asList();
         }
         return datastore.find(StudentModel.class).asList();
     }
