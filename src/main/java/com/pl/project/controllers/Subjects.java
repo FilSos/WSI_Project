@@ -98,6 +98,18 @@ public class Subjects {
         return Response.created(builder.build()).build();
     }
 
+    @POST
+    @Path("/{subject}/students")
+    @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public Response addStudentToSubject(StudentModel studentModel,@PathParam("subject") String subjectName, @Context UriInfo uriInfo) {
+        //mongoStudents.addStudent();
+        mongoBase.addStudentToSubject(studentModel,subjectName);
+        UriBuilder builder = uriInfo.getAbsolutePathBuilder();
+        builder.path(Long.toString(studentModel.getIndex()));
+        return Response.created(builder.build()).build();
+    }
+
+
     @PUT
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})

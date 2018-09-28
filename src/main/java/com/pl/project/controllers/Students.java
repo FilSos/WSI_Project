@@ -11,7 +11,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import java.util.List;
 
-//TODO resolver do bledu empty beans
+//TODO resolver do bledu empty beans - prawdopodobnie naprawione, zly typ zwracany przez PUT, do sprawdzenia
 @Path("/students")
 public class Students {
     //Unlock only if adding first record, otherwise use mongoBase instance
@@ -145,7 +145,6 @@ public class Students {
     public Response deleteGrade(@PathParam("index") Long index,
                                 @PathParam("subject") String subjectName,
                                 @PathParam("id") int id) {
-        System.out.println("wchodzi");
         GradeModel deletedGrade = mongoBase.oneGrade(id, subjectName);
         mongoBase.deleteGrade(deletedGrade, subjectName, id);
         return Response.status(Response.Status.OK).build();

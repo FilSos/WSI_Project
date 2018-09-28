@@ -58,6 +58,27 @@ public class MongoBase {
         datastore.delete(studentModel);
     }
 
+    //TODO do przetestowania na JSie
+    public void addStudentToSubject(StudentModel studentModel, String subjectName) {
+        Query<SubjectModel> getQuerySubject = datastore.find(SubjectModel.class);
+        Query<StudentModel> getQueryStudent = datastore.find(StudentModel.class);
+        SubjectModel subject = getQuerySubject.field("subjectName").equal(subjectName).get();
+        StudentModel student = getQueryStudent.field("index").equal(studentModel.getIndex()).get();
+        subject.getStudentList().add(student);
+        datastore.save(subject);
+    }
+
+    //TODO do przetestowania na JSie,prawdopodobnie zamiast usuwac po indexie studenta trzeba usuwac po miejscu na liscie
+    public void deleteStudentFromSubject(StudentModel studentModel, String subjectName) {
+        Query<SubjectModel> getQuerySubject = datastore.find(SubjectModel.class);
+        Query<StudentModel> getQueryStudent = datastore.find(StudentModel.class);
+        SubjectModel subject = getQuerySubject.field("subjectName").equal(subjectName).get();
+        StudentModel student = getQueryStudent.field("index").equal(studentModel.getIndex()).get();
+        datastore.delete(student);
+        subject.getStudentList().remove(student.getIndex().intValue());
+        datastore.save(subject);
+    }
+
     //TODO dziala, ale sypie errorami
     public void updateStudent(StudentModel student) {
         Query<StudentModel> updateQuery = datastore.createQuery(StudentModel.class).field("index").equal(student.getIndex());
@@ -91,8 +112,10 @@ public class MongoBase {
         SubjectModel subject = getQuerySubject.field("subjectName").equal(subjectName).get();
         datastore.delete(gradeModel);
         subject.getGradeList().remove(id);
+        datastore.save(subject);
     }
 
+    //TODO REST ok, sprawdzic JS
     public void updateGrade(GradeModel gradeModel, Long index, String subjectName) {
         if (gradeModel.getStudent().getIndex().equals(index)) {
             Query<GradeModel> updateQuery = datastore.createQuery(GradeModel.class).field("id").equal(gradeModel.getId());
@@ -113,10 +136,10 @@ public class MongoBase {
         datastore.delete(subjectModel);
     }
 
-    //TODO napisac dobrze update
+    //TODO sprawdzic dzialanie
     public void updateSubject(SubjectModel subjectModel) {
-        Query<SubjectModel> updateQuery = datastore.createQuery(SubjectModel.class).field("_id").equal(subjectModel.getId());
-        UpdateOperations<SubjectModel> update = datastore.createUpdateOperations(SubjectModel.class).set("subjectName", subjectModel.getSubjectName());
+        Query<SubjectModel> updateQuery = datastore.createQuery(SubjectModel.class).field("subjectName").equal(subjectModel.getSubjectName());
+        UpdateOperations<SubjectModel> update = datastore.createUpdateOperations(SubjectModel.class).set("Teacher", subjectModel.getTeacher());
         datastore.update(updateQuery, update);
     }
 
@@ -276,12 +299,14 @@ public class MongoBase {
         final Query<StudentModel> studentQuery = datastore.createQuery(StudentModel.class);
         StudentModel student = studentQuery.field("index").equal(index).get();
         if (!above.equals("")) {
-            gradeQuery.and(gradeQuery.criteria("gradeValue").greaterThan(above),
-                    gradeQuery.criteria("referencedStudent").equal(student));
+            double aboveValue = Double.parseDouble(above);
+            gradeQuery.and(gradeQuery.criteria("gradeValue").greaterThan(aboveValue),
+                    gradeQuery.criteria("student").equal(student));
             return gradeQuery.asList();
         } else if (!below.equals("")) {
-            gradeQuery.and(gradeQuery.criteria("gradeValue").lessThan(below),
-                    gradeQuery.criteria("referencedStudent").equal(student));
+            double belowValue = Double.parseDouble(below);
+            gradeQuery.and(gradeQuery.criteria("gradeValue").lessThan(belowValue),
+                    gradeQuery.criteria("student").equal(student));
             return gradeQuery.asList();
         }
         return null;
