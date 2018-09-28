@@ -16,8 +16,8 @@ import java.util.List;
 @Path("/students")
 public class Students {
     //Unlock only if adding first record, otherwise use mongoBase instance
-    //MongoStudents mongoStudents = new MongoStudents();
-    //MongoGrades mongoGrades = new MongoGrades();
+   // MongoStudents mongoStudents = new MongoStudents();
+    MongoGrades mongoGrades = new MongoGrades();
     MongoBase mongoBase = MongoBase.getInstance();
 
     @GET
@@ -84,12 +84,21 @@ public class Students {
     @POST
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response createStudent(StudentModel studentModel, @Context UriInfo uriInfo) {
-        //mongoStudents.addStudent();
+
         mongoBase.createStudent(studentModel);
         UriBuilder builder = uriInfo.getAbsolutePathBuilder();
         builder.path(Long.toString(studentModel.getIndex()));
         return Response.created(builder.build()).build();
     }
+
+    //Test records, unlock only if need it
+//    @POST
+//    @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+//    public Response createTestStudents() {
+//        mongoStudents.addStudent();
+//        return Response.status(Response.Status.OK).build();
+//
+//    }
 
     @POST
     @Path("/{index}/subjects/{subject}/grades")
@@ -98,12 +107,21 @@ public class Students {
                                 @PathParam("index") Long index,
                                 @PathParam("subject") String subjectName,
                                 @Context UriInfo uriInfo) {
-        //mongoGrades.addGrade();
+
         mongoBase.addGrade(gradeModel, index, subjectName);
         UriBuilder builder = uriInfo.getAbsolutePathBuilder();
         builder.path(gradeModel.getId().toString());
         return Response.created(builder.build()).build();
     }
+
+    //Test records, unlock only if need it
+//    @POST
+//    @Path("/grades")
+//    @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+//    public Response createTestGrades() {
+//        mongoGrades.addGrade();
+//        return Response.status(Response.Status.OK).build();
+//    }
 
     @PUT
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})

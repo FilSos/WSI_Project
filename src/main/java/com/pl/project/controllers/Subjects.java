@@ -14,7 +14,7 @@ import java.util.List;
 public class Subjects {
 
     //Unlock only if adding first record, otherwise use mongoBase instance
-    //MongoSubjects mongoSubjects = new MongoSubjects();
+    MongoSubjects mongoSubjects = new MongoSubjects();
     MongoBase mongoBase = MongoBase.getInstance();
 
     @GET
@@ -96,6 +96,15 @@ public class Subjects {
         builder.path(subjectModel.getSubjectName());
         return Response.created(builder.build()).build();
     }
+
+    //Test records, unlock only if need it
+//    @POST
+//    @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+//    public Response createTestSubjects() {
+//        mongoSubjects.addSubject();
+//        return Response.status(Response.Status.OK).build();
+//
+//    }
 
     @POST
     @Path("/{subject}/students")
