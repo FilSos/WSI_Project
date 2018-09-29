@@ -151,6 +151,7 @@ table tr:nth-child(odd) {
 
 #student_table tr:hover {
     background-color: darkgrey;
+    min-width: 700px;
 }
 
 #courses_table tr:hover {
@@ -206,7 +207,7 @@ input {
 }
 
 .button3 {
-    background-color: #f44336; /* Red */
+    background-color: #555555; /* Black */
     border: none;
     color: white;
     padding: 8px 16px;
@@ -250,7 +251,7 @@ input {
 
 }
 
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 900px) {
 
     .nav-toggle:checked ~ .main_menu {
         display: block;
