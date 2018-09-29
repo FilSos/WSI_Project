@@ -75,13 +75,20 @@ header h1 {
     cursor: pointer;
 }
 
+.nav-toggle {
+    display: none;
+}
+
+.nav-toggle-label {
+    display: none;
+}
+
 .main_menu {
     padding: 5px 0 5px 0;
     text-align: center;
     line-height: 32px;
     background-color: dimgray;
     min-width: 700px;
-
 }
 
 ul.main_menu {
@@ -241,6 +248,63 @@ input {
     padding: 8px;
     font-variant: small-caps;
 
+}
+
+@media screen and (min-width: 800px) {
+
+    .nav-toggle:checked ~ .main_menu {
+        display: block;
+    }
+
+    .nav-toggle {
+        display: none;
+    }
+
+    .nav-toggle-label {
+        margin-top: 0px;
+        padding: 14px;
+        display: flex;
+
+    }
+
+    .nav-toggle-label span,
+    .nav-toggle-label span::before,
+    .nav-toggle-label span::after {
+        background: white;
+        height: 2px;
+        width: 30px;
+        border-radius: 2px;
+        position: relative;
+    }
+
+    .nav-toggle-label span::before,
+    .nav-toggle-label span::after {
+        content: '';
+        position: absolute;
+    }
+
+    .nav-toggle-label span::before {
+        bottom: 7px;
+    }
+
+    .nav-toggle-label span::after {
+        top: 7px;
+    }
+
+    nav {
+        background-color: dimgray;
+    }
+
+    .main_menu {
+        display: none;
+
+    }
+
+    .main_menu li {
+        display: list-item;
+        padding: 0 0 0 0;
+        text-align: left;
+    }
 }
 
 @media print {

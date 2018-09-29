@@ -13,7 +13,7 @@
     <script type='text/javascript' src='js/logic.js'></script>
 
 </head>
-<!--TODO pozycjonowanie wzgledem search menu-->
+
 <body>
 <div id="wrapper">
     <header>
@@ -21,17 +21,22 @@
         <h1>Student Grade Manager</h1>
     </header>
     <nav>
+        <input type="checkbox" id="nav-toggle" class="nav-toggle">
+        <label for="nav-toggle" class="nav-toggle-label">
+            <span></span>
+        </label>
         <ul class="main_menu">
             <li><a href="#home">Home</a></li>
             <li><a href="#student_list" onclick="getStudents();">Manage students</a></li>
             <li><a href="#courses_list" onclick="getSubjects();">Manage courses</a></li>
         </ul>
-    </nav>
 
-    <div id="search_panel">
-        <input type="search" id="search_text" required="required" placeholder="example: Sosnowski"/>
-        <button id="search_button" type="submit"><i class="fa fa-search"></i></button>
-    </div>
+    </nav>
+    <!--TODO pozycjonowanie wzgledem search menu-->
+    <!--<div id="search_panel">-->
+    <!--<input type="search" id="search_text" required="required" placeholder="example: Sosnowski"/>-->
+    <!--<button id="search_button" type="submit"><i class="fa fa-search"></i></button>-->
+    <!--</div>-->
 
     <section id="home" class="view">
         <img src="images/home.png" id="home_logo" alt="home_logo">
@@ -40,10 +45,7 @@
 
     <section id="student_list" class="view">
         <h2>List of students</h2>
-        <h1>
-            <a onclick="clearStudentForm()" href="#add_student" class="button1">Add student</a>
-        </h1>
-        <form>
+        <form id="students" onsubmit="createStudent()">
             <table class="my_table" id="student_table">
                 <tr>
                     <th>Index</th>
@@ -59,10 +61,7 @@
                     <td data-bind="text: name"></td>
                     <td data-bind="text: surname"></td>
                     <td data-bind="text: birthday"></td>
-                    <td><a href="#student_grades"
-                           data-bind="attr: { 'data-index': index }"
-                           onclick="getStudentsGrades(this.dataset.index);"
-                           class="button4">See grades</a>
+                    <td>
                         <a data-bind="attr: { 'data-index': $index }"
                            onclick="getStudentEdit(this.dataset.index)"
                            href="#edit_student" class="button1">Edit student</a>
@@ -71,6 +70,25 @@
                     </td>
                 </tr>
                 </tbody>
+                <tr>
+                    <td><input type="number" required="required" data-bind="value: index"
+                               placeholder="example: 123456"/></td>
+
+                    <td><input type="text" required="required" data-bind="value: name" placeholder="example: John"/>
+                    </td>
+
+                    <td><input type="text" required="required" data-bind="value: surname"
+                               placeholder="example: Lemon"/>
+                    </td>
+
+                    <td><input type="date" required="required" data-bind="value: birthday"/></td>
+
+                    <td>
+                        <button type="submit" class="button3" form="students" value="Submit">
+                            Save
+                        </button>
+                    </td>
+                </tr>
             </table>
         </form>
     </section>
@@ -78,10 +96,7 @@
     <section class="view" id="courses_list">
 
         <h2>List of courses</h2>
-        <h1>
-            <a onclick="clearSubjectForm()" href="#add_subject" class="button1">Add course</a>
-        </h1>
-        <form>
+        <form id="subjects" onsubmit="createSubject()">
             <table id="courses_table">
                 <tr>
                     <th>Name</th>
@@ -103,35 +118,20 @@
                            class="button2">Delete</a></td>
                 </tr>
                 </tbody>
+                <td><input type="text" required="required" data-bind="textInput: subjectName"
+                           placeholder="example: Informatyka"/></td>
+
+                <td><input type="text" required="required" data-bind="value: teacher" placeholder="example: John Doe"/>
+                </td>
+
+                <td>
+                    <button type="submit" class="button3" form="subjects" value="Submit">Save</button>
+                </td>
+
             </table>
         </form>
     </section>
 
-    <section class="view" id="student_grades">
-        <h2>Student grades</h2>
-        <h1>
-            <a href="#add_grade" class="button1">Add grade</a>
-        </h1>
-        <form>
-            <table id="grades_table">
-                <tr>
-                    <th>Course</th>
-                    <th>Grade</th>
-                    <th>Date</th>
-                    <th>Actions</th>
-                </tr>
-                <tbody data-bind="foreach: list">
-                <tr>
-                    <td data-bind="text: subjectName"></td>
-                    <td data-bind="text: gradeValue"></td>
-                    <td data-bind="date: date"></td>
-                    <td><a href="#add_grade" class="button1">Modify</a>
-                        <a href="#" class="button2">Delete</a></td>
-                </tr>
-                </tbody>
-            </table>
-        </form>
-    </section>
     <!--TODO ostyluj sekcje-->
     <section class="view" id="students_on_course">
         <h2>Signed students</h2>
@@ -153,31 +153,46 @@
                     <td data-bind="text: name"></td>
                     <td data-bind="text: surname"></td>
                     <td data-bind="text: birthday"></td>
-                    <td><a href="#students_on_course" class="button2">Delete</a></td>
+                    <td><a href="#students_on_course" class="button2">Delete</a>
+                        <!--Podpiac przycisk-->
+                        <a href="#student_grades"
+                           data-bind="attr: { 'data-index': index }"
+                           onclick="getStudentsGrades(this.dataset.index);"
+                           class="button4">See grades</a>
+                    </td>
                 </tr>
                 </tbody>
-
             </table>
         </form>
     </section>
 
-    <section class="view" id="add_student">
-        <h2>Add student</h2>
-        <form id="student_form" onsubmit="createStudent()">
-            Index:<br>
-            <input type="number" required="required" data-bind="textInput: index" placeholder="example: 123456"/><br/>
-            First name:<br>
-            <input type="text" required="required" data-bind="value: name" placeholder="example: John"/><br/>
-            Last name:<br>
-            <input type="text" required="required" data-bind="value: surname" placeholder="example: Lemon"/><br/>
-            Birthday:<br>
-            <input type="date" required="required" data-bind="value: birthday"/><br/>
-            <h1>
-                <button type="submit" class="button3" form="student_form" value="Submit">Save</button>
-            </h1>
+    <section class="view" id="student_grades">
+        <h2>Student grades</h2>
+        <form>
+            <table id="grades_table">
+                <tr>
+                    <th>Grade</th>
+                    <th>Date</th>
+                    <th>Actions</th>
+                </tr>
+                <tbody data-bind="foreach: list">
+                <tr>
+                    <td data-bind="text: gradeValue"></td>
+                    <td data-bind="date: date"></td>
+                    <td><a href="#add_grade" class="button1">Modify</a>
+                        <a href="#" class="button2">Delete</a></td>
+                </tr>
+                </tbody>
+
+                <td><input type="number" required="required" placeholder="example: 4.0"/></td>
+
+                <td><input type="text" required="required" placeholder="example: John Lemon"/></td>
+
+                <td><a href="index.html" class="button3">Save</a></td>
+
+            </table>
         </form>
     </section>
-
 
     <section class="view" id="edit_student">
         <h2>Edit student</h2>
@@ -196,37 +211,8 @@
         </form>
     </section>
 
-
-    <section class="view" id="add_grade">
-        <h2>Add grade</h2>
-        <form>
-            Grade:<br>
-            <input type="number" required="required" placeholder="example: 4.0"/><br/>
-            Student Data:<br>
-            <input type="text" required="required" placeholder="example: John Lemon"/><br/>
-            Subject:<br>
-            <input type="text" required="required" placeholder="example: Matematyka"/><br/>
-            <h1>
-                <a href="index.html" class="button3">Save</a>
-            </h1>
-        </form>
-    </section>
-
-    <section class="view" id="add_subject">
-        <h2>Add subject</h2>
-        <form id="subject_form" onsubmit="createSubject()">
-            Name:<br>
-            <input type="text" required="required" data-bind="textInput: subjectName"
-                   placeholder="example: Informatyka"/><br/>
-            Teacher:<br>
-            <input type="text" required="required" data-bind="value: teacher" placeholder="example: John Doe"/><br/>
-            <h1>
-                <button type="submit" class="button3" form="subject_form" value="Submit">Save</button>
-            </h1>
-        </form>
-    </section>
-
     <div class="push"></div>
+
 </div>
 <footer>
     <div class="wrapper">
