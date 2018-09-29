@@ -58,7 +58,7 @@ public class MongoBase {
         datastore.save(studentModel);
     }
 
-    //TODO sprawdz
+    //TODO REST dziala, sprawdzic JS
     public void deleteStudent(StudentModel studentModel) {
         List<SubjectModel> getQuerySubjectsList = datastore.find(SubjectModel.class).asList();
         List<GradeModel> getQueryGradesList = datastore.find(GradeModel.class).asList();
@@ -162,7 +162,7 @@ public class MongoBase {
         datastore.save(subjectModel);
     }
 
-    //TODO napisac ladnie, jak usuwasz przedmiot, wypieprz wszystkie oceny rowniez z nim zwiazane
+    //TODO RESR dziala, sprawdzic JS
     public void deleteSubject(SubjectModel subjectModel) {
         List<GradeModel> gradeList = subjectModel.getGradeList();
         for (GradeModel grade : gradeList) {
