@@ -4,6 +4,7 @@ import com.mongodb.MongoClient;
 import com.pl.project.models.GradeModel;
 import com.pl.project.models.StudentModel;
 import com.pl.project.models.SubjectModel;
+import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
 import org.mongodb.morphia.query.Query;
@@ -57,7 +58,7 @@ public class MongoBase {
         datastore.save(studentModel);
     }
 
-    //TODO dokoncz ladne usuwanie,referencje studeta-usuniete,oceny-usuniete, usunac referencje do tych ocen jeszcze
+    //TODO sprawdz
     public void deleteStudent(StudentModel studentModel) {
         List<SubjectModel> getQuerySubjectsList = datastore.find(SubjectModel.class).asList();
         List<GradeModel> getQueryGradesList = datastore.find(GradeModel.class).asList();
@@ -65,14 +66,22 @@ public class MongoBase {
         for (int i = 0; i < getQuerySubjectsList.size(); i++) {
             for (int j = 0; j < getQuerySubjectsList.get(i).getStudentList().size(); j++) {
                 if (getQuerySubjectsList.get(i).getStudentList().get(j).getIndex().equals(index)) {
+                    for (int k = 0; k < getQuerySubjectsList.get(i).getGradeList().size(); k++) {
+                        if (getQuerySubjectsList.get(i).getGradeList().get(k).getStudent().getIndex().equals(index)) {
+                            getQuerySubjectsList.get(i).getGradeList().remove(getQuerySubjectsList.get(i).getGradeList().get(k));
+                            datastore.save(getQuerySubjectsList.get(i));
+                        }
+                    }
                     getQuerySubjectsList.get(i).getStudentList().remove(getQuerySubjectsList.get(i).getStudentList().get(j));
                     datastore.save(getQuerySubjectsList.get(i));
                 }
             }
         }
-        for (int k = 0; k < getQueryGradesList.size(); k++) {
-            if (getQueryGradesList.get(k).getStudent().getIndex().equals(index)) {
-                datastore.delete(getQueryGradesList.get(k));
+
+        for (int m = 0; m < getQueryGradesList.size(); m++) {
+            if (getQueryGradesList.get(m).getStudent().getIndex().equals(index)) {
+                ObjectId gradeId = getQueryGradesList.get(m).getId();
+                datastore.delete(getQueryGradesList.get(m));
             }
         }
         datastore.delete(studentModel);

@@ -111,22 +111,6 @@ public class Students {
 
     }
 
-    //TODO przeniesc do subjects
-    @PUT
-    @Path("/{index}/subjects/{subject}/grades")
-    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response updateGrade(GradeModel gradeModel,
-                                @PathParam("index") Long index,
-                                @PathParam("subject") String subjectName,
-                                @Context UriInfo uriInfo) {
-        mongoBase.updateGrade(gradeModel, index, subjectName);
-        UriBuilder builder = uriInfo.getAbsolutePathBuilder();
-        builder.path(gradeModel.getId().toString());
-        return Response.created(builder.build()).build();
-
-    }
-
     @DELETE
     @Path("/{index}")
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
@@ -135,17 +119,4 @@ public class Students {
         mongoBase.deleteStudent(deletedStudent);
         return Response.status(Response.Status.OK).build();
     }
-
-    //TODO przeniesc do subjects
-    @DELETE
-    @Path("/{index}/subjects/{subject}/grades/{id}")
-    @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response deleteGrade(@PathParam("index") Long index,
-                                @PathParam("subject") String subjectName,
-                                @PathParam("id") int id) {
-        GradeModel deletedGrade = mongoBase.oneGrade(id, subjectName);
-        mongoBase.deleteGrade(deletedGrade, subjectName, id);
-        return Response.status(Response.Status.OK).build();
-    }
-
 }
