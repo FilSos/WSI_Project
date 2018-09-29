@@ -156,12 +156,12 @@
                     <td data-bind="text: name"></td>
                     <td data-bind="text: surname"></td>
                     <td data-bind="text: birthday"></td>
-                    <td><a href="#students_on_course" class="button2">Delete</a>
-                        <!--Podpiac przycisk-->
+                    <td>  <!--Podpiac przycisk-->
                         <a href="#student_grades"
                            data-bind="attr: { 'data-index': index }"
                            onclick="getStudentsGrades(this.dataset.index);"
                            class="button4">See grades</a>
+                        <a href="#students_on_course" class="button2">Delete</a>
                     </td>
                 </tr>
                 </tbody>
