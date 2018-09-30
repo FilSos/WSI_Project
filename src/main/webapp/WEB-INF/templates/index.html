@@ -55,21 +55,23 @@
                     <th>Actions</th>
 
                 </tr>
-                <tbody data-bind="foreach: list">
+                <tbody id="students_list_data" data-bind="foreach: list">
                 <tr>
                     <td data-bind="text: index"></td>
                     <td data-bind="text: name"></td>
                     <td data-bind="text: surname"></td>
                     <td data-bind="text: birthday"></td>
                     <td>
-                        <a onclick="getStudentEdit(this.dataset.index)"
-                           data-bind="attr: { 'data-index': index }"
-                           href="#edit_student" class="button1">Edit student</a>
+                        <a href="#edit_student"
+                           data-bind="attr: { 'data-index': $index }"
+                           onclick="getStudentEdit(this.dataset.index)"
+                           class="button1">Edit student</a>
                         <a onclick="DeleteStudent(this.dataset.index)"
                            data-bind="attr: { 'data-index': index }" href="#student_list" class="button2">Delete</a>
                     </td>
                 </tr>
                 </tbody>
+
                 <tr id="student_add">
                     <td><input type="number" required="required" data-bind="value: index"
                                placeholder="example: 123456"/></td>
@@ -110,20 +112,20 @@
                     <td data-bind="text: subjectName"></td>
                     <td data-bind="text: teacher"></td>
                     <td><a href="#students_on_course"
-                           data-bind="attr: { 'data-index': subjectName }"
-                           onclick="getStudentsOnSubject(this.dataset.index);"
+                           data-bind="attr: { 'data-name': subjectName }"
+                           onclick="getStudentsOnSubject(this.dataset.name);"
                            class="button1">See students</a>
 
-                        <a data-bind="attr: { 'data-index': subjectName }" href="#courses_list"
-                           onclick="deleteSubject(this.dataset.index)"
+                        <a data-bind="attr: { 'data-name': subjectName }" href="#courses_list"
+                           onclick="deleteSubject(this.dataset.name)"
                            class="button2">Delete</a></td>
                 </tr>
                 </tbody>
                 <tr id="subject_add">
-                    <td><input type="text" required="required" data-bind="textInput: subjectName"
+                    <td><input type="text" required="required"
                                placeholder="example: Informatyka"/></td>
 
-                    <td><input type="text" required="required" data-bind="value: teacher"
+                    <td><input type="text" required="required"
                                placeholder="example: John Doe"/>
                     </td>
 
@@ -131,6 +133,7 @@
                         <button type="submit" class="button3" form="subjects" value="Submit">Save</button>
                     </td>
                 </tr>
+
             </table>
         </form>
     </section>
@@ -203,13 +206,15 @@
             Index:<br>
             <span data-bind="text: index"></span><br/>
             First name:<br>
-            <input type="text" required="required" data-bind="value: name"/><br/>
+            <label>
+                <input type="text" required="required" data-bind="value: name"/>
+            </label><br/>
             Last name:<br>
             <input type="text" required="required" data-bind="value: surname"/><br/>
             Birthday:<br>
             <input type="date" required="required" data-bind="value: birthday"/><br/>
             <h1>
-                <button type="submit" class="button3" form="edit_student_form" value="Submit">Save</button>
+                <button type="submit"  class="button3" form="edit_student_form" value="Submit">Save</button>
             </h1>
         </form>
 

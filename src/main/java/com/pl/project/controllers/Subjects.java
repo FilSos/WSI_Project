@@ -8,6 +8,7 @@ import com.pl.project.services.MongoSubjects;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Path("/subjects")
@@ -113,11 +114,20 @@ public class Subjects {
                                 @PathParam("index") Long index,
                                 @PathParam("subject") String subjectName,
                                 @Context UriInfo uriInfo) {
-
-        mongoBase.addGrade(gradeModel, index, subjectName);
-        UriBuilder builder = uriInfo.getAbsolutePathBuilder();
-        builder.path(gradeModel.getId().toString());
-        return Response.created(builder.build()).build();
+        List<Double> goodGrades = new ArrayList<>();
+        goodGrades.add(2.0);
+        goodGrades.add(3.0);
+        goodGrades.add(3.5);
+        goodGrades.add(4.0);
+        goodGrades.add(4.5);
+        goodGrades.add(5.0);
+        if (goodGrades.contains(gradeModel.getGradeValue())) {
+            mongoBase.addGrade(gradeModel, index, subjectName);
+            UriBuilder builder = uriInfo.getAbsolutePathBuilder();
+            builder.path(gradeModel.getId().toString());
+            return Response.created(builder.build()).build();
+        }
+        return Response.status(Response.Status.BAD_REQUEST).build();
     }
 
     //Test records, unlock only if need it

@@ -13,10 +13,8 @@ import org.mongodb.morphia.query.UpdateOperations;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
+
 
 public class MongoBase {
 
@@ -127,14 +125,17 @@ public class MongoBase {
     }
 
     public void addGrade(GradeModel gradeModel, Long index, String subjectName) {
+
         Query<SubjectModel> getQuerySubject = datastore.find(SubjectModel.class);
         Query<StudentModel> getQueryStudent = datastore.find(StudentModel.class);
         StudentModel student = getQueryStudent.field("index").equal(index).get();
         SubjectModel subject = getQuerySubject.field("subjectName").equal(subjectName).get();
+
         gradeModel.setStudent(student);
         datastore.save(gradeModel);
         subject.getGradeList().add(gradeModel);
         datastore.save(subject);
+
     }
 
     public void deleteGrade(GradeModel gradeModel, String subjectName, int id) {

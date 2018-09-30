@@ -12,7 +12,6 @@ import javax.ws.rs.core.*;
 import java.text.ParseException;
 import java.util.List;
 
-//TODO resolver do bledu empty beans - prawdopodobnie naprawione, zly typ zwracany przez PUT, do sprawdzenia
 @Path("/students")
 public class Students {
     //Unlock only if adding first record, otherwise use mongoBase instance

@@ -82,13 +82,13 @@ $(document).ready(function () {
     subjectNew = new SubjectViewModel();
     subjectEdit = new SubjectViewModel();
 
-    ko.applyBindings(studentList, $("#student_list")[0]);
+    ko.applyBindings(studentList, $("#students_list_data")[0]);
     ko.applyBindings(subjectList, $("#courses_list")[0]);
     ko.applyBindings(studentGradesFromSubjects, $("#student_grades")[0]);
     ko.applyBindings(studentsOnCourse, $("#students_on_course")[0]);
-    ko.applyBindings(studentNew, $("#student_list")[0]);
+    ko.applyBindings(studentNew, $("#student_add")[0]);
     ko.applyBindings(studentEdit, $("#edit_student")[0]);
-    ko.applyBindings(subjectNew, $("#courses_list")[0]);
+    //ko.applyBindings(subjectNew, $("#courses_list")[0]);
     //ko.applyBindings(subjectEdit, $("#add_subject")[0]);
 
     $('#students').submit(function (e) {
@@ -173,7 +173,6 @@ function Update(controllerName, method, vm) {
         data: json,
         contentType: "application/json",
         success: function (data) {
-            alert("Update success!");
         },
         error: function (error) {
             var errorVM = new ErrorViewModel();
@@ -268,12 +267,11 @@ function mapSubjectVM(vm1, vm2) {
     vm1.gradeList(vm2.gradeList());
 }
 
-// //TODO nie dziala, poprawic
-// function getStudentsOnSubject(subjectName) {
-//     getDbData('getSubjectStudents', 'subjects/' + subjectName + '/students/', studentsOnCourse);
-//     //studentsOnCourse.subjectName(subjectName);
-// }
-//
+function getStudentsOnSubject(subjectName) {
+    getDbData('getSubjectStudents', 'subjects/' + subjectName + '/students/', studentsOnCourse);
+    //studentsOnCourse.subjectName(subjectName);
+}
+
 // //TODO nie dziala, poprawic
 // function getStudentsGrades(index) {
 //     getDbData('getStudentSubjects', 'students/' + index + '/subjects/', studentGradesFromSubjects);
