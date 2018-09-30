@@ -9,7 +9,7 @@ import javax.ws.rs.ext.ContextResolver;
 import javax.ws.rs.ext.Provider;
 
 @Provider
-@Produces(MediaType.APPLICATION_JSON)
+@Produces({MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML})
 public class ObjectMapperResolver implements ContextResolver<ObjectMapper>
 {
     private final ObjectMapper mapper;

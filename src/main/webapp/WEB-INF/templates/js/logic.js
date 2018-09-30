@@ -10,7 +10,7 @@ var studentNew;
 var studentEdit;
 var subjectNew;
 var subjectEdit;
-
+//zle podlaczenie edtycji studenta do mojego widoku
 var StudentViewModel = function () {
     var self = this;
 
@@ -47,13 +47,13 @@ var StudentGradesFromSubjectsViewModel = function () {
     this.gradeData = new GradeViewModel();
     this.subjectViewModel = new SubjectViewModel();
     this.subjectList = new ListViewModel();
-    this.gradesList = new ListViewModel();
+    this.gradeList = new ListViewModel();
 };
 var StudentsOnCourseViewModel = function () {
     var self = this;
 
     this.studentData = new StudentViewModel();
-    this.studentsList = new ListViewModel();
+    this.studentList = new ListViewModel();
     this.subjectName = ko.observable();
 };
 
@@ -86,12 +86,12 @@ $(document).ready(function () {
     ko.applyBindings(subjectList, $("#courses_list")[0]);
     ko.applyBindings(studentGradesFromSubjects, $("#student_grades")[0]);
     ko.applyBindings(studentsOnCourse, $("#students_on_course")[0]);
-    ko.applyBindings(studentNew, $("#add_student")[0]);
+    ko.applyBindings(studentNew, $("#student_list")[0]);
     ko.applyBindings(studentEdit, $("#edit_student")[0]);
-    ko.applyBindings(subjectNew, $("#add_subject")[0]);
+    ko.applyBindings(subjectNew, $("#courses_list")[0]);
     //ko.applyBindings(subjectEdit, $("#add_subject")[0]);
 
-    $('#student_form').submit(function (e) {
+    $('#students').submit(function (e) {
         getStudents();
         window.location.href = '#student_list';
     });
@@ -100,7 +100,7 @@ $(document).ready(function () {
         window.location.href = '#student_list';
     });
 
-    $('#subject_form').submit(function (e) {
+    $('#subjects').submit(function (e) {
         getSubjects();
         window.location.href = '#courses_list';
     });
@@ -202,15 +202,15 @@ function Delete(method) {
 }
 
 function getStudents() {
-    getDbData('getStudentsList', 'students', studentList);
+    getDbData('getStudentsList', 'students/', studentList);
 }
 
 function createStudent() {
-    Create("createStudent", 'students/add_student', studentNew);
+    Create("createStudent", 'students/', studentNew);
 }
 
 function updateStudent() {
-    Update("updateStudent", 'students/update_student', studentEdit);
+    Update("updateStudent", 'students/', studentEdit);
 }
 
 function getStudentEdit(index) {
@@ -219,11 +219,12 @@ function getStudentEdit(index) {
 }
 
 function DeleteStudent(index) {
-    Delete("students/delete_student/" + index);
+    Delete("students/" + index);
     getStudents();
 
 }
 
+//TODO dodac czyszczenie do pol???
 function clearStudentForm() {
     mapStudentVM(studentNew, new StudentViewModel());
 }
@@ -236,23 +237,24 @@ function mapStudentVM(vm1, vm2) {
 }
 
 function getSubjects() {
-    getDbData('getSubjectsList', 'subjects', subjectList);
+    getDbData('getSubjectsList', 'subjects/', subjectList);
 }
 
 function createSubject() {
-    Create("createSubject", 'subjects/add_subject', subjectNew);
+    Create("createSubject", 'subjects/', subjectNew);
 }
 
 function editSubject() {
-    Update("updateSubject", 'subjects/update_subject', subjectEdit);
+    Update("updateSubject", 'subjects/', subjectEdit);
 }
 
 function deleteSubject(subjectName) {
-    Delete("subjects/delete_subject/" + subjectName);
+    Delete("subjects/" + subjectName);
     getSubjects();
 
 }
 
+//TODO dodac czyszczenie do pol???
 function clearSubjectForm() {
     mapSubjectVM(subjectEdit, new SubjectViewModel());
 }
@@ -266,14 +268,16 @@ function mapSubjectVM(vm1, vm2) {
     vm1.gradeList(vm2.gradeList());
 }
 
-function getStudentsOnSubject(subjectName) {
-    getDbData('getSubjectStudents', 'subjects/' + subjectName + '/students', studentsOnCourse);
-    // studentsOnCourse.subjectName(subjectName);
-}
-
-function getStudentsGrades(index) {
-    getDbData('getStudentSubjects', 'students/' + index + '/subjects', studentGradesFromSubjects);
-    //studentGradesFromSubjects.studentIndex(index);
-}
+// //TODO nie dziala, poprawic
+// function getStudentsOnSubject(subjectName) {
+//     getDbData('getSubjectStudents', 'subjects/' + subjectName + '/students/', studentsOnCourse);
+//     //studentsOnCourse.subjectName(subjectName);
+// }
+//
+// //TODO nie dziala, poprawic
+// function getStudentsGrades(index) {
+//     getDbData('getStudentSubjects', 'students/' + index + '/subjects/', studentGradesFromSubjects);
+//    // studentGradesFromSubjects.studentIndex(index);
+// }
 
 

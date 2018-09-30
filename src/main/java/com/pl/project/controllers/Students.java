@@ -33,7 +33,9 @@ public class Students {
             return Response.status(Response.Status.OK).entity(studentsList).build();
         } else {
             List<StudentModel> studentsListByDate = mongoBase.studentsListByDate(before, in, after);
-            return Response.status(Response.Status.OK).entity(studentsListByDate).build();
+            GenericEntity<List<StudentModel>> wrapper = new GenericEntity<List<StudentModel>>(studentsListByDate){
+            };
+            return Response.status(Response.Status.OK).entity(wrapper).build();
         }
     }
 

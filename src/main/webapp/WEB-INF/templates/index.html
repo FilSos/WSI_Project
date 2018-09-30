@@ -8,9 +8,9 @@
     <link href="https://fonts.googleapis.com/css?family=Hind" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="js/jquery.js"></script>
-    <script type='text/javascript' src='js/knockout.js'></script>
-    <script type='text/javascript' src='js/knockout_mapping_plugin.js'></script>
-    <script type='text/javascript' src='js/logic.js'></script>
+    <script src='js/knockout.js'></script>
+    <script src='js/knockout_mapping_plugin.js'></script>
+    <script src='js/logic.js'></script>
 
 </head>
 
@@ -62,29 +62,29 @@
                     <td data-bind="text: surname"></td>
                     <td data-bind="text: birthday"></td>
                     <td>
-                        <a data-bind="attr: { 'data-index': $index }"
-                           onclick="getStudentEdit(this.dataset.index)"
+                        <a onclick="getStudentEdit(this.dataset.index)"
+                           data-bind="attr: { 'data-index': index }"
                            href="#edit_student" class="button1">Edit student</a>
                         <a onclick="DeleteStudent(this.dataset.index)"
                            data-bind="attr: { 'data-index': index }" href="#student_list" class="button2">Delete</a>
                     </td>
                 </tr>
                 </tbody>
-                <tr>
-                    <td bgcolor="747E8C"><input type="number" required="required" data-bind="value: index"
-                                                placeholder="example: 123456"/></td>
+                <tr id="student_add">
+                    <td><input type="number" required="required" data-bind="value: index"
+                               placeholder="example: 123456"/></td>
 
-                    <td bgcolor="747E8C"><input type="text" required="required" data-bind="value: name"
-                                                placeholder="example: John"/>
+                    <td><input type="text" required="required" data-bind="value: name"
+                               placeholder="example: John"/>
                     </td>
 
-                    <td bgcolor="747E8C"><input type="text" required="required" data-bind="value: surname"
-                                                placeholder="example: Lemon"/>
+                    <td><input type="text" required="required" data-bind="value: surname"
+                               placeholder="example: Lemon"/>
                     </td>
 
-                    <td bgcolor="747E8C"><input type="date" required="required" data-bind="value: birthday"/></td>
+                    <td><input type="date" required="required" data-bind="value: birthday"/></td>
 
-                    <td bgcolor="747E8C">
+                    <td>
                         <button type="submit" class="button3" form="students" value="Submit">
                             Save
                         </button>
@@ -119,15 +119,15 @@
                            class="button2">Delete</a></td>
                 </tr>
                 </tbody>
-                <tr>
-                    <td bgcolor="747E8C"><input type="text" required="required" data-bind="textInput: subjectName"
-                                                placeholder="example: Informatyka"/></td>
+                <tr id="subject_add">
+                    <td><input type="text" required="required" data-bind="textInput: subjectName"
+                               placeholder="example: Informatyka"/></td>
 
-                    <td bgcolor="747E8C"><input type="text" required="required" data-bind="value: teacher"
-                                                placeholder="example: John Doe"/>
+                    <td><input type="text" required="required" data-bind="value: teacher"
+                               placeholder="example: John Doe"/>
                     </td>
 
-                    <td bgcolor="747E8C">
+                    <td>
                         <button type="submit" class="button3" form="subjects" value="Submit">Save</button>
                     </td>
                 </tr>
@@ -186,12 +186,12 @@
                         <a href="#" class="button2">Delete</a></td>
                 </tr>
                 </tbody>
-                <tr>
-                    <td bgcolor="747E8C"><input type="number" required="required" placeholder="example: 4.0"/></td>
+                <tr id="student_grades_add">
+                    <td><input type="number" required="required" placeholder="example: 4.0"/></td>
 
-                    <td bgcolor="747E8C"><input type="text" required="required" placeholder="example: John Lemon"/></td>
+                    <td><input type="text" required="required" placeholder="example: John Lemon"/></td>
 
-                    <td bgcolor="747E8C"><a href="index.html" class="button3">Save</a></td>
+                    <td><a href="index.html" class="button3">Save</a></td>
                 </tr>
             </table>
         </form>
@@ -212,6 +212,7 @@
                 <button type="submit" class="button3" form="edit_student_form" value="Submit">Save</button>
             </h1>
         </form>
+
     </section>
 
     <div class="push"></div>

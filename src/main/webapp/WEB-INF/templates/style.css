@@ -124,6 +124,18 @@ ul.main_menu {
     text-decoration: underline;
 }
 
+#student_add {
+    background: #747E8C;
+}
+
+#subject_add {
+    background: #747E8C;
+}
+
+#student_grades_add {
+    background: #747E8C;
+}
+
 table {
     border-collapse: collapse;
     width: 100%;
